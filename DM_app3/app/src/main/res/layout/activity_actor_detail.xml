@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context=".BoxOfficeDetailActivity" >
+
+    <!-- @drawable/large_movie_poster sourced from
+         http://content8.flixster.com/movie/11/15/86/11158674_pro.jpg -->
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:maxHeight="240dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/large_movie_poster" />
+
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:text="Joe Getto"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvName"
+        android:layout_below="@+id/tvName"
+        android:layout_marginTop="5dp"
+        android:text="1993.28.01 - "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvPlaceOfBirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvDate"
+        android:layout_below="@+id/tvDate"
+        android:layout_marginTop="5dp"
+        android:text="Staten Island, New York"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvPopularity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvPlaceOfBirth"
+        android:layout_below="@+id/tvPlaceOfBirth"
+        android:layout_marginTop="5dp"
+        android:text="Popularity : 8.1"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvHomepage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvPopularity"
+        android:layout_alignLeft="@+id/tvPopularity"
+        android:text="HOMEPAGE"/>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_margin="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvBiography"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This is an excellent movie that has action and romance" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

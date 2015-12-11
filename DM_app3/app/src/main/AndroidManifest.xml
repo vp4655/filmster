@@ -25,6 +25,10 @@
         </activity>
         <activity android:name=".MovieDetailsActivity" >
         </activity>
+        <activity
+            android:name=".ActorDetailActivity"
+            android:label="@string/title_activity_actor_detail" >
+        </activity>
     </application>
 
 </manifest>
