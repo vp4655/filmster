@@ -84,7 +84,10 @@ public class Recommendation1Fragment extends Fragment implements IFragment {
         adapter = new MovieArrayAdapter(getActivity(), movieList);
         listView.setAdapter(adapter);
 
-        doImages();
+        if(movieList.isEmpty())
+        {
+            doImages();
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
