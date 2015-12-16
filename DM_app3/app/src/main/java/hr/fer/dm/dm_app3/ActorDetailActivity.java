@@ -1,6 +1,7 @@
 package hr.fer.dm.dm_app3;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +9,10 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.graphics.Typeface;
 
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +64,8 @@ public class ActorDetailActivity extends AppCompatActivity {
                 startActivity(web);
             }
         });
-        Picasso.with(this).load(actor.getProfilePictureUrl()).transform(new CircleTransformation()).placeholder(R.drawable.large_movie_poster).into(ivProfilePicture);
+
+        Picasso.with(this).load(actor.getProfilePictureUrl()).transform(new CircleTransformation()).placeholder(R.drawable.person_placeholder).into(ivProfilePicture);
     }
 
     @Override
