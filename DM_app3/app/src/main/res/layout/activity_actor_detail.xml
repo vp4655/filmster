@@ -2,91 +2,121 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:orientation="vertical"
     tools:context=".BoxOfficeDetailActivity" >
 
     <!-- @drawable/large_movie_poster sourced from
          http://content8.flixster.com/movie/11/15/86/11158674_pro.jpg -->
-    <ImageView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="140dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:maxHeight="240dp"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:src="@drawable/large_movie_poster" />
+        android:id="@+id/topLayout">
+        <ImageView
+            android:id="@+id/coverPicture"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="250dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/actor_bg"
+            />
 
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"
+            android:text="@string/actor_default_name"
+            android:textSize="40sp"
+            android:textColor="#ffffff"/>
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivProfileImage"
-        android:textStyle="bold"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:text="Joe Getto"
-        android:textSize="28sp" />
+        android:id="@+id/bottomLayout"
+        android:layout_below="@+id/topLayout"
+        android:layout_alignParentBottom="true">
 
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvName"
-        android:layout_below="@+id/tvName"
-        android:layout_marginTop="5dp"
-        android:text="1993.28.01 - "
-        android:textSize="14sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/bottomTopLayout"></RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvPlaceOfBirth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvDate"
-        android:layout_below="@+id/tvDate"
-        android:layout_marginTop="5dp"
-        android:text="Staten Island, New York"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tvPopularity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvPlaceOfBirth"
-        android:layout_below="@+id/tvPlaceOfBirth"
-        android:layout_marginTop="5dp"
-        android:text="Popularity : 8.1"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/tvHomepage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tvPopularity"
-        android:layout_alignLeft="@+id/tvPopularity"
-        android:text="HOMEPAGE"/>
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfileImage"
-        android:layout_margin="10dp" >
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/bottomTopLayout">
 
-            <TextView
-                android:id="@+id/tvBiography"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="This is an excellent movie that has action and romance" />
+                android:orientation="vertical" >
 
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/actor_default_birth"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvPlaceOfBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/actor_default_place_of_birth"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvPopularity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/actor_default_popularity"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvHomepage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="16sp"
+                    android:text="@string/actor_default_homepage"/>
+
+                <TextView
+                    android:id="@+id/tvBiography"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textSize="16sp"
+                    android:text="@string/actor_default_text" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="200dp"
+        android:layout_above ="@+id/bottomLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-100dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/large_movie_poster"
+        />
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
 import hr.fer.dm.dm_app3.ListViewItems.Actor;
 
 public class ActorDetailActivity extends AppCompatActivity {
@@ -60,7 +61,7 @@ public class ActorDetailActivity extends AppCompatActivity {
                 startActivity(web);
             }
         });
-        Picasso.with(this).load(actor.getProfilePictureUrl()).placeholder(R.drawable.large_movie_poster).into(ivProfilePicture);
+        Picasso.with(this).load(actor.getProfilePictureUrl()).transform(new CircleTransformation()).placeholder(R.drawable.large_movie_poster).into(ivProfilePicture);
     }
 
     @Override

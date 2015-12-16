@@ -5,6 +5,10 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="actor_btn">Get Actor</string>
     <string name="title_activity_actor_detail">ActorDetailActivity</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="actor_default_name">John Doe</string>
+    <string name="actor_default_birth">1993.28.01 - </string>
+    <string name="actor_default_place_of_birth">Staten Island, New York</string>
+    <string name="actor_default_popularity">Popularity : 8.1</string>
+    <string name="actor_default_homepage">HOMEPAGE</string>
+    <string name="actor_default_text">This is an excellent actor that acted in action and romance</string>
 </resources>
