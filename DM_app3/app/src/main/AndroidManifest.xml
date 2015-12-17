@@ -23,11 +23,16 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".MovieDetailsActivity" >
+        <activity
+            android:name=".MovieDetailsActivity" >
         </activity>
         <activity
             android:name=".ActorDetailActivity"
             android:label="@string/title_activity_actor_detail" >
+        </activity>
+        <activity
+            android:name=".CastActivity"
+            android:label="@string/cast_string" >
         </activity>
     </application>
 
