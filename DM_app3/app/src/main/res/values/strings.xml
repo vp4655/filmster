@@ -11,4 +11,7 @@
     <string name="actor_default_popularity">Popularity : 8.1</string>
     <string name="actor_default_homepage">HOMEPAGE</string>
     <string name="actor_default_text">This is an excellent actor that acted in action and romance</string>
+    <string name="cast_string">Full cast</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

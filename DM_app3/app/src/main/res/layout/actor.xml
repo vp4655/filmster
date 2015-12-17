@@ -11,8 +11,7 @@
         android:layout_centerVertical="true"
         android:maxHeight="70dp"
         android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:src="@drawable/small_movie_poster" />
+        android:adjustViewBounds="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
