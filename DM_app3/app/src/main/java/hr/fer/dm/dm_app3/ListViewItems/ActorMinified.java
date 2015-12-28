@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import hr.fer.dm.dm_app3.LoginActivity;
+import hr.fer.dm.dm_app3.Activites.LoginActivity;
 
 /**
  * Created by Valentino on 17.12.2015..

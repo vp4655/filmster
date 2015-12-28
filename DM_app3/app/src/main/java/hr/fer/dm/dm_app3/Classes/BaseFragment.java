@@ -1,15 +1,42 @@
 package hr.fer.dm.dm_app3.Classes;
 
+import android.app.ProgressDialog;
+import android.support.v4.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hr.fer.dm.dm_app3.ListViewItems.Movie;
+
 /**
  * Created by Kajkara on 10.12.2015..
  */
-public class BaseFragment {
-    private static String url;
+public abstract class BaseFragment extends Fragment{
+    protected ProgressDialog pDialog;
+    protected String url;
 
-    public BaseFragment(String url_)
+    protected List<Movie> movieList = new ArrayList<Movie>();
+
+    int threshold;
+    int currentPage;
+
+    public BaseFragment()
     {
-        this.url = url_;
+        threshold = 10;
+        currentPage = 0;
     }
-    
-    //// TODO: 10.12.2015. napraviti ili baznu klasu koju nasljeđuju ostali fragmenti ili ostaviti interface, sve ovisi o klasi koju prima svaki fragment, ako su iste onda se može ova klasa upotrijebiti 
+
+    public abstract void getMovies();
+
+    public abstract void getMoviesLazy(int page);
+
+
+    protected void hidePDialog() {
+        if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
+    }
+
+
 }

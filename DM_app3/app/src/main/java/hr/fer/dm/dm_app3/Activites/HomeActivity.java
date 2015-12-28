@@ -1,9 +1,6 @@
-package hr.fer.dm.dm_app3;
+package hr.fer.dm.dm_app3.Activites;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.PackageInstaller;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,22 +25,12 @@ import android.widget.TextView;
 //import com.android.volley.VolleyLog;
 //import com.android.volley.toolbox.JsonArrayRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 import hr.fer.dm.dm_app3.Classes.SectionsPagerAdapter;
-import hr.fer.dm.dm_app3.ListViewItems.Movie;
-import hr.fer.dm.dm_app3.ListViewItems.MovieArrayAdapter;
-import hr.fer.dm.dm_app3.Util.AppController;
+import hr.fer.dm.dm_app3.R;
 
 public class HomeActivity extends AppCompatActivity {
 

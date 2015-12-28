@@ -1,7 +1,6 @@
-package hr.fer.dm.dm_app3;
+package hr.fer.dm.dm_app3.Activites;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,15 +8,14 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Typeface;
 
 import com.squareup.picasso.Picasso;
 
 import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
 import hr.fer.dm.dm_app3.ListViewItems.Actor;
+import hr.fer.dm.dm_app3.R;
 
 public class ActorDetailActivity extends AppCompatActivity {
     private ImageView ivProfilePicture;

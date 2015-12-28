@@ -1,4 +1,4 @@
-package hr.fer.dm.dm_app3;
+package hr.fer.dm.dm_app3.Activites;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,14 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
 import hr.fer.dm.dm_app3.ListViewItems.ActorsMinifiedAdapter;
-import hr.fer.dm.dm_app3.ListViewItems.Movie;
+import hr.fer.dm.dm_app3.R;
 
 public class CastActivity extends AppCompatActivity {
 

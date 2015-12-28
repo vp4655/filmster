@@ -1,37 +1,35 @@
-package hr.fer.dm.dm_app3;
+package hr.fer.dm.dm_app3.Activites;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.TextureView;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.lucasr.twowayview.TwoWayView;
-
-import java.util.ArrayList;
-
-import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
-import hr.fer.dm.dm_app3.ListViewItems.Actor;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
+import hr.fer.dm.dm_app3.R;
 
 public class MovieDetailsActivity extends AppCompatActivity {
-    public TextView title;
+    @Bind(R.id.tvTitle_md) TextView title;
+    @Bind(R.id.castText) TextView castTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+        ButterKnife.bind(this);
+
         String title_S = getIntent().getExtras().getString("Title");
-        title = (TextView)findViewById(R.id.tvTitle_md);
+        //title = (TextView)findViewById(R.id.tvTitle_md);
         title.setText(title_S);
 
-        TextView castTV = (TextView) findViewById(R.id.castText);
+        //TextView castTV = (TextView) findViewById(R.id.castText);
         castTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
