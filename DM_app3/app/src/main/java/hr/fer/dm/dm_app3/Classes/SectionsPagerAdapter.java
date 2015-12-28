@@ -31,11 +31,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if(position==0)
-            return R.drawable.icon1;
+            return R.drawable.friends;
         else if(position==1)
-            return R.drawable.icon4;
+            return R.drawable.trending;
         else
-            return R.drawable.icon3;
+            return R.drawable.graph;
     }
 
     @Override
