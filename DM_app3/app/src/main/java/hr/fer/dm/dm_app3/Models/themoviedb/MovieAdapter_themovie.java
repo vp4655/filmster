@@ -107,7 +107,7 @@ public class MovieAdapter_themovie extends BaseAdapter {
         }
 
         genreStr = genreStr.length() > 0 ? genreStr.substring(0,genreStr.length() - 2) : genreStr;
-        //TODO: genre preko datma piše
+        //TODO: genre preko datuma piše
 //        if(count >4)
 //            genreStr += "\n";
         genre.setText(genreStr);
