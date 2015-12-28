@@ -1,5 +1,6 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
@@ -50,13 +53,15 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         frameLayout = (FrameLayout) findViewById( R.id.mainmenu);
-        frameLayout.getForeground().setAlpha( 0);
+        frameLayout.getForeground().setAlpha(0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("What2watch");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

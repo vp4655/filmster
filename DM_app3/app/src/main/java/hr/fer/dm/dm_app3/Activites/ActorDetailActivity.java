@@ -31,6 +31,8 @@ public class ActorDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actor_detail);
 
+        getSupportActionBar().setTitle("Will Smith");
+
         ivProfilePicture = (ImageView) findViewById(R.id.ivProfileImage);
         name = (TextView) findViewById(R.id.tvName);
         date = (TextView) findViewById(R.id.tvDate);
