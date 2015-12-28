@@ -41,6 +41,12 @@ public class MovieAdapter_themovie extends BaseAdapter {
         ButterKnife.bind(activity);
     }
 
+    public void MovieAdapter_addMovies(List<Movie> movieItems) {
+        for (Movie movie : movieItems) {
+            this.movieItems.add(movie);
+        }
+    }
+
     @Override
     public int getCount() {
         return movieItems.size();

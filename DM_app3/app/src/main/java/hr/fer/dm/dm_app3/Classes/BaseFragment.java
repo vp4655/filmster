@@ -19,11 +19,13 @@ public abstract class BaseFragment extends Fragment{
 
     int threshold;
     int currentPage;
+    int totalPages;
 
     public BaseFragment()
     {
         threshold = 10;
-        currentPage = 0;
+        currentPage = 1; // imdb broji od 1!!!
+        totalPages = 0;
     }
 
     public abstract void getMovies();

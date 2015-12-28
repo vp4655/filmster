@@ -20,11 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.VolleyLog;
-//import com.android.volley.toolbox.JsonArrayRequest;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

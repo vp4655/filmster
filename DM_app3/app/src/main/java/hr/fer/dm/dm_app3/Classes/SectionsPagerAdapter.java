@@ -22,9 +22,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if(position==0)
             return Recommendation1Fragment.newInstance(position+1);
         else if(position==1)
-            return HomeFragment.newInstance(position+1);
-        else
             return Recommendation2Fragment.newInstance(position+1);
+        else
+            return HomeFragment.newInstance(position+1);
     }
 
     public int getIcon(int position) {

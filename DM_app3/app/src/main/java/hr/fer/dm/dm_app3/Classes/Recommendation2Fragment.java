@@ -1,15 +1,20 @@
 package hr.fer.dm.dm_app3.Classes;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Activites.MovieDetailsActivity;
+import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieAdapter_themovie;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.Models.themoviedb.Moviedx;
@@ -54,46 +59,46 @@ public class Recommendation2Fragment extends BaseFragment{
         {
             getMovies();
         }
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position,
-//                                    long id) {
-//                Movie entry = (Movie) parent.getAdapter().getItem(position);
-//                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-//                intent.putExtra("Title", entry.getTitle());     // // TODO: 10.12.2015. title zamijeniti s ID
-//                startActivity(intent);
-////                String text = entry.getTitle() + " is pressed!:)";
-////                Toast.makeText(getActivity(),text,Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                if (scrollState == SCROLL_STATE_IDLE) {
-//                    if (listView.getLastVisiblePosition() >= listView.getCount() - 1 - threshold) {
-//                        currentPage++;
-//                        //load more list items:
-////                      loadElements(currentPage);
-//                        //// TODO: 10.12.2015. dohvat podataka u listu ovisno o stranici na kojoj se nalazimo
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                //nikad ni ne ude??
-//                //                boolean loadMore = /* maybe add a padding */
-//                //                        firstVisibleItem + visibleItemCount >= totalItemCount;
-//                //
-//                //        if(loadMore) {
-//                ////            adapter.getCount() += visibleItemCount; // or any other amount
-//                //            adapter.notifyDataSetChanged();
-//                //        }
-//            }
-//        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Movie entry = (Movie) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+                intent.putExtra("Title", entry.getTitle());     // // TODO: 10.12.2015. title zamijeniti s ID
+                startActivity(intent);
+//                String text = entry.getTitle() + " is pressed!:)";
+//                Toast.makeText(getActivity(),text,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    int visible = listView.getLastVisiblePosition();
+                    int count = listView.getCount();
+                    int result = listView.getCount() - 1 - threshold;
+                    if ((listView.getLastVisiblePosition() >= listView.getCount() - 1 - threshold) && totalPages>currentPage) {
+                        currentPage++;
+                        getMoviesLazy(currentPage);
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //nikad ni ne ude??
+                //                boolean loadMore = /* maybe add a padding */
+                //                        firstVisibleItem + visibleItemCount >= totalItemCount;
+                //
+                //        if(loadMore) {
+                ////            adapter.getCount() += visibleItemCount; // or any other amount
+                //            adapter.notifyDataSetChanged();
+                //        }
+            }
+        });
 
         return rootView;
     }
@@ -112,6 +117,7 @@ public class Recommendation2Fragment extends BaseFragment{
                 try
                 {
                     hidePDialog();
+                    totalPages = m.getTotalPages();
                     adapter = new MovieAdapter_themovie(getActivity(), m.getMovieList());
                     listView.setAdapter(adapter);
                 }
@@ -130,7 +136,33 @@ public class Recommendation2Fragment extends BaseFragment{
 
     @Override
     public void getMoviesLazy(int page) {
-        // TODO: Lazy load - ovdje ne treba jer ima samo top 20 ili mozemo vise dohvatiti?
+//        ne treba loader kad loada unaprijed
+//        pDialog = new ProgressDialog(getActivity());
+//        // Showing progress dialog before making http request
+//        pDialog.setMessage("Loading...");
+//        pDialog.show();
+
+        ApiManager.getService().getMovies(currentPage, new Callback<Moviedx>() {
+            @Override
+            public void success(Moviedx m, Response response) {
+                try
+                {
+//                    hidePDialog();
+                    adapter.MovieAdapter_addMovies(m.getMovieList());
+//                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+                catch (Exception exc)
+                {
+
+                }
+            }
+            @Override
+            public void failure(RetrofitError error) {
+//                hidePDialog();
+                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
 

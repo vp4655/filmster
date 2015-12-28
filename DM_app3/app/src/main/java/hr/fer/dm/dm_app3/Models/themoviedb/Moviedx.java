@@ -15,8 +15,15 @@ public class Moviedx {
     @SerializedName("results")
     private List<Movie> movieList;
 
+    @SerializedName("total_pages")
+    private int totalPages;
+
     public List<Movie> getMovieList() {
         return movieList;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
     }
 }
 
