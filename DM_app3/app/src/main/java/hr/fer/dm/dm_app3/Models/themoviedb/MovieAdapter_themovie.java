@@ -11,7 +11,12 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -94,19 +99,30 @@ public class MovieAdapter_themovie extends BaseAdapter {
         // rating
         rating.setText("Rating: " + String.valueOf(m.getPopularity()));
 
-        //TODO: GENRE riješiti!
         // genre
         String genreStr = "";
+        int count = 0;
         for (String str : m.getGenres()) {
             genreStr += str + ", ";
         }
-        genreStr = genreStr.length() > 0 ? genreStr.substring(0,
-                genreStr.length() - 2) : genreStr;
+
+        genreStr = genreStr.length() > 0 ? genreStr.substring(0,genreStr.length() - 2) : genreStr;
+        //TODO: genre preko datma piše
+//        if(count >4)
+//            genreStr += "\n";
         genre.setText(genreStr);
 
         // release year
-        year.setText(String.valueOf(m.getRelease_date()));
-
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df_new = new SimpleDateFormat("dd.MM.yyyy.");
+        Date startDate;
+        try {
+            startDate = df.parse(m.getRelease_date());
+            String newDateString = df_new.format(startDate);
+            year.setText(newDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return convertView;
     }
 }
