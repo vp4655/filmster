@@ -96,10 +96,10 @@ public class MovieAdapter_themovie extends BaseAdapter {
 
         //TODO: GENRE riješiti!
         // genre
-        String genreStr = "DODATI GENRE";
-//        for (String str : m.getGenre()) {
-//            genreStr += str + ", ";
-//        }
+        String genreStr = "";
+        for (String str : m.getGenres()) {
+            genreStr += str + ", ";
+        }
         genreStr = genreStr.length() > 0 ? genreStr.substring(0,
                 genreStr.length() - 2) : genreStr;
         genre.setText(genreStr);

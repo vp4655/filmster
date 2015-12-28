@@ -26,6 +26,7 @@ public class Movie implements Serializable {
 
     @SerializedName("genre_ids")
     private List<Integer> genre_ids;
+    private List<String> genres;
 
     @SerializedName("id")
     private int id;
@@ -74,6 +75,14 @@ public class Movie implements Serializable {
     public List<Integer> getGenre_ids()
     {
         return genre_ids;
+    }
+    public List<String> getGenres()
+    {
+        return genres;
+    }
+    public void setGenres(List<String> genres)
+    {
+        this.genres = genres;
     }
 
     public int getId()

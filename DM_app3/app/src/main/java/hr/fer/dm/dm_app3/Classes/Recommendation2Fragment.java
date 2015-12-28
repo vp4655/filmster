@@ -11,9 +11,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hr.fer.dm.dm_app3.Activites.MovieDetailsActivity;
+import hr.fer.dm.dm_app3.Models.genres.Genre;
+import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieAdapter_themovie;
 import hr.fer.dm.dm_app3.R;
@@ -36,6 +42,7 @@ public class Recommendation2Fragment extends BaseFragment{
     @Bind(R.id.lvMovies_Recomm2) ListView listView;
     private MovieAdapter_themovie adapter;
 
+    HashMap<Integer, String> genres = new HashMap<Integer, String>();
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -57,7 +64,15 @@ public class Recommendation2Fragment extends BaseFragment{
 
         if(movieList.isEmpty())
         {
-            getMovies();
+//            pDialog = new ProgressDialog(getActivity());
+//            // Showing progress dialog before making http request
+//            pDialog.setMessage("Loading...");
+//            pDialog.show();
+
+            getGenres();
+//            getMovies();  // u getGenres() jer treba na success toga
+
+//            hidePDialog();
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,7 +95,7 @@ public class Recommendation2Fragment extends BaseFragment{
                     int visible = listView.getLastVisiblePosition();
                     int count = listView.getCount();
                     int result = listView.getCount() - 1 - threshold;
-                    if ((listView.getLastVisiblePosition() >= listView.getCount() - 1 - threshold) && totalPages>currentPage) {
+                    if ((listView.getLastVisiblePosition() >= listView.getCount() - 1 - threshold) && totalPages > currentPage) {
                         currentPage++;
                         getMoviesLazy(currentPage);
                     }
@@ -114,18 +129,16 @@ public class Recommendation2Fragment extends BaseFragment{
         ApiManager.getService().getMovies(new Callback<Moviedx>() {
             @Override
             public void success(Moviedx m, Response response) {
-                try
-                {
+                try {
                     hidePDialog();
                     totalPages = m.getTotalPages();
-                    adapter = new MovieAdapter_themovie(getActivity(), m.getMovieList());
+                    adapter = new MovieAdapter_themovie(getActivity(), m.getMovieList(genres));
                     listView.setAdapter(adapter);
-                }
-                catch (Exception exc)
-                {
+                } catch (Exception exc) {
 
                 }
             }
+
             @Override
             public void failure(RetrofitError error) {
                 hidePDialog();
@@ -148,7 +161,7 @@ public class Recommendation2Fragment extends BaseFragment{
                 try
                 {
 //                    hidePDialog();
-                    adapter.MovieAdapter_addMovies(m.getMovieList());
+                    adapter.MovieAdapter_addMovies(m.getMovieList(genres));
 //                    listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -160,6 +173,29 @@ public class Recommendation2Fragment extends BaseFragment{
             @Override
             public void failure(RetrofitError error) {
 //                hidePDialog();
+                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void getGenres() {
+
+        ApiManager.getService().getGenres(new Callback<Genredx>() {
+            @Override
+            public void success(Genredx genredx, Response response) {
+                try {
+                    List<Genre> genreList = genredx.getGenreList();
+                    for (Genre genre: genreList) {
+                        genres.put(genre.getId(), genre.getName());
+                    }
+                    getMovies();
+                } catch (Exception exc) {
+
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
             }
         });
