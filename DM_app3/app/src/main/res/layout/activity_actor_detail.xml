@@ -1,136 +1,159 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/mainLayout"
-    tools:context=".BoxOfficeDetailActivity" >
+    android:fitsSystemWindows="true"
+    android:theme="@style/NoAction">
 
-    <ScrollView
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollableContent">
+        android:layout_height="@dimen/detail_backdrop_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <RelativeLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/contentHolder">
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/topLayout">
-                <ImageView
-                    android:id="@+id/coverPicture"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:maxHeight="250dp"
-                    android:scaleType="fitXY"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/actor_bg"
-                    />
-
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="45dp"
-                    android:text="@string/actor_default_name"
-                    android:textSize="56sp"
-                    android:textColor="#ffffff"
-                    android:fontFamily="sans-serif"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bottomLayout"
-                android:layout_below="@+id/topLayout"
-                android:layout_alignParentBottom="true">
+                android:id="@+id/contentHolder">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:id="@+id/bottomTopLayout"></RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/topLayout">
+                    <ImageView
+                        android:id="@+id/coverPicture"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:maxHeight="250dp"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/actor_bg"
+                        />
 
-                <ScrollView
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="45dp"
+                        android:text="@string/actor_default_name"
+                        android:textSize="56sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="sans-serif"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/bottomTopLayout">
+                    android:id="@+id/bottomLayout"
+                    android:layout_below="@+id/topLayout"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray_background_actor_detail">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_height="75dp"
+                        android:id="@+id/bottomTopLayout"></RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/tvDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_gravity="center"
-                            android:text="@string/actor_default_birth"
-                            android:textSize="16sp" />
+                </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/tvPlaceOfBirth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_gravity="center"
-                            android:text="@string/actor_default_place_of_birth"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tvPopularity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/actor_default_popularity"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tvHomepage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_gravity="center"
-                            android:textSize="16sp"
-                            android:text="@string/actor_default_homepage"/>
-
-                        <TextView
-                            android:id="@+id/tvBiography"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:textSize="16sp"
-                            android:text="@string/actor_default_text" />
-
-                    </LinearLayout>
-                </ScrollView>
+                <ImageView
+                    android:id="@+id/ivProfileImage"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="150dp"
+                    android:layout_above ="@+id/bottomLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="-75dp"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/person_placeholder"
+                    />
 
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/ivProfileImage"
-                android:layout_width="150dp"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxHeight="150dp"
-                android:layout_above ="@+id/bottomLayout"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-75dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:src="@drawable/person_placeholder"
-                />
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:text="@string/actor_default_birth"
+                android:textSize="16sp" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/tvPlaceOfBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:text="@string/actor_default_place_of_birth"
+                android:textSize="16sp" />
 
-    </ScrollView>
+            <TextView
+                android:id="@+id/tvPopularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="@string/actor_default_popularity"
+                android:textSize="16sp" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tvHomepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:text="@string/actor_default_homepage"/>
+
+            <TextView
+                android:id="@+id/tvBiography"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                android:text="@string/actor_default_text" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

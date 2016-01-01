@@ -2,8 +2,11 @@ package hr.fer.dm.dm_app3.Activites;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,13 +28,25 @@ public class ActorDetailActivity extends AppCompatActivity {
     private TextView popularity;
     private TextView biography;
     private TextView homepage;
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbar;
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actor_detail);
 
-        getSupportActionBar().setTitle("Will Smith");
+        //getSupportActionBar().setTitle("Will Smith");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        //TODO otkirti kako promjeniti boju menu-a i back button-a
 
         ivProfilePicture = (ImageView) findViewById(R.id.ivProfileImage);
         name = (TextView) findViewById(R.id.tvName);
@@ -58,7 +73,28 @@ public class ActorDetailActivity extends AppCompatActivity {
 
     public void loadActor(final Actor actor){
 
-        setTitle(actor.getName());
+        //setTitle(actor.getName());
+        collapsingToolbar.setTitle("");
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbar.setTitle(actor.getName());
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbar.setTitle("");
+                    isShow = false;
+                }
+            }
+        });
 
         name.setText(actor.getName());
         date.setText(Html.fromHtml("<b>Age </b>" + actor.getBirthDate() + " - " + actor.getDeathDate()));
@@ -97,6 +133,10 @@ public class ActorDetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == android.R.id.home){
+            onBackPressed();
             return true;
         }
 

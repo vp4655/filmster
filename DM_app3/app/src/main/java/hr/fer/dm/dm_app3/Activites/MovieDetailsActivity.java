@@ -26,7 +26,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         String title_S = getIntent().getExtras().getString("Title");
-        getSupportActionBar().setTitle(title_S);
+        //getSupportActionBar().setTitle(title_S);
         //title = (TextView)findViewById(R.id.tvTitle_md);
 //        title.setText(title_S);
 

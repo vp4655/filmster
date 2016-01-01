@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name=".Activites.ActorDetailActivity"
-            android:label="@string/title_activity_actor_detail" >
+            android:theme="@style/NoAction"
+            android:label="">
         </activity>
         <activity
             android:name=".Activites.CastActivity"
