@@ -16,6 +16,7 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -47,7 +48,24 @@ public class LoginActivity extends AppCompatActivity {
 
         //***********************FACEBOOK****************************//
 
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
+//        FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+        FacebookSdk.sdkInitialize(getApplicationContext(), new FacebookSdk.InitializeCallback() {
+            @Override
+            public void onInitialized() {
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                if(accessToken == null){
+                    //System.out.println("not logged in yet");
+                } else {
+                    //System.out.println("Logged in");
+                    String token = AccessToken.getCurrentAccessToken().getToken(); //Facebook doesn't allow devs to Log "session.getAccessToken" directly, because it may cause leaks
+
+                    // do something with token
+
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                }
+            }
+        });
 
         setContentView(R.layout.activity_login);
         info = (TextView)findViewById(R.id.info);
@@ -59,13 +77,15 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                info.setText(
-                        "\n\n\nUser ID: "
-                                + loginResult.getAccessToken().getUserId()
-                                + "\n" +
-                                "Auth Token: "
-                                + loginResult.getAccessToken().getToken()
-                );
+//                info.setText(
+//                        "\n\n\nUser ID: "
+//                                + loginResult.getAccessToken().getUserId()
+//                                + "\n" +
+//                                "Auth Token: "
+//                                + loginResult.getAccessToken().getToken()
+//                );
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
             }
 
             @Override
@@ -112,13 +132,23 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        // Logs 'install' and 'app activate' App Events.
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
 //        AppEventsLogger.activateApp(this);
-//    }
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if (token != null) {
+            //Toast.makeText(getActivity(), token, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        //moveTaskToBack(true) leaves your back stack as it is, just puts all Activities in background (same as if user pressed Home button).
+    }
 //
 //    @Override
 //    protected void onPause() {

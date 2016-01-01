@@ -2,6 +2,7 @@
     <string name="app_name">DM_app3</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="action_settings">About</string>
+    <string name="action_logout">Log out</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="actor_btn">Get Actor</string>
     <string name="title_activity_actor_detail">ActorDetailActivity</string>
