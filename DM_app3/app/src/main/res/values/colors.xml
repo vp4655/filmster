@@ -13,4 +13,5 @@
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
     <color name="gray_background_actor_detail">#EEEEEE</color>
+    <color name="cast_title_color">#707070</color>
 </resources>

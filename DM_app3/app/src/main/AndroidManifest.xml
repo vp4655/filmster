@@ -33,6 +33,7 @@
         </activity>
         <activity
             android:name=".Activites.CastActivity"
+            android:theme="@style/NoAction"
             android:label="@string/cast_string" >
         </activity>
     </application>

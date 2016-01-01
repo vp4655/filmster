@@ -3,19 +3,32 @@ package hr.fer.dm.dm_app3.Activites;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
 import hr.fer.dm.dm_app3.ListViewItems.ActorsMinifiedAdapter;
+import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
+import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.R;
 
 public class CastActivity extends AppCompatActivity {
+
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +82,10 @@ public class CastActivity extends AppCompatActivity {
         aActors.add(a5);
         aActors.add(a6);
 
-        ActorsMinifiedAdapter adapter = new ActorsMinifiedAdapter(this, aActors);
+        initToolbar();
+        initRecyclerView(aActors);
+
+        /*ActorsMinifiedAdapter adapter = new ActorsMinifiedAdapter(this, aActors);
         ListView listView = (ListView) findViewById(R.id.lvCast);
         listView.setAdapter(adapter);
 
@@ -82,7 +98,7 @@ public class CastActivity extends AppCompatActivity {
                 intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, actorMin.getId());
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
@@ -104,7 +120,88 @@ public class CastActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void initToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbarCast);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(getString(R.string.cast_string));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.cast_title_color));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initRecyclerView(List<ActorMinified> actors) {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewCast);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final CastAdapter recyclerAdapter = new CastAdapter(actors);
+        recyclerView.setAdapter(recyclerAdapter);
+
+        final GestureDetector mGestureDetector = new GestureDetector(CastActivity.this, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+
+
+                if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
+
+                    ActorMinified actorMinified = (ActorMinified)recyclerAdapter.getItem(recyclerView.getChildAdapterPosition(child) - 1);
+                    Intent intent = new Intent(CastActivity.this, ActorDetailActivity.class);
+                    intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, actorMinified.getId());
+                    startActivity(intent);
+
+                    return true;
+
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
+        recyclerView.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
+
+    }
+
+    private void hideViews() {
+        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showViews() {
+        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+    }
+
+
 }
