@@ -2,6 +2,7 @@ package hr.fer.dm.dm_app3.Activites;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.facebook.login.LoginManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -130,10 +133,15 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
+        {
             initiatePopupWindow();
         }
-
+        else if(id==R.id.action_logout)
+        {
+            LoginManager.getInstance().logOut();
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
