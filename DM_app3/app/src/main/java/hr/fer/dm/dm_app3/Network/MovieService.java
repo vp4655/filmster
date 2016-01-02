@@ -1,6 +1,8 @@
 package hr.fer.dm.dm_app3.Network;
 
 import hr.fer.dm.dm_app3.Models.genres.Genredx;
+import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
+import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
 import hr.fer.dm.dm_app3.Models.themoviedb.Moviedx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Sprite;
 import retrofit.Callback;
@@ -31,4 +33,8 @@ public interface MovieService {
 
     @GET("/3/genre/movie/list?api_key=b4af86d450ee7b94546e7fc869efeb9f")
     void getGenres(Callback<Genredx> callback);
+
+    @GET("/3/movie/{id}?api_key=b4af86d450ee7b94546e7fc869efeb9f")
+    void getMovie(@Path("id") int id, Callback<MovieDetail> callback);
+
 }

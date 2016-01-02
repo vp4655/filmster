@@ -81,7 +81,7 @@ public class Recommendation2Fragment extends BaseFragment{
                                     long id) {
                 Movie entry = (Movie) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-                intent.putExtra("Title", entry.getTitle());     // // TODO: 10.12.2015. title zamijeniti s ID
+                intent.putExtra("Id", entry.getId());     // // TODO: 10.12.2015. title zamijeniti s ID
                 startActivity(intent);
 //                String text = entry.getTitle() + " is pressed!:)";
 //                Toast.makeText(getActivity(),text,Toast.LENGTH_SHORT).show();

@@ -13,6 +13,7 @@
     <string name="actor_default_homepage">HOMEPAGE</string>
     <string name="actor_default_text">This is an excellent actor that acted in action and romance</string>
     <string name="cast_string">Full cast</string>
+    <string name="cast_title">Leading roles</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id">412399092299440</string>
