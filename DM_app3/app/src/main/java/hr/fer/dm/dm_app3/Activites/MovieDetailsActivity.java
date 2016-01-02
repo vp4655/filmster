@@ -1,23 +1,42 @@
 package hr.fer.dm.dm_app3.Activites;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
+import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
+import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
+import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MovieDetailsActivity extends AppCompatActivity {
-    @Bind(R.id.tvTitle_md) TextView title;
+    @Bind(R.id.tvOverview) TextView overviewTV;
     @Bind(R.id.castText) TextView castTV;
+    @Bind(R.id.toolbar_movie) Toolbar toolbar;
+    @Bind(R.id.collapsing_toolbar_movie) CollapsingToolbarLayout collapsingToolbar;
+    @Bind(R.id.appbar_movie) AppBarLayout appBarLayout;
+    @Bind(R.id.thumbnail_movie) ImageView thumbnailIV;
+    @Bind(R.id.tvMovieHomepage) TextView homepageTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +44,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
         ButterKnife.bind(this);
 
-        String title_S = getIntent().getExtras().getString("Title");
-        //getSupportActionBar().setTitle(title_S);
-        //title = (TextView)findViewById(R.id.tvTitle_md);
-//        title.setText(title_S);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.colorAccent));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorAccent));
 
-        //TextView castTV = (TextView) findViewById(R.id.castText);
         castTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +147,66 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         rl6.setOnClickListener(setActorDetailsListener(a6.getId()));
 
+        int id = (int)getIntent().getExtras().get("Id");
+        setMovie(id);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_actor_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setMovie(int id){
+
+        ApiManager.getService().getMovie(id, new Callback<MovieDetail>() {
+            @Override
+            public void success(final MovieDetail movie, Response response) {
+                final MovieDetail m = movie;
+                try {
+                    overviewTV.setText(Html.fromHtml("<b>Synopsis :</b> " + movie.getOverview()));
+                    Picasso.with(getApplicationContext()).load(movie.getImage()).fit().placeholder(R.drawable.large_movie_poster).into(thumbnailIV);
+                    collapsingToolbar.setTitle(m.getTitle());
+                    homepageTV.setText(Html.fromHtml("<b>Homepage :</b> " + movie.getHomepage()));
+                    homepageTV.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse(movie.getHomepage());
+                            Intent web = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(web);
+                        }
+                    });
+                } catch (Exception exc) {
+
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(MovieDetailsActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
