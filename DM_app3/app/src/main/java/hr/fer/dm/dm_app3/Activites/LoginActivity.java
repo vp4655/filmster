@@ -1,13 +1,16 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -27,7 +30,15 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Models.genres.Genre;
+import hr.fer.dm.dm_app3.Models.genres.Genredx;
+import hr.fer.dm.dm_app3.Models.login.LoginResponse;
+import hr.fer.dm.dm_app3.Network.ApiManager;
+import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
 import hr.fer.dm.dm_app3.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,63 +63,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //***********************FACEBOOK****************************//
-
-//        FacebookSdk.sdkInitialize(this.getApplicationContext());
-
         FacebookSdk.sdkInitialize(getApplicationContext(), new FacebookSdk.InitializeCallback() {
             @Override
             public void onInitialized() {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                if (accessToken == null) {
-                    //System.out.println("not logged in yet");
-                } else {
+                if (accessToken != null) {
                     //System.out.println("Logged in");
-                    String token = AccessToken.getCurrentAccessToken().getToken(); //Facebook doesn't allow devs to Log "session.getAccessToken" directly, because it may cause leaks
+//                    String token = AccessToken.getCurrentAccessToken().getToken(); //Facebook doesn't allow devs to Log "session.getAccessToken" directly, because it may cause leaks
+//
+//                    // do something with token
+//
+//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
-                    // do something with token
+                    loggedin();
 
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
             }
         });
 
         setContentView(R.layout.activity_login);
-
-
-        // za onaj plavi login button
-
-//        info = (TextView)findViewById(R.id.info);
-//        loginButton = (LoginButton)findViewById(R.id.login_button);
-//
-//        callbackManager = CallbackManager.Factory.create();
-
-//        List<String> permissionNeeds = Arrays.asList("user_photos", "email", "user_birthday", "public_profile");
-//        loginButton.setReadPermissions(permissionNeeds);
-//        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-////                info.setText(
-////                        "\n\n\nUser ID: "
-////                                + loginResult.getAccessToken().getUserId()
-////                                + "\n" +
-////                                "Auth Token: "
-////                                + loginResult.getAccessToken().getToken()
-////                );
-//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                finish();
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                info.setText("Login attempt canceled.");
-//            }
-//
-//            @Override
-//            public void onError(FacebookException exception) {
-//                info.setText("Login attempt failed.");
-//            }
-//        });
-        //***********************************************************//
 
         // handmade button
 
@@ -116,14 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         myloginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Login with facebook on clicking custom button
-                // izgleda da sam facebook sdk ima svoj loader
-//                pDialog = new ProgressDialog(LoginActivity.this);
-//                // Showing progress dialog before making http request
-//                pDialog.setMessage("Logging in...");
-//                pDialog.show();
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends"));
-                //hidePDialog();
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends", "email", "user_likes", "user_photos"));
             }
         });
 
@@ -132,9 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
+                loggedin();
             }
 
             @Override
@@ -152,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         //***********************************************************//
 
 
-        ButterKnife.bind(this);                         // u onCreate dodati ovo kako bi se bindanje obavilo
+        ButterKnife.bind(this);      // u onCreate dodati ovo kako bi se bindanje obavilo
 
         skipButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -163,9 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
         );
 
-
-        //actorButton = (Button) findViewById(R.id.actor_btn);
-        // linija gore sad ne treba jer butterknife to lijepo odmah binda
 
         actorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,12 +171,37 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    void loggedin()
+    {
+        final String token = AccessToken.getCurrentAccessToken().getToken(); //Facebook doesn't allow devs to Log "session.getAccessToken" directly, because it may cause leaks
+
+        ApiManagerMovie.getService().getFToken(token, new Callback<LoginResponse>() {
+            @Override
+            public void success(LoginResponse loginResponse, Response response) {
+                try {
+                    SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("token", token);
+                    editor.putString("name", loginResponse.getUserData().getUser().getFirstName());
+                    editor.commit();
 //
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//
-//        // Logs 'app deactivate' App Event.
-//        AppEventsLogger.deactivateApp(this);
-//    }
+//                    // get token
+//                    SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
+//                    String storedToken = sp.getString("token", "0");
+
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+
+                } catch (Exception exc) {
+
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(LoginActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
 }

@@ -1,8 +1,10 @@
 package hr.fer.dm.dm_app3.Activites;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -64,7 +66,11 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("What2watch");
+
+        SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
+        String name = sp.getString("name", "NN");
+
+        getSupportActionBar().setTitle("Hello " + name + "!");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
