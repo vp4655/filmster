@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
 
     // odmah na početku definiramo bindanje
-    @Bind(R.id.btnSkip) Button skipButton;
-    @Bind(R.id.actor_btn) Button actorButton;
+//    @Bind(R.id.btnSkip) Button skipButton;
+//    @Bind(R.id.actor_btn) Button actorButton;
 
 //    @Bind(R.id.login_button) LoginButton loginButton;
 //    @Bind(R.id.info) Button info;
@@ -80,7 +83,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         setContentView(R.layout.activity_login);
 
         // handmade button
@@ -118,24 +124,24 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);      // u onCreate dodati ovo kako bi se bindanje obavilo
 
-        skipButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    }
-                }
-        );
-
-
-        actorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ActorDetailActivity.class);
-                intent.putExtra(ACTOR_DETAIL_KEY, 0);
-                startActivity(intent);
-            }
-        });
+//        skipButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                    }
+//                }
+//        );
+//
+//
+//        actorButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity.this, ActorDetailActivity.class);
+//                intent.putExtra(ACTOR_DETAIL_KEY, 0);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
