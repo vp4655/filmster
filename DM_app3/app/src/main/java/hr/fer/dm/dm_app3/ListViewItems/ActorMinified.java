@@ -1,5 +1,7 @@
 package hr.fer.dm.dm_app3.ListViewItems;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,14 +11,18 @@ import java.util.ArrayList;
 
 import hr.fer.dm.dm_app3.Activites.LoginActivity;
 
-/**
- * Created by Valentino on 17.12.2015..
- */
 public class ActorMinified implements Serializable{
 
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("profile_path")
     private String profilePictureUrl;
+
+    @SerializedName("character")
     private String characterName;
     private static final long serialVersionUID = -8959832007991513854L;
 
@@ -80,8 +86,9 @@ public class ActorMinified implements Serializable{
     }
 
     public String getProfilePictureUrl(){
-        return this.profilePictureUrl;
+        return LoginActivity.IMAGE_URL + this.profilePictureUrl;
     }
+
     public void setProfilePictureUrl(String profilePictureUrl){
         this.profilePictureUrl = LoginActivity.IMAGE_URL + profilePictureUrl;
     }

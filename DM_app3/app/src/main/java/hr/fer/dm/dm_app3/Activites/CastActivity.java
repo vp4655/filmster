@@ -16,6 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,12 @@ import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
 import hr.fer.dm.dm_app3.ListViewItems.ActorsMinifiedAdapter;
 import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
 import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
+import hr.fer.dm.dm_app3.Models.actor.CastList;
+import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class CastActivity extends AppCompatActivity {
 
@@ -35,70 +41,24 @@ public class CastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast);
 
-        //6 rucno dodanih
+        int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
 
-        ArrayList<ActorMinified> aActors = new ArrayList<ActorMinified>();
-
-        ActorMinified a1 = new ActorMinified();
-        a1.setName("Mark Hamill");
-        a1.setCharacterName("Luke Skywalker");
-        a1.setProfilePictureUrl("/zUXHs0t0rhRNg7rD1pQm09KXAKP.jpg");
-        a1.setId(2);
-
-        ActorMinified a2 = new ActorMinified();
-        a2.setName("Harrison Ford");
-        a2.setCharacterName("Han Solo");
-        a2.setProfilePictureUrl("/7CcoVFTogQgex2kJkXKMe8qHZrC.jpg");
-        a2.setId(3);
-
-        ActorMinified a3 = new ActorMinified();
-        a3.setName("Carrie Fisher");
-        a3.setCharacterName("Princess Leia Organa");
-        a3.setProfilePictureUrl("/oVYiGe4GzgQkoJfdHg8qKqEoWJz.jpg");
-        a3.setId(4);
-
-        ActorMinified a4 = new ActorMinified();
-        a4.setName("Peter Cushing");
-        a4.setCharacterName("Grand Moff Tarkin");
-        a4.setProfilePictureUrl("/iFE9Xi5B0eZcNFqvCx78UUzmUfI.jpg");
-        a4.setId(5);
-
-        ActorMinified a5 = new ActorMinified();
-        a5.setName("Alec Guinness");
-        a5.setCharacterName("Ben (Obi-Wan) Kenobi");
-        a5.setProfilePictureUrl("/nv3ppxgUQJytFGXZNde4f9ZlshB.jpg");
-        a5.setId(12248);
-
-        ActorMinified a6 = new ActorMinified();
-        a6.setName("Anthony Daniels");
-        a6.setCharacterName("See Threepio (C-3PO)");
-        a6.setProfilePictureUrl("/cljvryjb3VwTsNR7fjQKjNPMaBB.jpg");
-        a6.setId(612);
-
-        aActors.add(a1);
-        aActors.add(a2);
-        aActors.add(a3);
-        aActors.add(a4);
-        aActors.add(a5);
-        aActors.add(a6);
-
-        initToolbar();
-        initRecyclerView(aActors);
-
-        /*ActorsMinifiedAdapter adapter = new ActorsMinifiedAdapter(this, aActors);
-        ListView listView = (ListView) findViewById(R.id.lvCast);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ApiManager.getService().getCast(ajDI, new Callback<CastList>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                ActorMinified actorMin = (ActorMinified) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(CastActivity.this, ActorDetailActivity.class);
-                intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, actorMin.getId());
-                startActivity(intent);
+            public void success(CastList castList, Response response) {
+
+                List<ActorMinified> aActors = castList.getCast();
+
+                initToolbar();
+                initRecyclerView(aActors);
+
             }
-        });*/
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(CastActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

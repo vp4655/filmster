@@ -13,12 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
-import hr.fer.dm.dm_app3.ListViewItems.Actor;
+import hr.fer.dm.dm_app3.Models.actor.ActorDetail;
+import hr.fer.dm.dm_app3.Network.ApiActorManager;
 import hr.fer.dm.dm_app3.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ActorDetailActivity extends AppCompatActivity {
     private ImageView ivProfilePicture;
@@ -37,7 +42,6 @@ public class ActorDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actor_detail);
 
-        //getSupportActionBar().setTitle("Will Smith");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,64 +61,74 @@ public class ActorDetailActivity extends AppCompatActivity {
         homepage = (TextView) findViewById(R.id.tvHomepage);
 
         int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
-        Actor actor = new Actor();
-        actor.setId(2888);
-        actor.setName("Will Smith" +  Integer.toString(ajDI));
-        actor.setBiography("Willard Christopher Will Smith, Jr. (born September 25, 1968) is an American actor, film producer and pop rapper. He has enjoyed success in music, television and film. In April 2007, Newsweek called him the most powerful actor on the planet. Smith has been nominated for four Golden Globe Awards, two Academy Awards, and has won multiple Grammy Awards. In the late 1980s, Smith achieved modest fame as a rapper under the name The Fresh Prince. In 1990, his popularity increased dramatically when he starred in the popular television series The Fresh Prince of Bel-Air. The show ran for nearly six years (1990–1996) on NBC and has been syndicated consistently on various networks since then. In the mid-1990s, Smith transitioned from television to film, and ultimately starred in numerous blockbuster films that received broad box office success. In fact, he is the only actor in history to have eight consecutive films gross over $100 million in the domestic box office as well as being the only actor to have eight consecutive films in which he starred open at the #1 spot in the domestic box office tally. Fourteen of the 19 fiction films he has acted in have accumulated worldwide gross earnings of over $100 million, and 4 of them took in over $500 million in global box office receipts. His most financially successful films have been Bad Boys, Bad Boys II, Independence Day, Men in Black, Men in Black II, I, Robot, The Pursuit of Happyness, I Am Legend, Hancock, Wild Wild West, Enemy of the State, Shark Tale, Hitch, and Seven Pounds. He also earned critical praise for his performances in Six Degrees of Separation, Ali, and The Pursuit of Happyness, receiving Best Actor Oscar nominations for the latter two. From Wikipedia, the free encyclopedia.");
-        actor.setHomepageUrl("http://www.willsmith.com/");
-        actor.setProfilePictureUrl("/2iYXDlCvLyVO49louRyDDXagZ0G.jpg");
-        actor.setPopularity(5.297515);
-        actor.setBirthDate("1968-09-25");
-        actor.setDeathDate("");
-        actor.setPlaceOfBirth("Philadelphia, Pennsylvania, USA");
 
-        loadActor(actor);
+        loadActor(ajDI);
     }
 
-    public void loadActor(final Actor actor){
+    public void loadActor(int id){
 
         //setTitle(actor.getName());
         collapsingToolbar.setTitle("");
 
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
+        ApiActorManager.getService().getActor(id, new Callback<ActorDetail>() {
+            @Override
+            public void success(ActorDetail actorDetail, Response response) {
+
+                final ActorDetail actor = actorDetail;
+
+                try{
+
+                    appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+                    appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                        boolean isShow = false;
+                        int scrollRange = -1;
+
+                        @Override
+                        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                            if (scrollRange == -1) {
+                                scrollRange = appBarLayout.getTotalScrollRange();
+                            }
+                            if (scrollRange + verticalOffset == 0) {
+                                collapsingToolbar.setTitle(actor.getName());
+                                isShow = true;
+                            } else if (isShow) {
+                                collapsingToolbar.setTitle("");
+                                isShow = false;
+                            }
+                        }
+                    });
+
+                    name.setText(actor.getName());
+                    date.setText(Html.fromHtml("<b>Age </b>" + actor.getBirthday() + " - " + actor.getDeathday()));
+                    placeOfBirth.setText(Html.fromHtml("<b>Place of birth :</b> " + actor.getPlace_of_birth()));
+                    popularity.setText(Html.fromHtml("<b>Popularity : " + Double.toString(actor.getPopularity())));
+                    biography.setText(Html.fromHtml("<b>Biography</b> : " + actor.getBiography()));
+                    homepage.setText(Html.fromHtml("<b>Homepage : </b>" + actor.getHomepage()));
+                    homepage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse(actor.getHomepage());
+                            Intent web = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(web);
+                        }
+                    });
+
+                    Picasso.with(getApplicationContext()).load(actor.getImage()).transform(new CircleTransformation()).placeholder(R.drawable.person_placeholder).into(ivProfilePicture);
+
+                    ivProfilePicture.setOnClickListener(imageAsLinkListener(actor.getHomepage(), actor.getName()));
+
+                }
+                catch (Exception e){
+
+                }
+
+            }
 
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(actor.getName());
-                    isShow = true;
-                } else if (isShow) {
-                    collapsingToolbar.setTitle("");
-                    isShow = false;
-                }
+            public void failure(RetrofitError error) {
+                Toast.makeText(ActorDetailActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
             }
         });
-
-        name.setText(actor.getName());
-        date.setText(Html.fromHtml("<b>Age </b>" + actor.getBirthDate() + " - " + actor.getDeathDate()));
-        placeOfBirth.setText(Html.fromHtml("<b>Place of birth :</b> " + actor.getPlaceOfBirth()));
-        popularity.setText(Html.fromHtml("<b>Popularity : " + Double.toString(actor.getPopularity())));
-        biography.setText(Html.fromHtml("<b>Biography</b> : " + actor.getBiography()));
-        homepage.setText(Html.fromHtml("<b>Homepage : </b>" + actor.getHomepageUrl()));
-        homepage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse(actor.getHomepageUrl());
-                Intent web = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(web);
-            }
-        });
-
-        Picasso.with(this).load(actor.getProfilePictureUrl()).transform(new CircleTransformation()).placeholder(R.drawable.person_placeholder).into(ivProfilePicture);
-
-        ivProfilePicture.setOnClickListener(imageAsLinkListener(actor.getHomepageUrl(), actor.getName()));
-
     }
 
     @Override

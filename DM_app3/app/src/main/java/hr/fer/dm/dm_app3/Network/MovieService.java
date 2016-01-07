@@ -1,5 +1,6 @@
 package hr.fer.dm.dm_app3.Network;
 
+import hr.fer.dm.dm_app3.Models.actor.CastList;
 import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
@@ -12,9 +13,6 @@ import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
-/**
- * Created by Kajkara on 18.12.2015..
- */
 public interface MovieService {
 
     @GET("/json/movies.json")
@@ -37,5 +35,8 @@ public interface MovieService {
 
     @GET("/3/movie/{id}?api_key=b4af86d450ee7b94546e7fc869efeb9f")
     void getMovie(@Path("id") int id, Callback<MovieDetail> callback);
+
+    @GET("/3/movie/{id}/casts?api_key=b4af86d450ee7b94546e7fc869efeb9f")
+    void getCast(@Path("id") int id, Callback<CastList> callback);
 
 }
