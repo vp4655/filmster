@@ -1,4 +1,4 @@
-package hr.fer.dm.dm_app3.ListViewItems;
+package hr.fer.dm.dm_app3.Models.actor;
 
 import com.google.gson.annotations.SerializedName;
 

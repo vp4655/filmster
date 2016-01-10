@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -64,18 +65,14 @@ public class HomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
-        frameLayout = (FrameLayout) findViewById( R.id.mainmenu);
-        frameLayout.getForeground().setAlpha(0);
+//        frameLayout = (FrameLayout) findViewById( R.id.mainmenu);
+//        frameLayout.getForeground().setAlpha(0);
 
-
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.red_my));
-
+        Toolbar cl = (Toolbar) findViewById(R.id.toolbar_movie_list);
+        setSupportActionBar(cl);
         SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
         String name = sp.getString("name", "NN");
+//        cl.setTitle("Hello " + name + "!");
 
         getSupportActionBar().setTitle("Hello " + name + "!");
 

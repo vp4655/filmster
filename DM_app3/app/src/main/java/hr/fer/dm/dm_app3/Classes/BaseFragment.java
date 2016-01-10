@@ -8,6 +8,7 @@ import java.util.List;
 
 import hr.fer.dm.dm_app3.ListViewItems.Movie;
 
+
 /**
  * Created by Kajkara on 10.12.2015..
  */
