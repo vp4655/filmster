@@ -13,16 +13,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
-import hr.fer.dm.dm_app3.ListViewItems.ActorsMinifiedAdapter;
+import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
 import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.actor.CastList;

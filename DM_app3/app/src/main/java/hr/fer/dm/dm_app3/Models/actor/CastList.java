@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
-
 public class CastList {
 
     @SerializedName("id")

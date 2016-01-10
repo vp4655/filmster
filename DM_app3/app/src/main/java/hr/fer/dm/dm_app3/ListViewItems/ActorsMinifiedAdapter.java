@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.Util.AppController;
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.RecyclerViewHolders.ActorMinifiedViewHolder;
 import hr.fer.dm.dm_app3.RecyclerViewHolders.RecyclerHeaderViewHolder;

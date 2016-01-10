@@ -2,7 +2,11 @@ package hr.fer.dm.dm_app3.Classes;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +17,6 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +24,7 @@ import hr.fer.dm.dm_app3.Activites.MovieDetailsActivity;
 import hr.fer.dm.dm_app3.Models.genres.Genre;
 import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
+import hr.fer.dm.dm_app3.Models.themoviedb.MovieAdapterRV;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieAdapter_themovie;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.Models.themoviedb.Moviedx;
@@ -32,18 +36,23 @@ import retrofit.client.Response;
 /**
  * Created by Kajkara on 9.12.2015..
  */
-public class Recommendation2Fragment extends BaseFragment{
+public class Recommendation2Fragment extends BaseFragment
+{
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    @Bind(R.id.lvMovies_Recomm2) ListView listView;
-    private MovieAdapter_themovie adapter;
+    //private MovieAdapter_themovie adapter;
+    private MovieAdapterRV recyclerAdapter;
 
     HashMap<Integer, String> genres = new HashMap<Integer, String>();
 
+    private List<hr.fer.dm.dm_app3.Models.themoviedb.Movie> movieList;
+
+    private RecyclerView recyclerView;
+    private  boolean getting = false;
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -57,65 +66,66 @@ public class Recommendation2Fragment extends BaseFragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home_recomm2, container, false);
-        ButterKnife.bind(this, rootView);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        if(movieList.isEmpty())
-        {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//            if(movieList.isEmpty()){
 //            pDialog = new ProgressDialog(getActivity());
 //            // Showing progress dialog before making http request
 //            pDialog.setMessage("Loading...");
 //            pDialog.show();
 
-            getGenres();
+
 //            getMovies();  // u getGenres() jer treba na success toga
 
 //            hidePDialog();
-        }
+        //}
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Movie entry = (Movie) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-                intent.putExtra("Id", entry.getId());     // // TODO: 10.12.2015. title zamijeniti s ID
-                startActivity(intent);
-//                String text = entry.getTitle() + " is pressed!:)";
-//                Toast.makeText(getActivity(),text,Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_home_recomm2, container, false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    int visible = listView.getLastVisiblePosition();
-                    int count = listView.getCount();
-                    int result = listView.getCount() - 1 - threshold;
-                    if ((listView.getLastVisiblePosition() >= listView.getCount() - 1 - threshold) && totalPages > currentPage) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!getting) {
+                    LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
+                    int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+                    int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
+
+                    int count = movieList.size();
+                    if ((firstVisiblePosition >= count - 1 - threshold) && totalPages > currentPage) {
                         currentPage++;
                         getMoviesLazy(currentPage);
                     }
                 }
+
             }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                //nikad ni ne ude??
-                //                boolean loadMore = /* maybe add a padding */
-                //                        firstVisibleItem + visibleItemCount >= totalItemCount;
-                //
-                //        if(loadMore) {
-                ////            adapter.getCount() += visibleItemCount; // or any other amount
-                //            adapter.notifyDataSetChanged();
-                //        }
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+
+//                    int visible = recyclerView. ();
+//                    int count = recyclerView.getCount();
+//                    int result = recyclerView.getCount() - 1 - threshold;
+//                    if ((recyclerView.getLastVisiblePosition() >= recyclerView.getCount() - 1 - threshold) && totalPages > currentPage) {
+//                        currentPage++;
+//                        getMoviesLazy(currentPage);
+//                    }
             }
+
         });
 
-        return rootView;
+        getGenres();
+        return recyclerView;
     }
 
 
@@ -132,8 +142,14 @@ public class Recommendation2Fragment extends BaseFragment{
                 try {
                     hidePDialog();
                     totalPages = m.getTotalPages();
-                    adapter = new MovieAdapter_themovie(getActivity(), m.getMovieList(genres));
-                    listView.setAdapter(adapter);
+
+//                    adapter = new MovieAdapter_themovie(getActivity(), m.getMovieList(genres));
+//                    listView.setAdapter(adapter);
+
+
+                    movieList = m.getMovieList(genres);
+                    recyclerAdapter = new MovieAdapterRV(movieList);
+                    recyclerView.setAdapter(recyclerAdapter);
                 } catch (Exception exc) {
 
                 }
@@ -154,22 +170,22 @@ public class Recommendation2Fragment extends BaseFragment{
 //        // Showing progress dialog before making http request
 //        pDialog.setMessage("Loading...");
 //        pDialog.show();
-
+        getting=true;
         ApiManager.getService().getMovies(currentPage, new Callback<Moviedx>() {
             @Override
             public void success(Moviedx m, Response response) {
-                try
-                {
+                try {
 //                    hidePDialog();
-                    adapter.MovieAdapter_addMovies(m.getMovieList(genres));
+                    recyclerAdapter.addMovies(m.getMovieList(genres));
 //                    listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
-                catch (Exception exc)
-                {
+                    recyclerAdapter.notifyDataSetChanged();
+                    getting=false;
 
+                } catch (Exception exc) {
+                    int a = 0;
                 }
             }
+
             @Override
             public void failure(RetrofitError error) {
 //                hidePDialog();
@@ -185,7 +201,7 @@ public class Recommendation2Fragment extends BaseFragment{
             public void success(Genredx genredx, Response response) {
                 try {
                     List<Genre> genreList = genredx.getGenreList();
-                    for (Genre genre: genreList) {
+                    for (Genre genre : genreList) {
                         genres.put(genre.getId(), genre.getName());
                     }
                     getMovies();
@@ -200,5 +216,12 @@ public class Recommendation2Fragment extends BaseFragment{
             }
         });
     }
+
+    public void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+
+
+    }
+
 }
 

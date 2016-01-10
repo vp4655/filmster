@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
 
     // odmah na početku definiramo bindanje
-//    @Bind(R.id.btnSkip) Button skipButton;
+    @Bind(R.id.btnSkip) Button skipButton;
 //    @Bind(R.id.actor_btn) Button actorButton;
 
 //    @Bind(R.id.login_button) LoginButton loginButton;
@@ -124,14 +124,14 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);      // u onCreate dodati ovo kako bi se bindanje obavilo
 
-//        skipButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                    }
-//                }
-//        );
+        skipButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    }
+                }
+        );
 //
 //
 //        actorButton.setOnClickListener(new View.OnClickListener() {

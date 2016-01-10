@@ -22,10 +22,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import hr.fer.dm.dm_app3.ListViewItems.ActorMinified;
-import hr.fer.dm.dm_app3.Models.actor.ActorDetail;
+import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.Models.actor.CastList;
-import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
 import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.R;
