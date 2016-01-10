@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle" >
+    android:shape="rectangle">
+
+    <!--<gradient-->
+        <!--android:angle="270"-->
+        <!--android:endColor="@color/gold"-->
+        <!--android:startColor="@color/gold70" />-->
+
+    <!--<gradient-->
+    <!--android:angle="270"-->
+    <!--android:endColor="@color/gold"-->
+    <!--android:startColor="@color/gold" />-->
 
     <gradient
         android:angle="270"
-        android:endColor="@color/list_row_hover_end_color"
-        android:startColor="@color/list_row_hover_start_color" />
+        android:endColor="@color/lightblue"
+        android:startColor="@color/lightblue" />
 
 </shape>

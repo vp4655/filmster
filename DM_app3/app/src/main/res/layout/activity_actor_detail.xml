@@ -22,7 +22,8 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp">
+            app:expandedTitleMarginEnd="64dp"
+            android:backgroundTint="@color/dark">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -105,7 +106,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvDate"
@@ -114,7 +115,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 android:text="@string/actor_default_birth"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/dark"/>
 
             <TextView
                 android:id="@+id/tvPlaceOfBirth"
@@ -123,7 +125,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 android:text="@string/actor_default_place_of_birth"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/dark"/>
 
             <TextView
                 android:id="@+id/tvPopularity"
@@ -132,7 +135,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:text="@string/actor_default_popularity"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/dark"/>
 
             <TextView
                 android:id="@+id/tvHomepage"
@@ -141,7 +145,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 android:textSize="16sp"
-                android:text="@string/actor_default_homepage"/>
+                android:text="@string/actor_default_homepage"
+                android:textColor="@color/dark"/>
 
             <TextView
                 android:id="@+id/tvBiography"
@@ -149,7 +154,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textSize="16sp"
-                android:text="@string/actor_default_text" />
+                android:text="@string/actor_default_text"
+                android:textColor="@color/dark"/>
 
         </LinearLayout>
 
