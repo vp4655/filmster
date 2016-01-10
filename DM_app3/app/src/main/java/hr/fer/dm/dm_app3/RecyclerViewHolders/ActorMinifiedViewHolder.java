@@ -30,8 +30,8 @@ public class ActorMinifiedViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setContent(View parent, String name, String character, String url) {
-        mTitleView.setText(name);
-        mCharcaterTextView.setText(character);
+        mTitleView.setText(character);
+        mCharcaterTextView.setText(name);
         Picasso.with(parent.getContext()).load(url).placeholder(R.drawable.person_placeholder).into(mThumbnailImageView);
     }
 

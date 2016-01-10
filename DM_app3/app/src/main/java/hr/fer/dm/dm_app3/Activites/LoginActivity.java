@@ -59,8 +59,9 @@ public class LoginActivity extends AppCompatActivity {
 //    @Bind(R.id.login_button) LoginButton loginButton;
 //    @Bind(R.id.info) Button info;
 
-    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w500";
+    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w300";
     public static final String ACTOR_DETAIL_KEY = "actor";
+    public static final String IMDB_MOVIE_LINK = "http://www.imdb.com/title/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

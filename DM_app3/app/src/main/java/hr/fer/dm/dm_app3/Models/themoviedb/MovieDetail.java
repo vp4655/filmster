@@ -46,9 +46,16 @@ public class MovieDetail implements Serializable {
     @SerializedName("vote_average")
     private Float vote_average;
 
+    @SerializedName("imdb_id")
+    private String imdb_id;
+
 
     public String getTitle() {
         return title;
+    }
+
+    public String getImdb_id(){
+        return imdb_id;
     }
 
     public Boolean getAdult()

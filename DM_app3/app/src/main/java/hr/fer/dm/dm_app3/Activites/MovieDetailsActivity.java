@@ -11,11 +11,13 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,7 +36,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MovieDetailsActivity extends AppCompatActivity {
-    @Bind(R.id.tvOverview) TextView overviewTV;
+    @Bind(R.id.tvOverview) ExpandableTextView overviewTV;
     @Bind(R.id.castText) TextView castTV;
     @Bind(R.id.toolbar_movie) Toolbar toolbar;
     @Bind(R.id.collapsing_toolbar_movie) CollapsingToolbarLayout collapsingToolbar;
@@ -53,6 +55,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Bind(R.id.fifthName) TextView fifthTV;
     @Bind(R.id.sixthImage) ImageView sixthIV;
     @Bind(R.id.sixthName) TextView sixthTV;
+    @Bind(R.id.imdbLink) Button imdbButton;
+    @Bind(R.id.homepageLink) Button homepageButton;
 
 
     @Override
@@ -115,7 +119,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             public void success(final MovieDetail movie, Response response) {
                 final MovieDetail m = movie;
                 try {
-                    overviewTV.setText(Html.fromHtml("<b>Synopsis :</b> " + movie.getOverview()));
+                    overviewTV.setText(movie.getOverview());
                     Picasso.with(getApplicationContext()).load(movie.getImage()).fit().placeholder(R.drawable.large_movie_poster).into(thumbnailIV);
                     collapsingToolbar.setTitle(m.getTitle());
                     homepageTV.setText(Html.fromHtml("<b>Homepage :</b> " + movie.getHomepage()));
@@ -125,6 +129,28 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             Uri uri = Uri.parse(movie.getHomepage());
                             Intent web = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(web);
+                        }
+                    });
+
+                    imdbButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Uri imdbUri = Uri.parse(LoginActivity.IMDB_MOVIE_LINK + movie.getImdb_id());
+                            Intent imdb = new Intent(Intent.ACTION_VIEW, imdbUri);
+                            startActivity(imdb);
+
+                        }
+                    });
+
+                    homepageButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Uri imdbUri = Uri.parse(movie.getHomepage());
+                            Intent imdb = new Intent(Intent.ACTION_VIEW, imdbUri);
+                            startActivity(imdb);
+
                         }
                     });
 

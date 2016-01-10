@@ -31,6 +31,9 @@ public class Movie implements Serializable {
     @SerializedName("id")
     private int id;
 
+    @SerializedName("imdb_id")
+    private String imdb_id;
+
     @SerializedName("original_title")
     private String original_title;
 
@@ -103,6 +106,10 @@ public class Movie implements Serializable {
     public Float getPopularity()
     {
         return popularity;
+    }
+
+    public String getImdb_id(){
+        return imdb_id;
     }
 
     public int getVote_count()

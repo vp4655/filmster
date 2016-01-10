@@ -17,5 +17,6 @@
     <color name="cast_title_color">#707070</color>
     <color name="translucent_scrim_bottom">#48000000</color>
     <color name="translucent_scrim_bottom_center">#16000000</color>
+    <color name="imdb_color">#EEC949</color>
 
 </resources>
