@@ -77,7 +77,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MovieDetailsActivity.this, CastActivity.class);
                 intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, id);
-                    startActivity(intent);
+                startActivity(intent);
 
             }
         });

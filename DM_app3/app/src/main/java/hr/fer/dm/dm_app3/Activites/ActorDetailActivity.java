@@ -1,6 +1,7 @@
 package hr.fer.dm.dm_app3.Activites;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
@@ -31,11 +33,13 @@ public class ActorDetailActivity extends AppCompatActivity {
     private TextView date;
     private TextView placeOfBirth;
     private TextView popularity;
-    private TextView biography;
-    private TextView homepage;
+    private ExpandableTextView etvBiography;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
+    private ImageView homeIcon;
+    private ImageView dateIcon;
+    private TextView tvRoles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +61,28 @@ public class ActorDetailActivity extends AppCompatActivity {
         date = (TextView) findViewById(R.id.tvDate);
         placeOfBirth = (TextView) findViewById(R.id.tvPlaceOfBirth);
         popularity = (TextView) findViewById(R.id.tvPopularity);
-        biography = (TextView) findViewById(R.id.tvBiography);
-        homepage = (TextView) findViewById(R.id.tvHomepage);
+        etvBiography = (ExpandableTextView) findViewById(R.id.tvBiography);
 
-        int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
+        homeIcon = (ImageView) findViewById(R.id.homeIcon);
+        dateIcon = (ImageView) findViewById(R.id.dateIcon);
+        tvRoles = (TextView) findViewById(R.id.roles_text);
+
+        homeIcon.setColorFilter(Color.parseColor("#757575"));
+        dateIcon.setColorFilter(Color.parseColor("#757575"));
+
+        final int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
+
+        tvRoles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ActorDetailActivity.this, RolesActivity.class);
+                intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, ajDI);
+                intent.putExtra("ActorName", name.getText());
+                startActivity(intent);
+
+            }
+        });
 
         loadActor(ajDI);
     }
@@ -99,19 +121,10 @@ public class ActorDetailActivity extends AppCompatActivity {
                     });
 
                     name.setText(actor.getName());
-                    date.setText(Html.fromHtml("<b>Age </b>" + actor.getBirthday() + " - " + actor.getDeathday()));
-                    placeOfBirth.setText(Html.fromHtml("<b>Place of birth :</b> " + actor.getPlace_of_birth()));
-                    popularity.setText(Html.fromHtml("<b>Popularity : " + Double.toString(actor.getPopularity())));
-                    biography.setText(Html.fromHtml("<b>Biography</b> : " + actor.getBiography()));
-                    homepage.setText(Html.fromHtml("<b>Homepage : </b>" + actor.getHomepage()));
-                    homepage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Uri uri = Uri.parse(actor.getHomepage());
-                            Intent web = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(web);
-                        }
-                    });
+                    date.setText(actor.getBirthday() + " - " + actor.getDeathday());
+                    placeOfBirth.setText(actor.getPlace_of_birth());
+                    popularity.setText(Integer.toString(Math.round(actor.getPopularity())));
+                    etvBiography.setText(Html.fromHtml("<b>Biography</b> : " + actor.getBiography()));
 
                     Picasso.with(getApplicationContext()).load(actor.getImage()).transform(new CircleTransformation()).placeholder(R.drawable.person_placeholder).into(ivProfilePicture);
 

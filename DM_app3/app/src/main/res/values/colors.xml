@@ -18,5 +18,6 @@
     <color name="translucent_scrim_bottom">#48000000</color>
     <color name="translucent_scrim_bottom_center">#16000000</color>
     <color name="imdb_color">#EEC949</color>
+    <color name="actro_detail_gray">#757575</color>
 
 </resources>
