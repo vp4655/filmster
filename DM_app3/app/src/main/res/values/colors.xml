@@ -5,6 +5,14 @@
     <color name="colorAccent">#ffffff</color>
     <color name="red_my">#C90000</color>
 
+    <color name="gold">#E7AD31</color>
+    <color name="gold70">#70E7AD31</color>
+    <color name="dark">#090101</color>
+    <color name="darkblue">#031C30</color>
+    <color name="blue">#3A9CEA</color>
+    <color name="lightblue">#A8DAEA</color>
+    <color name="white">#ffffff</color>
+
 
     <color name="genre">#666666</color>
     <color name="year">#888888</color>
