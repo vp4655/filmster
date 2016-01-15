@@ -91,7 +91,8 @@ public class MovieAdapterRV extends RecyclerView.Adapter<RecyclerItemViewHolder>
 
     public void addMovies(List<Movie> movieItems) {
         this.movieItems.addAll(movieItems);
-        notifyItemInserted(getMovies().size()-1);
+        //notifyItemInserted(getMovies().size()-1);
+        notifyDataSetChanged();
 
     }
 

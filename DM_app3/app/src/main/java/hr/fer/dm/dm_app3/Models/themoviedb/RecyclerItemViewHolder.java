@@ -1,6 +1,7 @@
 package hr.fer.dm.dm_app3.Models.themoviedb;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -28,19 +29,23 @@ import hr.fer.dm.dm_app3.Util.AppController;
 public class RecyclerItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView title;
-    private TextView rating;
+    private TextView ratingImdb;
+    private TextView ratingMeta;
+    private TextView ratingRTomato;
     private TextView genre;
     private TextView year;
-    private NetworkImageView thumbNail;
+    private ImageView thumbNail;
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public RecyclerItemViewHolder(final View parent) {
         super(parent);
         title = (TextView) parent.findViewById(R.id.title);
-        rating = (TextView) parent.findViewById(R.id.rating);
+        ratingImdb = (TextView) parent.findViewById(R.id.tvImdb);
+        ratingMeta = (TextView) parent.findViewById(R.id.tvMetaCritic);
+        ratingRTomato = (TextView) parent.findViewById(R.id.tvRottenTomato);
         genre = (TextView) parent.findViewById(R.id.genre);
         year = (TextView) parent.findViewById(R.id.releaseYear);
-        thumbNail = (NetworkImageView) parent.findViewById(R.id.thumbnail);
+        thumbNail = (ImageView) parent.findViewById(R.id.thumbnail);
         parent.setOnClickListener(this);
     }
 
@@ -59,13 +64,15 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder implements V
             imageLoader = AppController.getInstance().getImageLoader();
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getImage(), imageLoader);
+        Picasso.with(parent.getContext()).load(m.getImage()).placeholder(R.drawable.small_movie_poster).into(thumbNail);
 
         // title
         title.setText(m.getTitle());
 
         // rating
-        rating.setText("Rating: " + String.valueOf(m.getPopularity()));
+        ratingImdb.setText(m.getPopularity());
+        ratingRTomato.setText(m.getPopularity());
+        ratingMeta.setText(m.getPopularity());
 
         // genre
         String genreStr = "";

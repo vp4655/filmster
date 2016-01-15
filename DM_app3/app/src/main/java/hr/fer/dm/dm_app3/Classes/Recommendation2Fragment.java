@@ -39,21 +39,8 @@ import retrofit.client.Response;
  */
 public class Recommendation2Fragment extends BaseFragment
 {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
-    //private MovieAdapter_themovie adapter;
-    private MovieAdapterRV recyclerAdapter;
 
-    HashMap<Integer, String> genres = new HashMap<Integer, String>();
-
-    private List<Movie> movieList;
-
-    private RecyclerView recyclerView;
-    private  boolean getting = false;
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -69,159 +56,87 @@ public class Recommendation2Fragment extends BaseFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//            if(movieList.isEmpty()){
-//            pDialog = new ProgressDialog(getActivity());
-//            // Showing progress dialog before making http request
-//            pDialog.setMessage("Loading...");
-//            pDialog.show();
-
-
-//            getMovies();  // u getGenres() jer treba na success toga
-
-//            hidePDialog();
-        //}
-
         movieList = new ArrayList<Movie>();
 
-                recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_home_recomm2, container, false);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_home_recomm2, container, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!getting) {
-                    LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
-                    int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-                    int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
-
-                    int count = movieList.size();
-                    if ((firstVisiblePosition >= count - 1 - threshold) && totalPages > currentPage) {
-                        currentPage++;
-                        getMoviesLazy(currentPage);
-                    }
-                }
-
-            }
-
-
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-
-//                    int visible = recyclerView. ();
-//                    int count = recyclerView.getCount();
-//                    int result = recyclerView.getCount() - 1 - threshold;
-//                    if ((recyclerView.getLastVisiblePosition() >= recyclerView.getCount() - 1 - threshold) && totalPages > currentPage) {
-//                        currentPage++;
-//                        getMoviesLazy(currentPage);
-//                    }
-            }
-
-        });
+        recyclerView.addOnScrollListener(rvScrollListener);
 
         getGenres();
+
         return recyclerView;
     }
 
-
     @Override
-    public void getMovies() {
-        pDialog = new ProgressDialog(getActivity());
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-        pDialog.show();
-
-        ApiManager.getService().getMovies(new Callback<Moviedx>() {
-            @Override
-            public void success(Moviedx m, Response response) {
-                try {
-                    hidePDialog();
-                    totalPages = m.getTotalPages();
-
-//                    adapter = new MovieAdapter_themovie(getActivity(), m.getMovieList(genres));
-//                    listView.setAdapter(adapter);
-
-
-                    movieList = m.getMovieList(genres);
-                    recyclerAdapter = new MovieAdapterRV(movieList);
-                    recyclerView.setAdapter(recyclerAdapter);
-                } catch (Exception exc) {
-
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                hidePDialog();
-                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
-            }
-        });
+    protected void getService() {
+        ApiManager.getService().getMovies(callback);
     }
 
     @Override
-    public void getMoviesLazy(int page) {
-//        ne treba loader kad loada unaprijed
+    protected void getServiceLazy(int page) {
+        ApiManager.getService().getMovies(currentPage, callbackLazy);
+    }
+
+//    @Override
+//    public void getMovies() {
 //        pDialog = new ProgressDialog(getActivity());
 //        // Showing progress dialog before making http request
 //        pDialog.setMessage("Loading...");
 //        pDialog.show();
-        getting=true;
-        ApiManager.getService().getMovies(currentPage, new Callback<Moviedx>() {
-            @Override
-            public void success(Moviedx m, Response response) {
-                try {
+//
+//        ApiManager.getService().getMovies(new Callback<Moviedx>() {
+//            @Override
+//            public void success(Moviedx m, Response response) {
+//                try {
 //                    hidePDialog();
-                    List<Movie> list = m.getMovieList(genres);
-                    recyclerAdapter.addMovies(list);
-
-                    getting=false;
-
-                } catch (Exception exc) {
-                    int a = 0;
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
+//                    totalPages = m.getTotalPages();
+//                    movieList = m.getMovieList(genres);
+//                    recyclerAdapter = new MovieAdapterRV(movieList);
+//                    recyclerView.setAdapter(recyclerAdapter);
+//                } catch (Exception exc) {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
 //                hidePDialog();
-                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+//                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
-    public void getGenres() {
+//    @Override
+//    public void getMoviesLazy(int page) {
+//        getting=true;
+//        ApiManager.getService().getMovies(currentPage, new Callback<Moviedx>() {
+//            @Override
+//            public void success(Moviedx m, Response response) {
+//                try {
+////                    hidePDialog();
+//                    List<Movie> list = m.getMovieList(genres);
+//                    recyclerAdapter.addMovies(list);
+//
+//                    getting=false;
+//
+//                } catch (Exception exc) {
+//                    int a = 0;
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+////                hidePDialog();
+//                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
-        ApiManager.getService().getGenres(new Callback<Genredx>() {
-            @Override
-            public void success(Genredx genredx, Response response) {
-                try {
-                    List<Genre> genreList = genredx.getGenreList();
-                    for (Genre genre : genreList) {
-                        genres.put(genre.getId(), genre.getName());
-                    }
-                    getMovies();
-                } catch (Exception exc) {
 
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-
-
-    }
 
 }
 

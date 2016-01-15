@@ -39,7 +39,7 @@ public class MovieAdapter_imdb extends BaseAdapter {
 
     // TODO: bindanje ne radi u adapteru treba setirati negdje
     @Bind(R.id.title) TextView title;
-    @Bind(R.id.rating) TextView rating;
+    //s@Bind(R.id.rating) TextView rating;
     @Bind(R.id.genre) TextView genre;
     @Bind(R.id.releaseYear) TextView year;
 
@@ -76,21 +76,21 @@ public class MovieAdapter_imdb extends BaseAdapter {
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
-        NetworkImageView thumbNail = (NetworkImageView) convertView
-                .findViewById(R.id.thumbnail);
+//        NetworkImageView thumbNail = (NetworkImageView) convertView
+//                .findViewById(R.id.thumbnail);
 
 
         // getting movie data for the row
         Movie m = movieItems.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
+        //thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
 
         // title
         title.setText(m.getTitle());
 
         // rating
-        rating.setText("Rating: " + String.valueOf(m.getRating()));
+        //rating.setText("Rating: " + String.valueOf(m.getRating()));
 
         // genre
         String genreStr = "";

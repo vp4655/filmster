@@ -30,7 +30,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.Util.AppController;
 
-//TODO: rename to list
+//TODO: rename to list ->>> jel ovo koristimo uopće??
 public class MovieArrayAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
@@ -71,7 +71,7 @@ public class MovieArrayAdapter extends BaseAdapter {
         NetworkImageView thumbNail = (NetworkImageView) convertView
                 .findViewById(R.id.thumbnail);
         TextView title = (TextView) convertView.findViewById(R.id.title);
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
+        //TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
@@ -85,7 +85,7 @@ public class MovieArrayAdapter extends BaseAdapter {
         title.setText(m.getTitle());
 
         // rating
-        rating.setText("Rating: " + String.valueOf(m.getRating()));
+        //rating.setText("Rating: " + String.valueOf(m.getRating()));
 
         // genre
         String genreStr = "";
