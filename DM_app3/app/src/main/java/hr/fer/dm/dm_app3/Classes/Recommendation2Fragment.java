@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class Recommendation2Fragment extends BaseFragment
 
     HashMap<Integer, String> genres = new HashMap<Integer, String>();
 
-    private List<hr.fer.dm.dm_app3.Models.themoviedb.Movie> movieList;
+    private List<Movie> movieList;
 
     private RecyclerView recyclerView;
     private  boolean getting = false;
@@ -85,10 +86,9 @@ public class Recommendation2Fragment extends BaseFragment
 //            hidePDialog();
         //}
 
+        movieList = new ArrayList<Movie>();
 
-
-
-        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_home_recomm2, container, false);
+                recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_home_recomm2, container, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -176,9 +176,9 @@ public class Recommendation2Fragment extends BaseFragment
             public void success(Moviedx m, Response response) {
                 try {
 //                    hidePDialog();
-                    recyclerAdapter.addMovies(m.getMovieList(genres));
-//                    listView.setAdapter(adapter);
-                    recyclerAdapter.notifyDataSetChanged();
+                    List<Movie> list = m.getMovieList(genres);
+                    recyclerAdapter.addMovies(list);
+
                     getting=false;
 
                 } catch (Exception exc) {

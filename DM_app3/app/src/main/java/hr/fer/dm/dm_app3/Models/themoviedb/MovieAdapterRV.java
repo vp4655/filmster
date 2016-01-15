@@ -40,7 +40,8 @@ public class MovieAdapterRV extends RecyclerView.Adapter<RecyclerItemViewHolder>
 //        throw new RuntimeException("There is no type that matches the type " + viewType + " + make sure your using types correctly");
 
         mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_listitem, parent, false);
-        return RecyclerItemViewHolder.newInstance(mView);
+        //return RecyclerItemViewHolder.newInstance(mView);
+        return new RecyclerItemViewHolder(mView);
     }
 
     @Override
@@ -50,7 +51,9 @@ public class MovieAdapterRV extends RecyclerView.Adapter<RecyclerItemViewHolder>
 
     }
 
-
+    public long getItemId(int position) {
+        return movieItems.get(position).getId();
+    }
 
     public Object getItem(int position){
         return movieItems.get(position);
@@ -88,6 +91,12 @@ public class MovieAdapterRV extends RecyclerView.Adapter<RecyclerItemViewHolder>
 
     public void addMovies(List<Movie> movieItems) {
         this.movieItems.addAll(movieItems);
+        notifyItemInserted(getMovies().size()-1);
+
+    }
+
+    public List<Movie> getMovies() {
+        return this.movieItems;
 
     }
 
