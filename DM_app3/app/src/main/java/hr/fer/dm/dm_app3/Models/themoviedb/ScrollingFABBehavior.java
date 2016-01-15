@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.Util.*;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,44 +19,36 @@ import android.content.res.TypedArray;
 /**
  * Created by Kajkara on 9.1.2016..
  */
-public class ScrollingFABBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
-    private int toolbarHeight;
-
+public class ScrollingFABBehavior extends FloatingActionButton.Behavior {
     public ScrollingFABBehavior(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.toolbarHeight = getToolbarHeight(context);
+        super();
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
-        return dependency instanceof AppBarLayout;
+    public boolean onStartNestedScroll(final CoordinatorLayout coordinatorLayout,
+                                       final FloatingActionButton child,
+                                       final View directTargetChild, final View target, final int nestedScrollAxes) {
+        // Ensure we react to vertical scrolling
+        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL
+                || super.onStartNestedScroll(coordinatorLayout, child,
+                directTargetChild, target, nestedScrollAxes);
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
-//        Toolbar cl = (Toolbar) parent.findViewById(R.id.toolbar_movie_list);
-//        float f = cl.getLayoutParams().height;
-        boolean returnValue = super.onDependentViewChanged(parent, fab, dependency);
-        if (dependency instanceof AppBarLayout) {
-            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            int fabBottomMargin = lp.bottomMargin;
-            int distanceToScroll = fab.getHeight() + fabBottomMargin;
-            float ratio = (float)dependency.getY()/(float)toolbarHeight;
-            fab.setTranslationY(-distanceToScroll * ratio);
+    public void onNestedScroll(final CoordinatorLayout coordinatorLayout,
+                               final FloatingActionButton child,
+                               final View target, final int dxConsumed, final int dyConsumed,
+                               final int dxUnconsumed, final int dyUnconsumed) {
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed,
+                dxUnconsumed, dyUnconsumed);
+        if (dyConsumed > 0) {
+            // User scrolled down and the FAB is currently visible -> hide the FAB
+            child.setTranslationY(200);
+            //child.hide();
+        } else if (dyConsumed < 0) {
+            // User scrolled up and the FAB is currently not visible -> show the FAB
+            child.setTranslationY(0);
+            //child.show();
         }
-        return returnValue;
     }
-
-    public static int getToolbarHeight(Context context) {
-        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
-                new int[]{R.attr.actionBarSize});
-        int toolbarHeight = (int) styledAttributes.getDimension(0, 0);
-        styledAttributes.recycle();
-
-        return toolbarHeight;
-    }
-
-//    public static int getTabsHeight(Context context) {
-//        return (int) context.getResources().getDimension(R.dimen.tabsHeight);
-//    }
 }
