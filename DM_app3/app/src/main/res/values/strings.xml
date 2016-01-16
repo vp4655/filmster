@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DM_app3</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_splash_screen">SplashScreenActivity</string>
     <string name="action_settings">About</string>
     <string name="action_logout">Log out</string>
     <string name="section_format">Hello World from section: %1$d</string>
@@ -18,8 +19,15 @@
     <string name="biography_text">Biography</string>
     <string name="poplarity_heading">RATING</string>
     <string name="roles_text">Roles</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Write something...</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id">412399092299440</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

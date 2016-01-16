@@ -291,6 +291,10 @@ public class HomeActivity extends AppCompatActivity {
             LoginManager.getInstance().logOut();
             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         }
+        else if(id==R.id.action_search)
+        {
+            startActivity(new Intent(HomeActivity.this, SearchActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
