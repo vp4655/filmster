@@ -26,6 +26,8 @@ import hr.fer.dm.dm_app3.Util.AppController;
 /**
  * Created by Kajkara on 27.12.2015..
  */
+
+// TODO: koristimo li????
 public class MovieAdapter_themovie extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
@@ -78,26 +80,25 @@ public class MovieAdapter_themovie extends BaseAdapter {
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
-        NetworkImageView thumbNail = (NetworkImageView) convertView
-                .findViewById(R.id.thumbnail);
+
 
         // getting movie data for the row
         Movie m = movieItems.get(position);
 
 
         TextView title = (TextView) convertView.findViewById(R.id.title);
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
+        //TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getImage(), imageLoader);
+        //thumbNail.setImageUrl(m.getImage(), imageLoader);
 
         // title
         title.setText(m.getTitle());
 
         // rating
-        rating.setText("Rating: " + String.valueOf(m.getPopularity()));
+        //rating.setText("Rating: " + String.valueOf(m.getPopularity()));
 
         // genre
         String genreStr = "";

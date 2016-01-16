@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import android.text.TextUtils;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -103,9 +105,12 @@ public class Movie implements Serializable {
         return backdrop_path;
     }
 
-    public Float getPopularity()
+    public String getPopularity()
     {
-        return popularity;
+//        DecimalFormat df = new DecimalFormat("#.##");
+//        df.setRoundingMode(RoundingMode.CEILING);
+//        return df.format(popularity);
+        return Float.toString(25.0f);
     }
 
     public String getImdb_id(){
