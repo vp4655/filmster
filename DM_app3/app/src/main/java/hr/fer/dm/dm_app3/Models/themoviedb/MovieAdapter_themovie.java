@@ -80,8 +80,7 @@ public class MovieAdapter_themovie extends BaseAdapter {
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
-        NetworkImageView thumbNail = (NetworkImageView) convertView
-                .findViewById(R.id.thumbnail);
+
 
         // getting movie data for the row
         Movie m = movieItems.get(position);
@@ -93,7 +92,7 @@ public class MovieAdapter_themovie extends BaseAdapter {
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getImage(), imageLoader);
+        //thumbNail.setImageUrl(m.getImage(), imageLoader);
 
         // title
         title.setText(m.getTitle());

@@ -1,8 +1,10 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.animation.Animator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +12,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,17 +20,27 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
@@ -35,7 +48,12 @@ import com.facebook.login.LoginManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
+import hr.fer.dm.dm_app3.Classes.Fab.FilterOptions;
 import hr.fer.dm.dm_app3.Classes.SectionsPagerAdapter;
 import hr.fer.dm.dm_app3.R;
 
@@ -59,20 +77,23 @@ public class HomeActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;
 
+    private FilterOptions filterOptions;
+    final Context context = this;
+    NumberPicker npFrom;
+    NumberPicker npTo;
+    ListView listview;
+    Switch switchYear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
 
-//        frameLayout = (FrameLayout) findViewById( R.id.mainmenu);
-//        frameLayout.getForeground().setAlpha(0);
-
         Toolbar cl = (Toolbar) findViewById(R.id.toolbar_movie_list);
         setSupportActionBar(cl);
         SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
         String name = sp.getString("name", "NN");
-//        cl.setTitle("Hello " + name + "!");
 
         getSupportActionBar().setTitle("Hello " + name + "!");
 
@@ -96,12 +117,128 @@ public class HomeActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
 
+
+        filterOptions = new FilterOptions();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Search", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                // get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.fillter, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context);
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView.findViewById(R.id.etFilterTitle);
+
+                //years for picker
+                npFrom = (NumberPicker) promptsView.findViewById(R.id.npYears);
+                npTo = (NumberPicker) promptsView.findViewById(R.id.npYearsTo);
+                npFrom.setMinValue(1900);
+                Calendar now = Calendar.getInstance();   // Gets the current date and time
+                int year = now.get(Calendar.YEAR);
+                npFrom.setMaxValue(year);
+                npTo.setMaxValue(year);
+                npFrom.setValue(year);
+                npTo.setValue(year);
+                npTo.setMinValue(year);       // ne može manje od ovog
+//                npTo.setEnabled(true);
+//                npFrom.setEnabled(true);
+
+                switchYear = (Switch) promptsView.findViewById(R.id.swYear);
+                switchYear.setChecked(true);
+
+                switchYear.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        npFrom.setEnabled(isChecked);
+                        npTo.setEnabled(isChecked);
+                    }
+                });
+
+                npFrom.setOnScrollListener(new NumberPicker.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
+                        if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
+                            //We get the different between oldValue and the new value
+                            int newValue = numberPicker.getValue();
+                             npTo.setMinValue(numberPicker.getValue());
+                        }
+                    }
+                });
+
+                // lista zanrova
+                //TODO: listu genereova dohvatiti??
+                listview = (ListView) promptsView.findViewById(R.id.lvGenresDialog);
+                String[] values = new String[] { "Action ", "Adventure ", "Animation ", "Biography ", "Comedy ", "Crime ", "Documentary ", "Drama ", "Family ", "Fantasy ", "Film-Noir ", "History ", "Horror ", "Music ", "Musical ", "Mystery ", "Romance ", "Sci-Fi ", "Sport ", "Thriller ", "War ", "Western"};
+
+                List<String> pomList = new ArrayList<String>();
+                for (String s: values) {
+                    pomList.add(s);
+                }
+
+                DialogAdapter adapter = new DialogAdapter((Activity) view.getContext(), pomList);
+
+                listview.setAdapter(adapter);
+
+                // setiraj visinu liste
+                int totalHeight = 0;
+                for (int i = 0; i < adapter.getNumItemToShow(); i++) {
+                    View listItem = adapter.getView(i, null, listview);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight();
+                }
+
+                ViewGroup.LayoutParams params = listview.getLayoutParams();
+                params.height = totalHeight + (listview.getDividerHeight() * (adapter.getNumItemToShow() - 1));
+                listview.setLayoutParams(params);
+                listview.requestLayout();
+
+                // set dialog message
+                alertDialogBuilder
+                .setCancelable(true)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        filterOptions.setTitle(userInput.getText().toString());
+
+                                        List<String> checkedGenres = new ArrayList<String>();
+
+                                        SparseBooleanArray checked = listview.getCheckedItemPositions();
+                                        for (int i = 0; i < listview.getAdapter().getCount(); i++) {
+                                            if (checked.get(i)) {
+                                                // Do something
+                                                checkedGenres.add((String)listview.getAdapter().getItem(i));
+                                            }
+                                        }
+
+                                        filterOptions.setGenres(checkedGenres);
+                                        filterOptions.setNumFrom(npFrom.getValue());
+                                        filterOptions.setNumTo(npTo.getValue());
+
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
             }
         });
 
@@ -124,6 +261,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+
 
 //    public void onActivityCreated (Bundle savedInstanceState) {
 //        doImages();
@@ -224,4 +362,26 @@ public class HomeActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+//TODO: https://guides.codepath.com/android/Circular-Reveal-Animation
+//    void enterReveal() {
+//        // previously invisible view
+//        final View myView = findViewById(R.id.fab);
+//
+//        // get the center for the clipping circle
+//        int cx = myView.getMeasuredWidth() / 2;
+//        int cy = myView.getMeasuredHeight() / 2;
+//
+//        // get the final radius for the clipping circle
+//        int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
+//
+//        // create the animator for this view (the start radius is zero)
+//        Animator anim =
+//                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+//
+//        // make the view visible and start the animation
+//        myView.setVisibility(View.VISIBLE);
+//        anim.start();
+//    }
+
+
 }
