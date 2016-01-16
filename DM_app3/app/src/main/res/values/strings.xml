@@ -21,5 +21,14 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id">412399092299440</string>
+    <string name="action_home">Home</string>
+
+
+    <string name="drawer_item_search">Find Movie</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_watchlist">Watchlist</string>
+    <string name="drawer_item_watched">Seen</string>
+    <string name="drawer_item_section_header">Profile Options</string>
+    <string name="drawer_item_logout">Logout</string>
 
 </resources>

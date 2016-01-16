@@ -190,6 +190,9 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("token", token);
                     editor.putString("name", loginResponse.getUserData().getUser().getFirstName());
+                    editor.putString("uri", loginResponse.getUserData().getUser().getPhoto());
+                    editor.putString("email", loginResponse.getUserData().getUser().getEmail());
+                    editor.putString("last_name", loginResponse.getUserData().getUser().getLastName());
                     editor.commit();
 //
 //                    // get token

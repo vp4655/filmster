@@ -1,12 +1,11 @@
 package hr.fer.dm.dm_app3.Activites;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -23,14 +22,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -58,6 +68,8 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private FrameLayout frameLayout;
+    private Drawer drawer;
+    private AccountHeader headerResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +82,70 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar cl = (Toolbar) findViewById(R.id.toolbar_movie_list);
         setSupportActionBar(cl);
+
+
         SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
         String name = sp.getString("name", "NN");
-//        cl.setTitle("Hello " + name + "!");
+        String uri = sp.getString("uri", "NN");
+        String lastName = sp.getString("last_name", "NN");
+        String email = sp.getString("email", "NN");
 
-        getSupportActionBar().setTitle("Hello " + name + "!");
+        getSupportActionBar().setTitle("Hello, " + name + "!");
+
+        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+            @Override
+            public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                Picasso.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+            }
+
+            @Override
+            public void cancel(ImageView imageView) {
+                Picasso.with(imageView.getContext()).cancelRequest(imageView);
+            }
+        });
+
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withCompactStyle(false)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(
+                        new ProfileDrawerItem().withName(name + " " + lastName).withEmail(email).withIcon(uri))
+                .withSavedInstance(savedInstanceState)
+                .build();
+
+        drawer = new DrawerBuilder().withActivity(this)
+                .withDrawerGravity(Gravity.END)
+                .withAccountHeader(headerResult)
+                .withSliderBackgroundColor(getResources().getColor(R.color.primary))
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(R.drawable.ic_action_action_home).withTextColor(getResources().getColor(R.color.text_icons)).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_search).withIcon(R.drawable.ic_search_white_24dp).withTextColor(getResources().getColor(R.color.text_icons)).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_watchlist).withIcon(R.drawable.ic_local_movies_white_24dp).withTextColor(getResources().getColor(R.color.text_icons)).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_watched).withIcon(R.drawable.ic_movie_creation_white_24dp).withTextColor(getResources().getColor(R.color.text_icons)).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(R.drawable.ic_power_settings_new_white_24dp).withTextColor(getResources().getColor(R.color.text_icons)).withIdentifier(4)
+                ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+                        if(iDrawerItem != null){
+                            Intent intent = null;
+                            if(iDrawerItem.getIdentifier() == 1){
+                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                            }
+                            else if (iDrawerItem.getIdentifier() == 2){
+                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                            }
+                            else if (iDrawerItem.getIdentifier() == 3){
+                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                            }
+                            else if (iDrawerItem.getIdentifier() == 4){
+                                LoginManager.getInstance().logOut();
+                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                            }
+                        }
+                        return false;
+                    }
+                }).build();
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -88,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
 //        tabLayout.addTab(tabLayout.newTab().setIcon());//  setText("Recommendation1"));
 //        tabLayout.addTab(tabLayout.newTab().setText("Hot 100"));
 //        tabLayout.addTab(tabLayout.newTab().setText("Recommendation2"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);;
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
         // Set up the ViewPager with the sections adapter.
@@ -146,12 +217,12 @@ public class HomeActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
-            initiatePopupWindow();
-        }
-        else if(id==R.id.action_logout)
-        {
-            LoginManager.getInstance().logOut();
-            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            if(drawer.isDrawerOpen()){
+                drawer.closeDrawer();
+            }
+            else {
+                drawer.openDrawer();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

@@ -65,8 +65,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.colorAccent));
-        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorAccent));
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.text_icons));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.text_icons));
 
         final int id = (int)getIntent().getExtras().get("Id");
         setMovie(id);
@@ -87,7 +87,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_actor_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_other, menu);
         return true;
     }
 
@@ -99,8 +99,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_other) {
+            Intent intent = new Intent(MovieDetailsActivity.this, HomeActivity.class);
+            startActivity(intent);
         }
         else if (id == android.R.id.home){
             onBackPressed();
