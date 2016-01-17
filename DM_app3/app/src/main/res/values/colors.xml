@@ -27,6 +27,7 @@
     <color name="blue">#3A9CEA</color>
     <color name="lightblue">#A8DAEA</color>
     <color name="white">#ffffff</color>
+    <color name="gray_back">#EEEEEE</color>
 
 
     <color name="genre">#666666</color>

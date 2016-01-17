@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +28,14 @@ import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
 import hr.fer.dm.dm_app3.Models.actor.ActorDetail;
+import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
+import hr.fer.dm.dm_app3.Models.actor.RolesList;
+import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
+import hr.fer.dm.dm_app3.Models.themoviedb.MovieMinified;
 import hr.fer.dm.dm_app3.Network.ApiActorManager;
 import hr.fer.dm.dm_app3.R;
 import retrofit.Callback;
@@ -55,6 +63,19 @@ public class ActorDetailActivity extends AppCompatActivity {
     private Drawer drawer;
     private AccountHeader headerResult;
 
+    private ImageView firstIV;
+    private TextView firstTV;
+    private ImageView secondIV;
+    private TextView secondTV;
+    private ImageView thirdIV;
+    private TextView thirdTV;
+    private ImageView fourthIV;
+    private TextView fourthTV;
+    private ImageView fifthIV;
+    private TextView fifthTV;
+    private ImageView sixthIV;
+    private TextView sixthTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +97,19 @@ public class ActorDetailActivity extends AppCompatActivity {
         placeOfBirth = (TextView) findViewById(R.id.tvPlaceOfBirth);
         popularity = (TextView) findViewById(R.id.tvPopularity);
         etvBiography = (ExpandableTextView) findViewById(R.id.tvBiography);
+
+        firstTV = (TextView) findViewById(R.id.aFirstName);
+        firstIV = (ImageView) findViewById(R.id.aFirstImage);
+        secondIV = (ImageView) findViewById(R.id.aSecondImage);
+        secondTV = (TextView) findViewById(R.id.aSecondName);
+        thirdTV = (TextView) findViewById(R.id.aThirdName);
+        thirdIV = (ImageView) findViewById(R.id.aThirdImage);
+        fourthIV = (ImageView) findViewById(R.id.aFourthImage);
+        fourthTV = (TextView) findViewById(R.id.aFourthName);
+        fifthIV = (ImageView) findViewById(R.id.aFifthImage);
+        fifthTV = (TextView) findViewById(R.id.aFifthName);
+        sixthTV = (TextView) findViewById(R.id.aSixthName);
+        sixthIV = (ImageView) findViewById(R.id.aSixthImage);
 
         homeIcon = (ImageView) findViewById(R.id.homeIcon);
         dateIcon = (ImageView) findViewById(R.id.dateIcon);
@@ -138,11 +172,13 @@ public class ActorDetailActivity extends AppCompatActivity {
                     date.setText(actor.getBirthday() + " - " + actor.getDeathday());
                     placeOfBirth.setText(actor.getPlace_of_birth());
                     popularity.setText(Integer.toString(Math.round(actor.getPopularity())));
-                    etvBiography.setText(Html.fromHtml("<b>Biography</b> : " + actor.getBiography()));
+                    etvBiography.setText(actor.getBiography());
 
                     Picasso.with(getApplicationContext()).load(actor.getImage()).transform(new CircleTransformation()).placeholder(R.drawable.person_placeholder).into(ivProfilePicture);
 
                     ivProfilePicture.setOnClickListener(imageAsLinkListener(actor.getHomepage(), actor.getName()));
+
+                    setRoles(actor.getId());
 
                 }
                 catch (Exception e){
@@ -156,6 +192,85 @@ public class ActorDetailActivity extends AppCompatActivity {
                 Toast.makeText(ActorDetailActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void setRoles(int ajDi){
+
+        ApiActorManager.getService().getRoles(ajDi, new Callback<RolesList>() {
+            @Override
+            public void success(RolesList rolesList, Response response) {
+
+                List<MovieMinified> aMovies = rolesList.getSmallRoles();
+
+                MovieMinified a1 = aMovies.get(0);
+                MovieMinified a2 = aMovies.get(1);
+                MovieMinified a3 = aMovies.get(2);
+                MovieMinified a4 = aMovies.get(3);
+                MovieMinified a5 = aMovies.get(4);
+                MovieMinified a6 = aMovies.get(5);
+
+                firstTV.setText(a1.getTitle());
+                Picasso.with(getApplicationContext()).load(a1.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(firstIV);
+
+                secondTV.setText(a2.getTitle());
+                Picasso.with(getApplicationContext()).load(a2.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(secondIV);
+
+                thirdTV.setText(a3.getTitle());
+                Picasso.with(getApplicationContext()).load(a3.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(thirdIV);
+
+                fourthTV.setText(a4.getTitle());
+                Picasso.with(getApplicationContext()).load(a4.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(fourthIV);
+
+                fifthTV.setText(a5.getTitle());
+                Picasso.with(getApplicationContext()).load(a5.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(fifthIV);
+
+                sixthTV.setText(a6.getTitle());
+                Picasso.with(getApplicationContext()).load(a6.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(sixthIV);
+
+                //on click open actor
+
+                RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.aFirstLayout);
+                RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.aSecondLayout);
+                RelativeLayout rl3 = (RelativeLayout) findViewById(R.id.aThirdLayout);
+                RelativeLayout rl4 = (RelativeLayout) findViewById(R.id.aFourthLayout);
+                RelativeLayout rl5 = (RelativeLayout) findViewById(R.id.aFifthLayout);
+                RelativeLayout rl6 = (RelativeLayout) findViewById(R.id.aSixthLayout);
+
+                rl1.setOnClickListener(setMovieDetailsListener(a1.getId()));
+
+                rl2.setOnClickListener(setMovieDetailsListener(a2.getId()));
+
+                rl3.setOnClickListener(setMovieDetailsListener(a3.getId()));
+
+                rl4.setOnClickListener(setMovieDetailsListener(a4.getId()));
+
+                rl5.setOnClickListener(setMovieDetailsListener(a5.getId()));
+
+                rl6.setOnClickListener(setMovieDetailsListener(a6.getId()));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(ActorDetailActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private View.OnClickListener setMovieDetailsListener(final int actorId){
+
+        return new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActorDetailActivity.this, MovieDetailsActivity.class);
+                intent.putExtra("Id", actorId);
+                startActivity(intent);
+            }
+
+        };
+
     }
 
     @Override

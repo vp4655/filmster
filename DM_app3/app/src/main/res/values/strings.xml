@@ -14,10 +14,11 @@
     <string name="actor_default_text">This is an excellent actor that acted in action and romance</string>
     <string name="cast_string">Full cast</string>
     <string name="cast_title">Leading roles</string>
+    <string name="roles_title">Known Roles</string>
     <string name="synopsis_text">Synopsis</string>
     <string name="biography_text">Biography</string>
     <string name="poplarity_heading">RATING</string>
-    <string name="roles_text">Roles</string>
+    <string name="roles_text">Filmography</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id">412399092299440</string>

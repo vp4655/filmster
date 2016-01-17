@@ -23,7 +23,7 @@ public class RolesList implements Serializable {
         return cast;
     }
 
-    public List<MovieMinified> getSmallCast(){
+    public List<MovieMinified> getSmallRoles(){
         return cast.subList(0, 6);
     }
 

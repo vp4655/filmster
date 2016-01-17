@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +32,8 @@
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
-                android:src="@drawable/large_movie_poster"/>
+                android:src="@drawable/large_movie_poster"
+                android:background="@drawable/border_top"/>
 
             <View
                 android:layout_width="match_parent"
@@ -70,79 +72,114 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:id="@+id/bottom_wrapper">
 
                     <LinearLayout
-                        android:background="#66ddff00"
                         android:layout_width="match_parent"
-                        android:weightSum="3"
-                        android:layout_height="match_parent">
+                        android:weightSum="4"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_back">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:background="@color/secondaryText">
 
                             <ImageView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:src="@drawable/imdb_icon_button">
+                                android:src="@drawable/ic_social_share">
 
                             </ImageView>
 
                             <TextView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:text="5.6">
+                                android:text="Share"
+                                android:textSize="18sp"
+                                android:textColor="@color/text_icons">
 
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:background="@color/colorPrimary">
 
                             <ImageView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:src="@drawable/imdb_icon_button">
+                                android:src="@drawable/ic_action_alarm_add">
 
                             </ImageView>
 
                             <TextView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:text="5.6">
+                                android:text="Watchlist"
+                                android:textSize="18sp"
+                                android:textColor="@color/text_icons">
 
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:background="#46529e">
 
                             <ImageView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:src="@drawable/imdb_icon_button">
+                                android:src="@drawable/ic_action_thumb_up">
 
                             </ImageView>
 
                             <TextView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:text="5.6">
+                                android:text="Like"
+                                android:textSize="18sp"
+                                android:textColor="@color/text_icons">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@color/colorAccent">
+
+                            <ImageView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_watched">
+
+                            </ImageView>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Seen"
+                                android:textSize="18sp"
+                                android:textColor="@color/text_icons">
 
                             </TextView>
 
@@ -154,23 +191,23 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:id="@+id/likes">
 
                     <LinearLayout
-                        android:background="#ffffff"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:weightSum="8">
+                        android:weightSum="8"
+                        android:background="@color/gray_back">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="7"
-                            android:weightSum="3">
+                            android:weightSum="2">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
@@ -178,23 +215,24 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:background="@drawable/border_bottom">
+                                    android:orientation="horizontal"
+                                    android:gravity="center">
 
                                     <ImageView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:src="@drawable/imdb_icon_button">
+                                        android:layout_height="55dp"
+                                        android:layout_width="55dp"
+                                        android:src="@drawable/ic_rtomato">
 
                                     </ImageView>
 
                                     <TextView
                                         android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:text="5.6">
+                                        android:layout_marginLeft="8dp"
+                                        android:text="5.6"
+                                        android:textSize="32sp">
 
                                     </TextView>
 
@@ -202,22 +240,24 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="vertical"
+                                    android:orientation="horizontal"
                                     android:gravity="center">
 
                                     <ImageView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:src="@drawable/imdb_icon_button">
+                                        android:layout_height="55dp"
+                                        android:layout_width="55dp"
+                                        android:src="@drawable/ic_rt_users">
 
                                     </ImageView>
 
                                     <TextView
                                         android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:text="5.6">
+                                        android:layout_marginLeft="8dp"
+                                        android:text="5.6"
+                                        android:textSize="32sp">
 
                                     </TextView>
 
@@ -226,7 +266,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
@@ -234,23 +274,24 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:background="@drawable/border_bottom">
+                                    android:orientation="horizontal"
+                                    android:gravity="center">
 
                                     <ImageView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:src="@drawable/imdb_icon_button">
+                                        android:layout_height="55dp"
+                                        android:layout_width="55dp"
+                                        android:src="@drawable/ic_imdb_icon">
 
                                     </ImageView>
 
                                     <TextView
                                         android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:text="5.6">
+                                        android:layout_marginLeft="8dp"
+                                        android:text="5.6"
+                                        android:textSize="32sp">
 
                                     </TextView>
 
@@ -258,22 +299,24 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="vertical"
+                                    android:orientation="horizontal"
                                     android:gravity="center">
 
                                     <ImageView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:src="@drawable/imdb_icon_button">
+                                        android:layout_height="55dp"
+                                        android:layout_width="55dp"
+                                        android:src="@drawable/ic_metacritic">
 
                                     </ImageView>
 
                                     <TextView
                                         android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:text="5.6">
+                                        android:layout_marginLeft="8dp"
+                                        android:text="5.6"
+                                        android:textSize="32sp">
 
                                     </TextView>
 
@@ -281,61 +324,23 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:weightSum="2">
+                                android:src="@drawable/ic_keyboard_arrow_left_black_48dp">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center"
-                                    android:background="@drawable/border_bottom">
+                            </ImageView>
 
-                                    <ImageView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:src="@drawable/imdb_icon_button">
-
-                                    </ImageView>
-
-                                    <TextView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:text="5.6">
-
-                                    </TextView>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:src="@drawable/imdb_icon_button">
-
-                                    </ImageView>
-
-                                    <TextView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:text="5.6">
-
-                                    </TextView>
-
-                                </LinearLayout>
-
-                            </LinearLayout>
 
                         </LinearLayout>
 
