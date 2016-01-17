@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DM_app3</string>
+    <string name="app_name">Filmster</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_splash_screen">SplashScreenActivity</string>
     <string name="action_settings">About</string>
