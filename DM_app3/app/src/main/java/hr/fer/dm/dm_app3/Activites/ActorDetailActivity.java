@@ -1,7 +1,10 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +35,11 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ActorDetailActivity extends AppCompatActivity {
+
+    private String firstName;
+    private String uri;
+    private String lastName;
+    private String email;
     private ImageView ivProfilePicture;
     private TextView name;
     private TextView date;
@@ -40,6 +52,8 @@ public class ActorDetailActivity extends AppCompatActivity {
     private ImageView homeIcon;
     private ImageView dateIcon;
     private TextView tvRoles;
+    private Drawer drawer;
+    private AccountHeader headerResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +66,7 @@ public class ActorDetailActivity extends AppCompatActivity {
 
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.text_icons));
 
         //TODO otkirti kako promjeniti boju menu-a i back button-a
 
@@ -147,7 +161,7 @@ public class ActorDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_actor_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_other, menu);
         return true;
     }
 
@@ -159,8 +173,9 @@ public class ActorDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_other) {
+            Intent intent = new Intent(ActorDetailActivity.this, HomeActivity.class);
+            startActivity(intent);
         }
         else if (id == android.R.id.home){
             onBackPressed();

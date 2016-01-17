@@ -19,8 +19,6 @@
     <string name="biography_text">Biography</string>
     <string name="poplarity_heading">RATING</string>
     <string name="roles_text">Roles</string>
-    <string name="action_search">Search</string>
-    <string name="search_hint">Write something...</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id">412399092299440</string>
@@ -29,5 +27,14 @@
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="action_home">Home</string>
+
+
+    <string name="drawer_item_search">Find Movie</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_watchlist">Watchlist</string>
+    <string name="drawer_item_watched">Seen</string>
+    <string name="drawer_item_section_header">Profile Options</string>
+    <string name="drawer_item_logout">Logout</string>
 
 </resources>

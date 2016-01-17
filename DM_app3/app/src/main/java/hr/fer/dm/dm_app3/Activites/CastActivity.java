@@ -1,19 +1,37 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -29,10 +47,14 @@ import retrofit.client.Response;
 
 public class CastActivity extends AppCompatActivity {
 
+    private String name;
+    private String uri;
+    private String lastName;
+    private String email;
     private Toolbar mToolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast);
 
@@ -60,7 +82,7 @@ public class CastActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cast, menu);
+        getMenuInflater().inflate(R.menu.menu_other, menu);
         return true;
     }
 
@@ -72,8 +94,9 @@ public class CastActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_other) {
+            Intent intent = new Intent(CastActivity.this, HomeActivity.class);
+            startActivity(intent);
         }
         else if (id == android.R.id.home){
             onBackPressed();
@@ -87,7 +110,7 @@ public class CastActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbarCast);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(getString(R.string.cast_string));
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.cast_title_color));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

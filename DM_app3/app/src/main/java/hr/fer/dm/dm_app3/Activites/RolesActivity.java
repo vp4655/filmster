@@ -17,15 +17,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
 import hr.fer.dm.dm_app3.ListViewItems.RolesAdapter;
 import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
-import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
-import hr.fer.dm.dm_app3.Models.actor.CastList;
 import hr.fer.dm.dm_app3.Models.actor.RolesList;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieMinified;
 import hr.fer.dm.dm_app3.Network.ApiActorManager;
-import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.R;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -68,7 +64,7 @@ public class RolesActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cast, menu);
+        getMenuInflater().inflate(R.menu.menu_other, menu);
         return true;
     }
 
@@ -80,8 +76,9 @@ public class RolesActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_other) {
+            Intent intent = new Intent(RolesActivity.this, HomeActivity.class);
+            startActivity(intent);
         }
         else if (id == android.R.id.home){
             onBackPressed();
@@ -95,7 +92,7 @@ public class RolesActivity extends AppCompatActivity{
         mToolbar = (Toolbar) findViewById(R.id.toolbarRoles);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(toolbarText);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.cast_title_color));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -123,7 +120,7 @@ public class RolesActivity extends AppCompatActivity{
 
                     MovieMinified movieMinified = (MovieMinified)recyclerAdapter.getItem(recyclerView.getChildAdapterPosition(child) - 1);
                     Intent intent = new Intent(RolesActivity.this, MovieDetailsActivity.class);
-                    intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, movieMinified.getId());
+                    intent.putExtra("Id", movieMinified.getId());
                     startActivity(intent);
 
                     return true;

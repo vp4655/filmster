@@ -91,7 +91,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+                android:background="#32052D4D"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:theme="@style/ToolbarColoredBackArrow"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
