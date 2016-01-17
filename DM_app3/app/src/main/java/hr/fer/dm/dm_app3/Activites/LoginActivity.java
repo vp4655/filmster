@@ -52,7 +52,7 @@ import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final long DELAY = 3000; // u ms
+    private static final long DELAY = 700; // u ms
 
     private TextView info;
     private CallbackManager callbackManager;
@@ -252,17 +252,18 @@ public class LoginActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 long durationFadeOut = myFadeOutAnimation.getDuration();
-                long durationFadeIn = myFadeInAnimation.getDuration()+durationFadeOut;
+                long durationFadeIn = durationFadeOut;
+                //long durationFadeIn = myFadeInAnimation.getDuration()+durationFadeOut;
 
-                myFadeOutAnimation.setInterpolator(new AccelerateInterpolator());
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        //ivPopcorn.clearAnimation();
-                        ivPopcorn.setVisibility(View.GONE);
-
-                    }
-                }, durationFadeOut);
-                ivPopcorn.startAnimation(myFadeOutAnimation);
+//                myFadeOutAnimation.setInterpolator(new AccelerateInterpolator());
+//                new Handler().postDelayed(new Runnable() {
+//                    public void run() {
+//                        //ivPopcorn.clearAnimation();
+//                        ivPopcorn.setVisibility(View.GONE);
+//
+//                    }
+//                }, durationFadeOut);
+//                ivPopcorn.startAnimation(myFadeOutAnimation);
 
 
                 myFadeInAnimation.setStartOffset(myFadeOutAnimation.getDuration());
@@ -271,7 +272,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         //myloginButton.clearAnimation();
                         myloginButton.setVisibility(View.VISIBLE);
-                        skipButton.setVisibility(View.VISIBLE);
+                        //skipButton.setVisibility(View.VISIBLE);
 
                     }
                 }, durationFadeIn);
