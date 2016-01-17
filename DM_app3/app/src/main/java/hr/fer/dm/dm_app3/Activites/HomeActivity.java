@@ -365,6 +365,10 @@ public class HomeActivity extends AppCompatActivity {
                 drawer.openDrawer();
             }
         }
+        else if(id==R.id.action_search)
+        {
+            startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 

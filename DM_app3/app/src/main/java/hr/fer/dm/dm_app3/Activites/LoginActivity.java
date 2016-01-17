@@ -5,13 +5,20 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +52,9 @@ import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final long DELAY = 700; // u ms
+
     private TextView info;
-    private LoginButton loginButton;
     private CallbackManager callbackManager;
 
     private Button myloginButton;
@@ -54,6 +62,15 @@ public class LoginActivity extends AppCompatActivity {
 
     // odmah na početku definiramo bindanje
     @Bind(R.id.btnSkip) Button skipButton;
+
+    // TODO: obrisati
+    @Bind(R.id.btnAnimate) Button animateButton;
+
+    @Bind(R.id.ivPopcorn) ImageView ivPopcorn;
+
+    private Animation myFadeInAnimation;
+    private Animation myFadeOutAnimation;
+
 //    @Bind(R.id.actor_btn) Button actorButton;
 
 //    @Bind(R.id.login_button) LoginButton loginButton;
@@ -93,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         // handmade button
 
         myloginButton = (Button)findViewById(R.id.login_button_my);
+        //myloginButton.setAlpha(0);
         myloginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +162,18 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 
+
+        //TODO: obrisati:
+        myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        myFadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+
+        animate();
+
+
+
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -214,4 +243,54 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private float xCurrentPos, yCurrentPos;
+    private ImageView logoFocus;
+
+    private void animate()
+    {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                long durationFadeOut = myFadeOutAnimation.getDuration();
+                long durationFadeIn = durationFadeOut;
+                //long durationFadeIn = myFadeInAnimation.getDuration()+durationFadeOut;
+
+//                myFadeOutAnimation.setInterpolator(new AccelerateInterpolator());
+//                new Handler().postDelayed(new Runnable() {
+//                    public void run() {
+//                        //ivPopcorn.clearAnimation();
+//                        ivPopcorn.setVisibility(View.GONE);
+//
+//                    }
+//                }, durationFadeOut);
+//                ivPopcorn.startAnimation(myFadeOutAnimation);
+
+
+                myFadeInAnimation.setStartOffset(myFadeOutAnimation.getDuration());
+                myFadeInAnimation.setInterpolator(new AccelerateInterpolator());
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        //myloginButton.clearAnimation();
+                        myloginButton.setVisibility(View.VISIBLE);
+                        //skipButton.setVisibility(View.VISIBLE);
+
+                    }
+                }, durationFadeIn);
+                myloginButton.startAnimation(myFadeInAnimation);
+
+            }
+        }, DELAY);
+
+
+
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                myloginButton.startAnimation(myFadeInAnimation);
+//                skipButton.startAnimation(myFadeInAnimation);
+//
+//            }
+//        }, 100);
+    }
+
 }
