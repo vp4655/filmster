@@ -367,7 +367,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         else if(id==R.id.action_search)
         {
-            startActivity(new Intent(HomeActivity.this, SearchActivity.class));
+            startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

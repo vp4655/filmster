@@ -20,9 +20,12 @@
     <string name="poplarity_heading">RATING</string>
     <string name="roles_text">Roles</string>
 
+
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id">412399092299440</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="action_search">search</string>
+    <string name="search_hint">Write here...</string>
 
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
