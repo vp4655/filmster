@@ -31,6 +31,8 @@
     <string name="runtime_text">Runtime</string>
     <string name="full_crew">Full Crew</string>
     <string name="director_list">John Doe, Jane Doe</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="watched">Watched Movies</string>
 
 
     <string name="hello_world">Hello world!</string>

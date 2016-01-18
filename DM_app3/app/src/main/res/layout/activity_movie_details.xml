@@ -119,6 +119,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
+                        android:id="@+id/addToWatchlist"
                         android:background="@color/colorPrimary">
 
                         <ImageView
@@ -146,6 +147,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
+                        android:id="@+id/facebookLike"
                         android:background="@color/facebook_color">
 
                         <ImageView
@@ -173,12 +175,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
+                        android:id="@+id/addWatched"
                         android:background="@color/colorAccent">
 
                         <ImageView
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:src="@drawable/ic_watched">
+                            android:src="@drawable/ic_watched"
+                            android:id="@+id/watchedIcon">
 
                         </ImageView>
 

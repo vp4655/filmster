@@ -40,6 +40,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Classes.PosterRetrofit;
 import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.Models.actor.CastList;
 import hr.fer.dm.dm_app3.Models.actor.CastWrapper;
@@ -213,6 +214,102 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             shareImage(m.getImdb_id(), m.getTitle(), m.getImage());
                         }
                     });
+
+                    if(m.getWatchlist()){
+
+                        swiper.findViewById(R.id.addToWatchlist).setBackgroundColor(getResources().getColor(R.color.dividerColor));
+
+                    }
+                    else {
+
+                        if(!m.getWatched()){
+                            swiper.findViewById(R.id.addToWatchlist).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    ApiManagerMovie.getService().addToWatchlist(apiToken2, new PosterRetrofit(m.getId()), new Callback<Void>() {
+                                        @Override
+                                        public void success(Void aVoid, Response response) {
+
+                                            swiper.findViewById(R.id.addToWatchlist).setBackgroundColor(getResources().getColor(R.color.dividerColor));
+                                            Toast.makeText(MovieDetailsActivity.this, m.getTitle() + " added to Watchlist", Toast.LENGTH_LONG).show();
+
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+
+                    }
+
+                    if(m.getWatched()){
+
+                        swiper.findViewById(R.id.addToWatchlist).setBackgroundColor(getResources().getColor(R.color.dividerColor));
+                        swiper.findViewById(R.id.addWatched).setBackgroundColor(getResources().getColor(R.color.dividerColor));
+
+                        swiper.findViewById(R.id.addWatched).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                AlertDialog.Builder removeDialog = new AlertDialog.Builder(MovieDetailsActivity.this);
+                                removeDialog.setTitle("Remove from Watched Movies");
+                                removeDialog.setMessage("Are you sure you didn't watch this movie?");
+                                removeDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    ApiManagerMovie.getService().removeWatched(apiToken2, new PosterRetrofit(m.getId()), new Callback<Void>(){
+                                        @Override
+                                        public void success(Void aVoid, Response response) {
+                                            swiper.findViewById(R.id.addWatched).setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                                            Toast.makeText(MovieDetailsActivity.this, m.getTitle() + " removed from Watched Movies", Toast.LENGTH_LONG).show();
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+
+                                        }
+                                    });
+
+                                    }
+                                });
+                                removeDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                removeDialog.show();
+                            }
+                        });
+
+                    }
+                    else{
+
+                        swiper.findViewById(R.id.addWatched).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                ApiManagerMovie.getService().addToWatched(apiToken2, new PosterRetrofit(m.getId()), new Callback<Void>() {
+                                    @Override
+                                    public void success(Void aVoid, Response response) {
+                                        swiper.findViewById(R.id.addWatched).setBackgroundColor(getResources().getColor(R.color.dividerColor));
+                                        Toast.makeText(MovieDetailsActivity.this, m.getTitle() + " added to Watched Movies", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
 
                     setCast(apiToken2, m.getId());
 

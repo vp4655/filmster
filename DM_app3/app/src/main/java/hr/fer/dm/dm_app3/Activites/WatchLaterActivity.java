@@ -7,6 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.Toast;
 
@@ -15,8 +20,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.ErrorModel;
 import hr.fer.dm.dm_app3.Models.api.MovieAdapterApi;
+import hr.fer.dm.dm_app3.Models.api.MovieAdapterHeader;
 import hr.fer.dm.dm_app3.Models.api.MovieApi;
 import hr.fer.dm.dm_app3.Models.api.MoviedxApi;
 import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
@@ -42,10 +49,11 @@ public class WatchLaterActivity extends AppCompatActivity {
     @Bind(R.id.rvMoviesWatchLater)RecyclerView recyclerViewApi;                // <--
 
     protected  boolean gettingApi = false;
-    protected MovieAdapterApi recyclerAdapterApi;
+    protected MovieAdapterHeader recyclerAdapterApi;
     protected RecyclerView.OnScrollListener rvScrollListenerApi;
     protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackApi;
     protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackLazyApi;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +69,35 @@ public class WatchLaterActivity extends AppCompatActivity {
 
         movieListApi = new ArrayList<>();
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbarWatchLater);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(getString(R.string.watchlist));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerViewApi = (RecyclerView) findViewById(R.id.rvMoviesWatchLater);            // <--
         recyclerViewApi.setLayoutManager(new LinearLayoutManager(this));
+
+        final GestureDetector mGestureDetector = new GestureDetector(WatchLaterActivity.this, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+        recyclerViewApi.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
+
         rvScrollListenerApi = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -106,7 +141,7 @@ public class WatchLaterActivity extends AppCompatActivity {
                     if(m.getMovieList().size()<m.getlimit())
                         end = true;
 
-                    recyclerAdapterApi = new MovieAdapterApi(movieListApi);
+                    recyclerAdapterApi = new MovieAdapterHeader(movieListApi);
                     recyclerViewApi.setAdapter(recyclerAdapterApi);
                 } catch (Exception exc) {
 
@@ -161,6 +196,14 @@ public class WatchLaterActivity extends AppCompatActivity {
 
 
         initList();
+    }
+
+    private void hideViews() {
+        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showViews() {
+        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     public void initList()

@@ -82,7 +82,7 @@ public class WatchedActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbarWatched);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getString(R.string.cast_string));
+        getSupportActionBar().setTitle(getString(R.string.watched));
         mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

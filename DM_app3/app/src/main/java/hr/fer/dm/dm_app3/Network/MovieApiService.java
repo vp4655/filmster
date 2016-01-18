@@ -1,5 +1,8 @@
 package hr.fer.dm.dm_app3.Network;
 
+import com.squareup.okhttp.Response;
+
+import hr.fer.dm.dm_app3.Classes.PosterRetrofit;
 import hr.fer.dm.dm_app3.Models.actor.ActorWrapper;
 import hr.fer.dm.dm_app3.Models.actor.CastList;
 import hr.fer.dm.dm_app3.Models.actor.CastWrapper;
@@ -15,6 +18,9 @@ import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
 import hr.fer.dm.dm_app3.Models.themoviedb.Moviedx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Sprite;
 import retrofit.Callback;
+import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
@@ -51,5 +57,14 @@ public interface MovieApiService {
 
     @GET("/v1/actors/{id}")
     void getActor(@Query("access_token") String movies, @Query("fields") String fields, @Path("id") int id, Callback<ActorWrapper> callback);
+
+    @POST("/v1/users/addWatchlist")
+    void addToWatchlist(@Query("access_token") String movies, @Body PosterRetrofit poster, Callback<Void> responseCallback);
+
+    @POST("/v1/users/addWatched")
+    void addToWatched(@Query("access_token") String movies, @Body PosterRetrofit poster, Callback<Void> responseCallback);
+
+    @POST("/v1/users/removeWatched")
+    void removeWatched(@Query("access_token") String movies, @Body PosterRetrofit poster, Callback<Void> responseCallback);
 
 }

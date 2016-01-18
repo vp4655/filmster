@@ -121,7 +121,7 @@ public class CrewActivity extends AppCompatActivity {
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbarCast);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getString(R.string.cast_string));
+        getSupportActionBar().setTitle("Full Crew");
         mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

@@ -56,6 +56,12 @@ public class MovieDetail implements Serializable {
     @SerializedName("director")
     private String director;
 
+    @SerializedName("watched")
+    private boolean watched;
+
+    @SerializedName("watchlist")
+    private boolean watchlist;
+
 
     public String getTitle() {
         return title;
@@ -124,6 +130,14 @@ public class MovieDetail implements Serializable {
     public String getImage() {
         return "https://image.tmdb.org/t/p/w396/" + image;
 
+    }
+
+    public boolean getWatched(){
+        return watched;
+    }
+
+    public boolean getWatchlist(){
+        return watchlist;
     }
 
 }

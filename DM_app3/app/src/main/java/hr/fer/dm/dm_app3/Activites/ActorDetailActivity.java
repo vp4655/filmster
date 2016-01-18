@@ -185,14 +185,14 @@ public class ActorDetailActivity extends AppCompatActivity {
                     String mDate;
                     String dDate;
 
-                    if(actor.getBirthday().isEmpty()){
+                    if(actor.getBirthday() == null){
                         mDate = "";
                     }
                     else{
                         mDate = actor.getBirthday().split("T")[0].replace('-', '.');
                     }
 
-                    if(actor.getDeathday().isEmpty()){
+                    if(actor.getDeathday() == null){
                         dDate = "";
                     }
                     else{
