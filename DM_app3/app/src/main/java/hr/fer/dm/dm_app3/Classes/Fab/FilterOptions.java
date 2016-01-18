@@ -13,6 +13,7 @@ public class FilterOptions {
     private List<String> genres;
     private int numFrom;
     private int numTo;
+    private boolean isYearChecked;
 
     public FilterOptions()
     {
@@ -20,12 +21,22 @@ public class FilterOptions {
         genres = new ArrayList<String>();
         numFrom=0;
         numTo=0;
+        isYearChecked = false;
     }
 
     public FilterOptions(String title_)
     {
         title= title_;
     }
+    public boolean getIsYearChecked() {
+        return isYearChecked;
+    }
+
+    public void setIsYearChecked(boolean b) {
+        this.isYearChecked = b;
+    }
+
+
     public String getTitle() {
         return title;
     }
@@ -60,5 +71,16 @@ public class FilterOptions {
         this.numTo= num;
     }
 
+
+    public boolean filter()
+    {
+        if(genresSelected() || isYearChecked || title!="") return true;
+        else return false;
+    }
+
+    public boolean genresSelected()
+    {
+        return (genres.size()!=0);
+    }
 
 }

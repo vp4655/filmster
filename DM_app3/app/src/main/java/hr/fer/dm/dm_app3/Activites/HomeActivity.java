@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
     private Drawer drawer;
     private AccountHeader headerResult;
 
-    private FilterOptions filterOptions;
+    public FilterOptions filterOptions;
     final Context context = this;
     NumberPicker npFrom;
     NumberPicker npTo;
@@ -300,6 +300,8 @@ public class HomeActivity extends AppCompatActivity {
                                         filterOptions.setNumFrom(npFrom.getValue());
                                         filterOptions.setNumTo(npTo.getValue());
 
+                                        mSectionsPagerAdapter.notifyDataSetChanged();
+
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -457,6 +459,7 @@ public class HomeActivity extends AppCompatActivity {
 //        myView.setVisibility(View.VISIBLE);
 //        anim.start();
 //    }
+
 
 
 }
