@@ -27,7 +27,7 @@ public class Movie implements Serializable {
     private List<Integer> genre_ids;
     private List<String> genres;
 
-    @SerializedName("movieId")
+    @SerializedName("id")
     private int id;
 
     @SerializedName("imdb_id")
