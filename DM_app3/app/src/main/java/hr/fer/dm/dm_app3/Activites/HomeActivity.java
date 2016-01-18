@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -66,11 +67,31 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import hr.fer.dm.dm_app3.Classes.BaseFragment;
 import hr.fer.dm.dm_app3.Classes.Fab.FilterOptions;
+import hr.fer.dm.dm_app3.Classes.HomeFragment;
+import hr.fer.dm.dm_app3.Classes.Recommendation1Fragment;
+import hr.fer.dm.dm_app3.Classes.Recommendation2Fragment;
 import hr.fer.dm.dm_app3.Classes.SectionsPagerAdapter;
 import hr.fer.dm.dm_app3.R;
 
 public class HomeActivity extends AppCompatActivity {
+
+    public HomeFragment fragment1;
+    public Recommendation1Fragment fragment2;
+    public Recommendation2Fragment fragment3;
+
+    public void setF1(Fragment f) {
+        fragment1=(HomeFragment)f;
+    }
+
+    public void setF2(Fragment f) {
+        fragment2=(Recommendation1Fragment)f;
+    }
+
+    public void setF3(Fragment f) {
+        fragment3=(Recommendation2Fragment)f;
+    }
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -244,7 +265,7 @@ public class HomeActivity extends AppCompatActivity {
                         if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
                             //We get the different between oldValue and the new value
                             int newValue = numberPicker.getValue();
-                             npTo.setMinValue(numberPicker.getValue());
+                            npTo.setMinValue(numberPicker.getValue());
                         }
                     }
                 });
@@ -252,10 +273,10 @@ public class HomeActivity extends AppCompatActivity {
                 // lista zanrova
                 //TODO: listu genereova dohvatiti??
                 listview = (ListView) promptsView.findViewById(R.id.lvGenresDialog);
-                String[] values = new String[] { "Action ", "Adventure ", "Animation ", "Biography ", "Comedy ", "Crime ", "Documentary ", "Drama ", "Family ", "Fantasy ", "Film-Noir ", "History ", "Horror ", "Music ", "Musical ", "Mystery ", "Romance ", "Sci-Fi ", "Sport ", "Thriller ", "War ", "Western"};
+                String[] values = new String[]{"Action ", "Adventure ", "Animation ", "Biography ", "Comedy ", "Crime ", "Documentary ", "Drama ", "Family ", "Fantasy ", "Film-Noir ", "History ", "Horror ", "Music ", "Musical ", "Mystery ", "Romance ", "Sci-Fi ", "Sport ", "Thriller ", "War ", "Western"};
 
                 List<String> pomList = new ArrayList<String>();
-                for (String s: values) {
+                for (String s : values) {
                     pomList.add(s);
                 }
 
@@ -278,10 +299,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 // set dialog message
                 alertDialogBuilder
-                .setCancelable(true)
+                        .setCancelable(true)
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         // get user input and set it to result
                                         // edit text
                                         filterOptions.setTitle(userInput.getText().toString());
@@ -292,7 +313,7 @@ public class HomeActivity extends AppCompatActivity {
                                         for (int i = 0; i < listview.getAdapter().getCount(); i++) {
                                             if (checked.get(i)) {
                                                 // Do something
-                                                checkedGenres.add((String)listview.getAdapter().getItem(i));
+                                                checkedGenres.add((String) listview.getAdapter().getItem(i));
                                             }
                                         }
 
@@ -300,13 +321,20 @@ public class HomeActivity extends AppCompatActivity {
                                         filterOptions.setNumFrom(npFrom.getValue());
                                         filterOptions.setNumTo(npTo.getValue());
 
-                                        mSectionsPagerAdapter.notifyDataSetChanged();
+                                        fragment1.setFilterOptions(filterOptions);
+                                        fragment2.setFilterOptions(filterOptions);
+                                        fragment3.setFilterOptions(filterOptions);
+
+                                        fragment1.reload();
+                                        fragment2.reload();
+                                        fragment3.reload();
+
 
                                     }
                                 })
                         .setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 });
@@ -337,6 +365,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -459,7 +488,6 @@ public class HomeActivity extends AppCompatActivity {
 //        myView.setVisibility(View.VISIBLE);
 //        anim.start();
 //    }
-
 
 
 }

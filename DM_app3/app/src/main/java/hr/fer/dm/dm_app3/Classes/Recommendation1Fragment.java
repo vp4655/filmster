@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.fer.dm.dm_app3.Activites.HomeActivity;
 import hr.fer.dm.dm_app3.Models.api.MovieApi;
 import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
 import hr.fer.dm.dm_app3.R;
@@ -57,6 +58,10 @@ public class Recommendation1Fragment extends BaseFragment {
         {
             getMovies();
         }
+
+        HomeActivity activity = (HomeActivity) getActivity();
+        activity.setF2(this);
+
         return recyclerViewApi;
     }
 

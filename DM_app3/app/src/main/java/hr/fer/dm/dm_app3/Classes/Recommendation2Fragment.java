@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 
+import hr.fer.dm.dm_app3.Activites.HomeActivity;
 import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.Network.ApiManager;
@@ -45,6 +46,10 @@ public class Recommendation2Fragment extends BaseFragment
         recyclerView.addOnScrollListener(rvScrollListener);
 
         getGenres();
+
+
+        HomeActivity activity = (HomeActivity) getActivity();
+        activity.setF3(this);
 
         return recyclerView;
     }

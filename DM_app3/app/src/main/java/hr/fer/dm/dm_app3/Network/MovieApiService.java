@@ -30,6 +30,16 @@ public interface MovieApiService {
     @GET("/v1/movies")
     void getMovies( @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
 
+    @GET("/v1/movies")
+    void getMoviesWatched( @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
+
+
+    @GET("/v1/movies")
+    void getMoviesSearch( @Query("access_token") String movies, @Query("sort") String sort, @Query("page") int page, @Query("where") String where, Callback<MoviedxApi> callback);
+
+//    @GET("/v1/movies")
+//    void getMoviesSearch( @Query("access_token") String movies, @Query("page") int page, @Query("where") String where, Callback<MoviedxApi> callback);
+
     @GET("/v1/movies/{id}")
     void getMovie(@Query("access_token") String movies, @Query("fields") String fields, @Path("id") int id, Callback<ApiWraper> callback);
 

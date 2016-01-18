@@ -41,8 +41,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hr.fer.dm.dm_app3.Models.ErrorModel;
-import hr.fer.dm.dm_app3.Models.genres.Genre;
-import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.login.LoginResponse;
 import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
