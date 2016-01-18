@@ -53,8 +53,10 @@ public class Recommendation1Fragment extends BaseFragment {
         String s = getResources().getString(R.string.sharedPref);
         SharedPreferences sp = getContext().getSharedPreferences(s, Activity.MODE_PRIVATE);
         token= sp.getString("token", "");
-
-        getMovies();
+        if(movieListApi.size()==0)
+        {
+            getMovies();
+        }
         return recyclerViewApi;
     }
 

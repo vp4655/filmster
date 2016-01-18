@@ -1,5 +1,6 @@
 package hr.fer.dm.dm_app3.Classes;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.List;
 
+import hr.fer.dm.dm_app3.Activites.HomeActivity;
 import hr.fer.dm.dm_app3.Models.ErrorModel;
 import hr.fer.dm.dm_app3.Models.api.MovieAdapterApi;
 import hr.fer.dm.dm_app3.Models.api.MovieApi;
@@ -276,16 +278,20 @@ public abstract class BaseFragment extends Fragment{
         };
     }
 
+
+
+
     @Override
     public void onResume() {
-        //super.onResume();
+        super.onResume();
 
         // reload only if filter is cahanged
 //        if(isChanged)
 //        {
 //            reInit();
 //        }
-
+        //if(((HomeActivity)getActivity()).filterOptions.filter())
+        //Toast.makeText(getActivity(), "Resume", Toast.LENGTH_LONG).show();
     }
 
     public void reInit()
@@ -303,11 +309,6 @@ public abstract class BaseFragment extends Fragment{
             pDialog.dismiss();
             pDialog = null;
         }
-    }
-
-    protected void init()
-    {
-
     }
 
     protected void getMovies() {
