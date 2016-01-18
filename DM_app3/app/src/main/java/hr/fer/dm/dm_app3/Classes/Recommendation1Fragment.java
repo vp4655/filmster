@@ -25,7 +25,6 @@ public class Recommendation1Fragment extends BaseFragment {
      * number.
      */
 
-    private List<MovieApi> movieList;
     public static Recommendation1Fragment newInstance(int sectionNumber) {
         Recommendation1Fragment fragment = new Recommendation1Fragment();
         Bundle args = new Bundle();

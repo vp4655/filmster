@@ -276,6 +276,23 @@ public abstract class BaseFragment extends Fragment{
         };
     }
 
+    @Override
+    public void onResume() {
+        //super.onResume();
+
+        // reload only if filter is cahanged
+//        if(isChanged)
+//        {
+//            reInit();
+//        }
+
+    }
+
+    public void reInit()
+    {
+        movieListApi.clear();
+    }
+
     //public abstract void getMovies();
 
 //    public abstract void getMoviesLazy(int page);
