@@ -49,7 +49,7 @@ public class Recommendation2Fragment extends BaseFragment
 
 
         HomeActivity activity = (HomeActivity) getActivity();
-        activity.setF3(this);
+        activity.setF3((BaseFragment)this);
 
         return recyclerView;
     }

@@ -21,4 +21,10 @@ public class Genre {
         return name;
     }
 
+    public Genre(String s, int i)
+    {
+        name=s;
+        id=i;
+    }
+
 }

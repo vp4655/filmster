@@ -60,7 +60,7 @@ public class Recommendation1Fragment extends BaseFragment {
         }
 
         HomeActivity activity = (HomeActivity) getActivity();
-        activity.setF2(this);
+        activity.setF2((BaseFragment)this);
 
         return recyclerViewApi;
     }
@@ -68,12 +68,50 @@ public class Recommendation1Fragment extends BaseFragment {
 
     @Override
     protected void getService() {
-        ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackApi);
+        if(filterOptions!=null && filterOptions.getOption() == SearchOption.Genre)
+        {
+
+            String s = "{\"genres\":["+filterOptions.getGenreId()+"]};";
+            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackApi);
+        }
+        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.Name)
+        {
+            String s = "{\"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
+            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackApi);
+        }
+        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.NameGenre)
+        {
+            String s = "{\"genres\":["+filterOptions.getGenreId()+"], \"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
+            ApiManagerMovie.getService().getMoviesSearch(token,"popularity", currentPageApi, s, callbackApi);
+        }
+        else    // sve
+        {
+            ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackApi);
+        }
     }
 
     @Override
     protected void getServiceLazy(int page) {
-        ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackLazyApi);
+        if(filterOptions!=null && filterOptions.getOption() == SearchOption.Genre)
+        {
+
+            String s = "{\"genres\":["+filterOptions.getGenreId()+"]};";
+            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackLazyApi);
+        }
+        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.Name)
+        {
+            String s = "{\"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
+            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackLazyApi);
+        }
+        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.NameGenre)
+        {
+            String s = "{\"genres\":["+filterOptions.getGenreId()+"], \"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
+            ApiManagerMovie.getService().getMoviesSearch(token,"popularity", currentPageApi, s, callbackLazyApi);
+        }
+        else    // sve
+        {
+            ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackLazyApi);
+        }
     }
 
 }

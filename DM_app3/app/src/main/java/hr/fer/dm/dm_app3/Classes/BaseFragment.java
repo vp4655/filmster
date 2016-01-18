@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.AbsListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -370,9 +371,11 @@ public abstract class BaseFragment extends Fragment{
 
     public void reload()
     {
-        Toast.makeText(getActivity(), "FRAGM", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "FRAGM", Toast.LENGTH_SHORT).show();
+//        movieListApi = new ArrayList<MovieApi>();
         movieListApi.clear();
-
+        getMovies();
+        recyclerAdapterApi.notifyDataSetChanged();
     }
 
     public void setFilterOptions(FilterOptions f)

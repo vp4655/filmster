@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.dm.dm_app3.Classes.SearchOption;
+import hr.fer.dm.dm_app3.Models.genres.Genre;
 
 /**
  * Created by Kajkara on 15.1.2016..
@@ -17,6 +18,8 @@ public class FilterOptions {
     private int numTo;
     private boolean isYearChecked;
 
+    private List<GenreSearch> gernesList;
+
     public FilterOptions()
     {
         title= "";
@@ -24,6 +27,7 @@ public class FilterOptions {
         numFrom=0;
         numTo=0;
         isYearChecked = false;
+        initGenres();
     }
 
     public FilterOptions(String title_)
@@ -87,41 +91,86 @@ public class FilterOptions {
 
     public SearchOption getOption()
     {
-        if(title=="" && !genresSelected())
+        boolean b = genresSelected();
+        if(title.isEmpty() && !genresSelected())
             return SearchOption.None;
-        else if (title=="" && genresSelected())
+        else if (title.isEmpty() && genresSelected())
             return SearchOption.Genre;
-        else if (title!="" && !genresSelected())
+        else if (!title.isEmpty() && !genresSelected())
             return SearchOption.Name;
-        else if (title!="" && genresSelected())
+        else if (!title.isEmpty()&& genresSelected())
             return SearchOption.NameGenre;
         else
             return SearchOption.None;
     }
 
+    public void initGenres()
+    {
+        gernesList = new ArrayList<GenreSearch>();
+        gernesList.add(new GenreSearch("Adventure", "12" ));
+        gernesList.add(new GenreSearch("Mystery", "9648" ));
+        gernesList.add(new GenreSearch("Science Fiction", "878" ));
+        gernesList.add(new GenreSearch("Thriller", "53" ));
+        gernesList.add(new GenreSearch("Drama", "18" ));
+        gernesList.add(new GenreSearch("Romance", "10749" ));
+        gernesList.add(new GenreSearch("Crime", "80" ));
+        gernesList.add(new GenreSearch("Comedy", "35" ));
+        gernesList.add(new GenreSearch("Music", "10402" ));
+        gernesList.add(new GenreSearch("Foreign", "10769" ));
+        gernesList.add(new GenreSearch("Documentary", "99" ));
+        gernesList.add(new GenreSearch("Animation", "16" ));
+        gernesList.add(new GenreSearch("Action", "28" ));
+        gernesList.add(new GenreSearch("Fantasy", "14" ));
+        gernesList.add(new GenreSearch("History", "35" ));
+        gernesList.add(new GenreSearch("War", "10752" ));
+        gernesList.add(new GenreSearch("Family", "10751" ));
+        gernesList.add(new GenreSearch("Western", "37" ));
+        gernesList.add(new GenreSearch("Horror", "27" ));
+        gernesList.add(new GenreSearch("TV Movie", "10770" ));
+        gernesList.add(new GenreSearch("Kids", "10762" ));
+        gernesList.add(new GenreSearch("Reality", "10764"));
+
+    }
+
+    public List<String> stringList()
+    {
+        List<String> temp=new ArrayList<String>();
+        for (GenreSearch g :gernesList) {
+            temp.add(g.name);
+        }
+        return temp;
+    }
+
+    public String getGenreId()
+    {
+        List<Integer> temp=new ArrayList<Integer>();
+        String s ="";
+        int i =0;
+        for (GenreSearch g :gernesList) {
+            if(genres.contains(g.name))
+            {
+                s+=(g.id);
+                i++;
+                if(i<=genres.size()-1)
+                    s+=(",");
+            }
+        }
+        return s.toString();
+    }
+
 }
 
 
+class GenreSearch
+{
+    public String name;
+    public String id;
 
-//{ "name" : "Adventure", "id" : 12 }
-//        { "name" : "Mystery", "id" : 9648 }
-//        { "name" : "Science Fiction", "id" : 878 }
-//        { "name" : "Thriller", "id" : 53 }
-//        { "name" : "Drama", "id" : 18 }
-//        { "name" : "Romance", "id" : 10749 }
-//        { "name" : "Crime", "id" : 80 }
-//        { "name" : "Comedy", "id" : 35 }
-//        { "name" : "Music", "id" : 10402 }
-//        { "name" : "Foreign", "id" : 10769 }
-//        { "name" : "Documentary", "id" : 99 }
-//        { "name" : "Animation", "id" : 16 }
-//        { "name" : "Action", "id" : 28 }
-//        { "name" : "Fantasy", "id" : 14 }
-//        { "name" : "History", "id" : 36 }
-//        { "name" : "War", "id" : 10752 }
-//        { "name" : "Family", "id" : 10751 }
-//        { "name" : "Horror", "id" : 27 }
-//        { "name" : "Western", "id" : 37 }
-//        { "name" : "TV Movie", "id" : 10770 }
-//        { "name" : "Kids", "id" : 10762 }
-//        { "name" : "Reality", "id" : 10764 }
+    public GenreSearch(String n, String i)
+    {
+        name=n;
+        id=i;
+    }
+}
+
+

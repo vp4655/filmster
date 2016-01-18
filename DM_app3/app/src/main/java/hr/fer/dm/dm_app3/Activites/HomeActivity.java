@@ -77,9 +77,9 @@ import hr.fer.dm.dm_app3.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public HomeFragment fragment1;
-    public Recommendation1Fragment fragment2;
-    public Recommendation2Fragment fragment3;
+    public BaseFragment fragment1;
+    public BaseFragment fragment2;
+    public BaseFragment fragment3;
 
     public void setF1(Fragment f) {
         fragment1=(HomeFragment)f;
@@ -275,12 +275,7 @@ public class HomeActivity extends AppCompatActivity {
                 listview = (ListView) promptsView.findViewById(R.id.lvGenresDialog);
                 String[] values = new String[]{"Action ", "Adventure ", "Animation ", "Biography ", "Comedy ", "Crime ", "Documentary ", "Drama ", "Family ", "Fantasy ", "Film-Noir ", "History ", "Horror ", "Music ", "Musical ", "Mystery ", "Romance ", "Sci-Fi ", "Sport ", "Thriller ", "War ", "Western"};
 
-                List<String> pomList = new ArrayList<String>();
-                for (String s : values) {
-                    pomList.add(s);
-                }
-
-                DialogAdapter adapter = new DialogAdapter((Activity) view.getContext(), pomList);
+                DialogAdapter adapter = new DialogAdapter((Activity) view.getContext(), filterOptions.stringList());
 
                 listview.setAdapter(adapter);
 
@@ -327,7 +322,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                         fragment1.reload();
                                         fragment2.reload();
-                                        fragment3.reload();
+                                        //fragment3.reload();   // jer je s imdb pa nema search
 
 
                                     }
