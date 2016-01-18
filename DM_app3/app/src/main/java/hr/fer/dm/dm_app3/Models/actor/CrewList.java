@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CrewList {
 
-    @SerializedName("id")
+    @SerializedName("movieId")
     private int id;
 
     @SerializedName("crew")

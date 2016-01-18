@@ -234,6 +234,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_marginLeft="8dp"
                                     android:text="5.6"
+                                    android:id="@+id/tvRottenTomato"
                                     android:textSize="32sp">
 
                                 </TextView>
@@ -259,6 +260,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_marginLeft="8dp"
                                     android:text="5.6"
+                                    android:id="@+id/tvRottenTomatoUser"
                                     android:textSize="32sp">
 
                                 </TextView>
@@ -293,6 +295,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_marginLeft="8dp"
                                     android:text="5.6"
+                                    android:id="@+id/tvImdb"
                                     android:textSize="32sp">
 
                                 </TextView>
@@ -318,6 +321,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_marginLeft="8dp"
                                     android:text="5.6"
+                                    android:id="@+id/tvMetaCritic"
                                     android:textSize="32sp">
 
                                 </TextView>

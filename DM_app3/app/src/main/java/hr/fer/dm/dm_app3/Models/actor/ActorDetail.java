@@ -2,12 +2,9 @@ package hr.fer.dm.dm_app3.Models.actor;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Valentino on 7.1.2016..
- */
 public class ActorDetail {
 
-    @SerializedName("profile_path")
+    @SerializedName("profile_picture")
     private String image;
 
     @SerializedName("adult")
@@ -25,7 +22,7 @@ public class ActorDetail {
     @SerializedName("homepage")
     private String homepage;
 
-    @SerializedName("id")
+    @SerializedName("actorId")
     private int id;
 
     @SerializedName("imdb_id")

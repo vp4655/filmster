@@ -39,7 +39,9 @@ import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
 import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.actor.CastList;
+import hr.fer.dm.dm_app3.Models.actor.CastWrapper;
 import hr.fer.dm.dm_app3.Network.ApiManager;
+import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
 import hr.fer.dm.dm_app3.R;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -52,6 +54,7 @@ public class CastActivity extends AppCompatActivity {
     private String lastName;
     private String email;
     private Toolbar mToolbar;
+    private String apiToken;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -60,11 +63,15 @@ public class CastActivity extends AppCompatActivity {
 
         int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
 
-        ApiManager.getService().getCast(ajDI, new Callback<CastList>() {
-            @Override
-            public void success(CastList castList, Response response) {
+        String s = getResources().getString(R.string.sharedPref);
+        SharedPreferences sp = this.getApplicationContext().getSharedPreferences(s, Activity.MODE_PRIVATE);
+        apiToken = sp.getString("token", "");
 
-                List<ActorMinified> aActors = castList.getCast();
+        ApiManagerMovie.getService().getCast(apiToken, "movieId,cast",ajDI, new Callback<CastWrapper>() {
+            @Override
+            public void success(CastWrapper castList, Response response) {
+
+                List<ActorMinified> aActors = castList.getCastList().getCast();
 
                 initToolbar();
                 initRecyclerView(aActors);

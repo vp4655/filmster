@@ -33,10 +33,13 @@ import java.util.List;
 import hr.fer.dm.dm_app3.ImageTransformations.CircleTransformation;
 import hr.fer.dm.dm_app3.Models.actor.ActorDetail;
 import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
+import hr.fer.dm.dm_app3.Models.actor.ActorWrapper;
 import hr.fer.dm.dm_app3.Models.actor.RolesList;
+import hr.fer.dm.dm_app3.Models.themoviedb.ApiWraper;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieMinified;
 import hr.fer.dm.dm_app3.Network.ApiActorManager;
+import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
 import hr.fer.dm.dm_app3.R;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -76,6 +79,8 @@ public class ActorDetailActivity extends AppCompatActivity {
     private ImageView sixthIV;
     private TextView sixthTV;
 
+    private String apiToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +89,10 @@ public class ActorDetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        String s = getResources().getString(R.string.sharedPref);
+        SharedPreferences sp = this.getApplicationContext().getSharedPreferences(s, Activity.MODE_PRIVATE);
+        apiToken = sp.getString("token", "");
 
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
@@ -132,19 +141,22 @@ public class ActorDetailActivity extends AppCompatActivity {
             }
         });
 
-        loadActor(ajDI);
+        loadActor(apiToken, ajDI);
     }
 
-    public void loadActor(int id){
+    public void loadActor(final String apiToken, int id){
 
         //setTitle(actor.getName());
         collapsingToolbar.setTitle("");
 
-        ApiActorManager.getService().getActor(id, new Callback<ActorDetail>() {
-            @Override
-            public void success(ActorDetail actorDetail, Response response) {
+        ApiManagerMovie.getService().getActor(apiToken, "actorId,biography,birthday,deathday,homepage,imdb_id,name,place_of_birth,popularity,profile_picture", id, new Callback<ActorWrapper>() {
 
-                final ActorDetail actor = actorDetail;
+            final String token = apiToken;
+
+            @Override
+            public void success(ActorWrapper actorDetail, Response response) {
+
+                final ActorDetail actor = actorDetail.getActorDetail();
 
                 try {
 
@@ -169,7 +181,25 @@ public class ActorDetailActivity extends AppCompatActivity {
                     });
 
                     name.setText(actor.getName());
-                    date.setText(actor.getBirthday() + " - " + actor.getDeathday());
+
+                    String mDate;
+                    String dDate;
+
+                    if(actor.getBirthday().isEmpty()){
+                        mDate = "";
+                    }
+                    else{
+                        mDate = actor.getBirthday().split("T")[0].replace('-', '.');
+                    }
+
+                    if(actor.getDeathday().isEmpty()){
+                        dDate = "";
+                    }
+                    else{
+                        dDate = actor.getDeathday().split("T")[0].replace('-', '.');
+                    }
+
+                    date.setText(mDate + " - " + dDate);
                     placeOfBirth.setText(actor.getPlace_of_birth());
                     popularity.setText(Integer.toString(Math.round(actor.getPopularity())));
                     etvBiography.setText(actor.getBiography());

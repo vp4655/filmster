@@ -17,9 +17,6 @@ public class Movie implements Serializable {
     @SerializedName("poster_path")
     private String image;
 
-    @SerializedName("adult")
-    private Boolean adult;
-
     @SerializedName("overview")
     private String overview;
 
@@ -30,29 +27,32 @@ public class Movie implements Serializable {
     private List<Integer> genre_ids;
     private List<String> genres;
 
-    @SerializedName("id")
+    @SerializedName("movieId")
     private int id;
 
     @SerializedName("imdb_id")
     private String imdb_id;
 
-    @SerializedName("original_title")
-    private String original_title;
+    @SerializedName("imdb_rating")
+    private String imdb_rating;
 
     @SerializedName("title")
     private String title;
 
-    @SerializedName("backdrop_path")
-    private String backdrop_path;
+    @SerializedName("metascore")
+    private String metascore;
+
+    @SerializedName("runtime")
+    private int runtime;
+
+    @SerializedName("tomato_meter")
+    private String tomato_meter;
+
+    @SerializedName("tomato_user_meter")
+    private String tomato_user_meter;
 
     @SerializedName("popularity")
     private Float popularity;
-
-    @SerializedName("vote_count")
-    private int vote_count;
-
-    @SerializedName("video")
-    private Boolean video;
 
     @SerializedName("vote_average")
     private Float vote_average;
@@ -60,11 +60,6 @@ public class Movie implements Serializable {
 
     public String getTitle() {
         return title;
-    }
-
-    public Boolean getAdult()
-    {
-        return adult;
     }
 
     public String getOverview()
@@ -95,14 +90,24 @@ public class Movie implements Serializable {
         return id;
     }
 
-    public String getOriginal_title()
-    {
-        return original_title;
+    public String getRuntime(){
+        return Integer.toString(runtime);
     }
 
-    public String getBackdrop_path()
-    {
-        return backdrop_path;
+    public String getImdb_rating(){
+        return imdb_rating;
+    }
+
+    public String getMetascore(){
+        return metascore;
+    }
+
+    public String getTomato_meter(){
+        return tomato_meter;
+    }
+
+    public String getTomato_user_meter(){
+        return tomato_user_meter;
     }
 
     public String getPopularity()
@@ -115,16 +120,6 @@ public class Movie implements Serializable {
 
     public String getImdb_id(){
         return imdb_id;
-    }
-
-    public int getVote_count()
-    {
-        return vote_count;
-    }
-
-    public Boolean getVideo()
-    {
-        return video;
     }
 
     public Float getVote_average()

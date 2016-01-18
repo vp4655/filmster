@@ -42,7 +42,9 @@ import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.actor.CastList;
 import hr.fer.dm.dm_app3.Models.actor.CrewList;
 import hr.fer.dm.dm_app3.Models.actor.CrewMinified;
+import hr.fer.dm.dm_app3.Models.actor.CrewWrapper;
 import hr.fer.dm.dm_app3.Network.ApiManager;
+import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
 import hr.fer.dm.dm_app3.R;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -55,6 +57,7 @@ public class CrewActivity extends AppCompatActivity {
     private String lastName;
     private String email;
     private Toolbar mToolbar;
+    private String apiToken;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -63,9 +66,15 @@ public class CrewActivity extends AppCompatActivity {
 
         int ajDI = (int) getIntent().getExtras().get("Id");
 
-        ApiManager.getService().getCrew(ajDI, new Callback<CrewList>() {
+        String s = getResources().getString(R.string.sharedPref);
+        SharedPreferences sp = this.getApplicationContext().getSharedPreferences(s, Activity.MODE_PRIVATE);
+        apiToken = sp.getString("token", "");
+
+        ApiManagerMovie.getService().getCrew(apiToken, "movieId,crew",ajDI, new Callback<CrewWrapper>() {
             @Override
-            public void success(CrewList castList, Response response) {
+            public void success(CrewWrapper wrapper, Response response) {
+
+                CrewList castList = wrapper.getCrewList();
 
                 List<CrewMinified> aCrew = castList.getCrew();
 
