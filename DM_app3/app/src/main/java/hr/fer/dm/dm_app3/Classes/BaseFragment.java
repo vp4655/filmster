@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import hr.fer.dm.dm_app3.Activites.HomeActivity;
+import hr.fer.dm.dm_app3.Classes.Fab.FilterOptions;
 import hr.fer.dm.dm_app3.Models.ErrorModel;
 import hr.fer.dm.dm_app3.Models.api.MovieAdapterApi;
 import hr.fer.dm.dm_app3.Models.api.MovieApi;
@@ -34,6 +35,7 @@ import retrofit.client.Response;
 public abstract class BaseFragment extends Fragment{
 
     protected ProgressDialog pDialog;
+    protected FilterOptions filterOptions;
     //protected String url;
 
     /**
@@ -366,5 +368,16 @@ public abstract class BaseFragment extends Fragment{
         });
     }
 
+    public void reload()
+    {
+        Toast.makeText(getActivity(), "FRAGM", Toast.LENGTH_SHORT).show();
+        movieListApi.clear();
+
+    }
+
+    public void setFilterOptions(FilterOptions f)
+    {
+        filterOptions = f;
+    }
 }
 

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -69,10 +70,28 @@ import java.util.List;
 import hr.fer.dm.dm_app3.Classes.BaseFragment;
 import hr.fer.dm.dm_app3.Classes.Fab.FilterOptions;
 import hr.fer.dm.dm_app3.Classes.HomeFragment;
+import hr.fer.dm.dm_app3.Classes.Recommendation1Fragment;
+import hr.fer.dm.dm_app3.Classes.Recommendation2Fragment;
 import hr.fer.dm.dm_app3.Classes.SectionsPagerAdapter;
 import hr.fer.dm.dm_app3.R;
 
 public class HomeActivity extends AppCompatActivity {
+
+    public HomeFragment fragment1;
+    public Recommendation1Fragment fragment2;
+    public Recommendation2Fragment fragment3;
+
+    public void setF1(Fragment f) {
+        fragment1=(HomeFragment)f;
+    }
+
+    public void setF2(Fragment f) {
+        fragment2=(Recommendation1Fragment)f;
+    }
+
+    public void setF3(Fragment f) {
+        fragment3=(Recommendation2Fragment)f;
+    }
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -302,7 +321,14 @@ public class HomeActivity extends AppCompatActivity {
                                         filterOptions.setNumFrom(npFrom.getValue());
                                         filterOptions.setNumTo(npTo.getValue());
 
-                                        mSectionsPagerAdapter.notifyDataSetChanged();
+                                        fragment1.setFilterOptions(filterOptions);
+                                        fragment2.setFilterOptions(filterOptions);
+                                        fragment3.setFilterOptions(filterOptions);
+
+                                        fragment1.reload();
+                                        fragment2.reload();
+                                        fragment3.reload();
+
 
                                     }
                                 })
