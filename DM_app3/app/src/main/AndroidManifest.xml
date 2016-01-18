@@ -78,11 +78,15 @@
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/FullscreenTheme" >
         </activity>
-        <activity android:name=".Activites.SearchMoviesActivity" >
+        <activity android:name=".Activites.SearchMoviesActivity"
+            android:label=""
+            android:theme="@style/NoAction">
         </activity>
-        <activity android:name=".Activites.WatchedActivity" >
+        <activity android:name=".Activites.WatchedActivity"
+            android:theme="@style/NoAction">
         </activity>
-        <activity android:name=".Activites.WatchLaterActivity" >
+        <activity android:name=".Activites.WatchLaterActivity"
+            android:theme="@style/NoAction">
         </activity>
     </application>
 

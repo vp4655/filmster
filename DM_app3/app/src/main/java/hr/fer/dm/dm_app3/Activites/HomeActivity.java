@@ -175,7 +175,7 @@ public class HomeActivity extends AppCompatActivity {
                         if(iDrawerItem != null){
                             Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
                             if(iDrawerItem.getIdentifier() == 1){
-                                startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
+                                intent = new Intent(HomeActivity.this, SearchMoviesActivity.class);
                             }
                             else if (iDrawerItem.getIdentifier() == 2){
                                 intent = new Intent(HomeActivity.this, WatchLaterActivity.class);

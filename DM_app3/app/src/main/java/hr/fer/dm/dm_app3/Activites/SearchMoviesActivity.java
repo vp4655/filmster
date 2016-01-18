@@ -8,9 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,8 +28,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.ErrorModel;
 import hr.fer.dm.dm_app3.Models.api.MovieAdapterApi;
+import hr.fer.dm.dm_app3.Models.api.MovieAdapterHeader;
 import hr.fer.dm.dm_app3.Models.api.MovieApi;
 import hr.fer.dm.dm_app3.Models.api.MoviedxApi;
 import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
@@ -36,6 +43,7 @@ import retrofit.client.Response;
 public class SearchMoviesActivity extends AppCompatActivity {
 
     protected ProgressDialog pDialog;
+    private Toolbar mToolbar;
 
     int threshold;
     int currentPage;
@@ -52,7 +60,7 @@ public class SearchMoviesActivity extends AppCompatActivity {
     @Bind(R.id.rvMoviesSearch)RecyclerView recyclerViewApi;
 
     protected  boolean gettingApi = false;
-    protected MovieAdapterApi recyclerAdapterApi;
+    protected MovieAdapterHeader recyclerAdapterApi;
     protected RecyclerView.OnScrollListener rvScrollListenerApi;
     protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackApi;
     protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackLazyApi;
@@ -62,6 +70,9 @@ public class SearchMoviesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_movies);
         ButterKnife.bind(this);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbarSearch);
+        setSupportActionBar(mToolbar);
 
         threshold = 10;
         currentPage = 1; // imdb broji od 1!!!
@@ -74,6 +85,27 @@ public class SearchMoviesActivity extends AppCompatActivity {
 
         recyclerViewApi = (RecyclerView) findViewById(R.id.rvMoviesSearch);
         recyclerViewApi.setLayoutManager(new LinearLayoutManager(this));
+
+        final GestureDetector mGestureDetector = new GestureDetector(SearchMoviesActivity.this, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+        recyclerViewApi.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
+
         rvScrollListenerApi = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -125,7 +157,7 @@ public class SearchMoviesActivity extends AppCompatActivity {
                     if(m.getMovieList().size()<m.getlimit())
                         end = true;
 
-                    recyclerAdapterApi = new MovieAdapterApi(movieListApi);
+                    recyclerAdapterApi = new MovieAdapterHeader(movieListApi);
                     recyclerViewApi.setAdapter(recyclerAdapterApi);
                 } catch (Exception exc) {
 
@@ -177,6 +209,8 @@ public class SearchMoviesActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), errorMess, Toast.LENGTH_LONG).show();
             }
         };
+
+
 
         searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -234,6 +268,16 @@ public class SearchMoviesActivity extends AppCompatActivity {
         if (searchPlateView != null) {
             searchPlateView.setBackgroundColor(Color.WHITE); //depand you can set
         }
+    }
+
+    private void hideViews() {
+        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        searchView.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showViews() {
+        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        searchView.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     private void changeSearchViewTextColor(View view) {
