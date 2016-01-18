@@ -1,61 +1,82 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import hr.fer.dm.dm_app3.ListViewItems.RolesAdapter;
+import hr.fer.dm.dm_app3.ListViewItems.CrewAdapter;
+import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
+import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
 import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
-import hr.fer.dm.dm_app3.Models.actor.RolesList;
-import hr.fer.dm.dm_app3.Models.themoviedb.MovieMinified;
-import hr.fer.dm.dm_app3.Network.ApiActorManager;
+import hr.fer.dm.dm_app3.Models.actor.CastList;
+import hr.fer.dm.dm_app3.Models.actor.CrewList;
+import hr.fer.dm.dm_app3.Models.actor.CrewMinified;
+import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.R;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by Valentino on 12.1.2016..
- */
-public class RolesActivity extends AppCompatActivity{
+public class CrewActivity extends AppCompatActivity {
 
+    private String name;
+    private String uri;
+    private String lastName;
+    private String email;
     private Toolbar mToolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roles);
+        setContentView(R.layout.activity_cast);
 
-        int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
-        final String actorName = (String) getIntent().getExtras().get("ActorName") + "'s credits";
+        int ajDI = (int) getIntent().getExtras().get("Id");
 
-        ApiActorManager.getService().getRoles(ajDI, new Callback<RolesList>() {
+        ApiManager.getService().getCrew(ajDI, new Callback<CrewList>() {
             @Override
-            public void success(RolesList rolesList, Response response) {
+            public void success(CrewList castList, Response response) {
 
-                List<MovieMinified> aMovies = rolesList.getCast();
+                List<CrewMinified> aCrew = castList.getCrew();
 
-                initToolbar(actorName);
-                initRecyclerView(aMovies);
+                initToolbar();
+                initRecyclerView(aCrew);
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(RolesActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(CrewActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -77,7 +98,7 @@ public class RolesActivity extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_other) {
-            Intent intent = new Intent(RolesActivity.this, HomeActivity.class);
+            Intent intent = new Intent(CrewActivity.this, HomeActivity.class);
             startActivity(intent);
         }
         else if (id == android.R.id.home){
@@ -88,21 +109,21 @@ public class RolesActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private void initToolbar(String toolbarText) {
-        mToolbar = (Toolbar) findViewById(R.id.toolbarRoles);
+    private void initToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbarCast);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(toolbarText);
+        getSupportActionBar().setTitle(getString(R.string.cast_string));
         mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initRecyclerView(List<MovieMinified> movies) {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewRoles);
+    private void initRecyclerView(List<CrewMinified> crew) {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewCast);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final RolesAdapter recyclerAdapter = new RolesAdapter(movies);
+        final CrewAdapter recyclerAdapter = new CrewAdapter(crew);
         recyclerView.setAdapter(recyclerAdapter);
 
-        final GestureDetector mGestureDetector = new GestureDetector(RolesActivity.this, new GestureDetector.SimpleOnGestureListener() {
+        final GestureDetector mGestureDetector = new GestureDetector(CrewActivity.this, new GestureDetector.SimpleOnGestureListener() {
 
             @Override public boolean onSingleTapUp(MotionEvent e) {
                 return true;
@@ -118,9 +139,9 @@ public class RolesActivity extends AppCompatActivity{
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
 
-                    MovieMinified movieMinified = (MovieMinified)recyclerAdapter.getItem(recyclerView.getChildAdapterPosition(child) - 1);
-                    Intent intent = new Intent(RolesActivity.this, MovieDetailsActivity.class);
-                    intent.putExtra("Id", movieMinified.getId());
+                    CrewMinified crewMinified = (CrewMinified)recyclerAdapter.getItem(recyclerView.getChildAdapterPosition(child) - 1);
+                    Intent intent = new Intent(CrewActivity.this, ActorDetailActivity.class);
+                    intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, crewMinified.getId());
                     startActivity(intent);
 
                     return true;
@@ -162,5 +183,6 @@ public class RolesActivity extends AppCompatActivity{
     private void showViews() {
         mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
+
 
 }

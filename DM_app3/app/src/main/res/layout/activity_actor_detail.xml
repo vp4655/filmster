@@ -288,13 +288,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aFirstImage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aFirstName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aFirstImage"
                             android:layout_centerInParent="true"/>
 

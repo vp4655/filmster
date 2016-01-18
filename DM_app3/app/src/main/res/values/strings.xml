@@ -8,6 +8,7 @@
     <string name="actor_btn">Get Actor</string>
     <string name="title_activity_actor_detail">ActorDetailActivity</string>
     <string name="actor_default_name">John Doe</string>
+    <string name="default_movie_name">Unknown</string>
     <string name="actor_default_birth">1993.28.01 - </string>
     <string name="actor_default_place_of_birth">Staten Island, New York</string>
     <string name="actor_default_popularity">81 </string>
@@ -15,11 +16,18 @@
     <string name="actor_default_text">This is an excellent actor that acted in action and romance</string>
     <string name="cast_string">Full cast</string>
     <string name="cast_title">Leading roles</string>
-    <string name="roles_title">Known Roles</string>
+    <string name="roles_title">Known For</string>
     <string name="synopsis_text">Synopsis</string>
     <string name="biography_text">Biography</string>
     <string name="poplarity_heading">RATING</string>
     <string name="roles_text">Filmography</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="runtime_movie">128 min</string>
+    <string name="release_date">28.1.1993</string>
+    <string name="release_text">Released</string>
+    <string name="runtime_text">Runtime</string>
+    <string name="full_crew">Full Crew</string>
+    <string name="director_list">John Doe, Jane Doe</string>
 
 
     <string name="hello_world">Hello world!</string>
@@ -32,6 +40,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="action_home">Home</string>
+    <string name="like_text">Like</string>
+    <string name="watch_text">Watchlist</string>
+    <string name="seen_text">Seen</string>
 
 
     <string name="drawer_item_search">Find Movie</string>

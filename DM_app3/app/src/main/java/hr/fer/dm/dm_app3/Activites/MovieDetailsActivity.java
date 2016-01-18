@@ -1,15 +1,19 @@
 package hr.fer.dm.dm_app3.Activites;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +21,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +49,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Bind(R.id.collapsing_toolbar_movie) CollapsingToolbarLayout collapsingToolbar;
     @Bind(R.id.appbar_movie) AppBarLayout appBarLayout;
     @Bind(R.id.thumbnail_movie) ImageView thumbnailIV;
-    @Bind(R.id.tvMovieHomepage) TextView homepageTV;
+    @Bind(R.id.crewLink) TextView crewLink;
     @Bind(R.id.firstImage) ImageView firstIV;
     @Bind(R.id.firstName) TextView firstTV;
     @Bind(R.id.secondImage) ImageView secondIV;
@@ -55,6 +64,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Bind(R.id.sixthName) TextView sixthTV;
     @Bind(R.id.imdbLink) Button imdbButton;
     @Bind(R.id.homepageLink) Button homepageButton;
+    @Bind(R.id.share_btn) ShareButton shareButton;
+    @Bind(R.id.swiper) SwipeLayout swiper;
+    @Bind(R.id.runtime) TextView runtimeTV;
+    @Bind(R.id.releaseDate) TextView releaseDateTV;
+
+    private Bitmap image;
 
 
     @Override
@@ -69,6 +84,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.text_icons));
 
         final int id = (int)getIntent().getExtras().get("Id");
+
+        swiper.setShowMode(SwipeLayout.ShowMode.LayDown);
+
         setMovie(id);
 
         castTV.setOnClickListener(new View.OnClickListener() {
@@ -121,15 +139,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     overviewTV.setText(movie.getOverview());
                     Picasso.with(getApplicationContext()).load(movie.getImage()).fit().placeholder(R.drawable.large_movie_poster).into(thumbnailIV);
                     collapsingToolbar.setTitle(m.getTitle());
-                    homepageTV.setText(Html.fromHtml("<b>Homepage :</b> " + movie.getHomepage()));
-                    homepageTV.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Uri uri = Uri.parse(movie.getHomepage());
-                            Intent web = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(web);
-                        }
-                    });
+
+                    releaseDateTV.setText(movie.getRelease_date());
 
                     imdbButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -153,6 +164,24 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         }
                     });
 
+                    crewLink.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent crewIntent = new Intent(MovieDetailsActivity.this, CrewActivity.class);
+                            crewIntent.putExtra("Id", movie.getId());
+                            startActivity(crewIntent);
+
+                        }
+                    });
+
+                    swiper.findViewById(R.id.sharer).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            shareImage(movie.getImdb_id(), movie.getTitle(), movie.getImage());
+                        }
+                    });
+
                     setCast(movie.getId());
 
                 } catch (Exception exc) {
@@ -166,6 +195,34 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void shareImage(String uri, String title, final String imageUri){
+        final String url = uri;
+        final String imageUrl = imageUri;
+        final String titles = title;
+        AlertDialog.Builder shareDialog = new AlertDialog.Builder(this);
+        shareDialog.setTitle("Share movie");
+        shareDialog.setMessage("Share movie to Facebook?");
+        shareDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //share the image to Facebook
+                ShareLinkContent content = new ShareLinkContent.Builder()
+                        .setContentUrl(Uri.parse(LoginActivity.IMDB_MOVIE_LINK + url))
+                        .setImageUrl(Uri.parse(imageUri))
+                        .setContentTitle(titles + " is AWESOME!!")
+                        .setContentDescription("Great movie, you should definitely watch this piece of art!! Thx Filmster")
+                        .build();
+                shareButton.setShareContent(content);
+                shareButton.performClick();
+            }
+        });
+        shareDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        shareDialog.show();
     }
 
     private void setCast(int id){

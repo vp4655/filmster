@@ -19,6 +19,13 @@ public class MovieMinified implements Serializable {
 
     @SerializedName("character")
     private String characterName;
+
+    @SerializedName("job")
+    private String job;
+
+    @SerializedName("department")
+    private String department;
+
     private static final long serialVersionUID = -8959832007991513854L;
 
     public MovieMinified(){
@@ -42,6 +49,10 @@ public class MovieMinified implements Serializable {
 
     public String getCharacterName(){
         return this.characterName;
+    }
+
+    public String getJob() {
+        return this.job + "(" + this.department + ")";
     }
 
     //endregion

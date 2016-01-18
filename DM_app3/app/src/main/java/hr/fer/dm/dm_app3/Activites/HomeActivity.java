@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity {
                         if(iDrawerItem != null){
                             Intent intent = null;
                             if(iDrawerItem.getIdentifier() == 1){
-                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                                startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
                             }
                             else if (iDrawerItem.getIdentifier() == 2){
                                 intent = new Intent(HomeActivity.this, HomeActivity.class);
@@ -364,10 +364,6 @@ public class HomeActivity extends AppCompatActivity {
             else {
                 drawer.openDrawer();
             }
-        }
-        else if(id==R.id.action_search)
-        {
-            startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

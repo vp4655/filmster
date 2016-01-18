@@ -146,7 +146,7 @@ public class ActorDetailActivity extends AppCompatActivity {
 
                 final ActorDetail actor = actorDetail;
 
-                try{
+                try {
 
                     appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
                     appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -180,8 +180,7 @@ public class ActorDetailActivity extends AppCompatActivity {
 
                     setRoles(actor.getId());
 
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -202,51 +201,53 @@ public class ActorDetailActivity extends AppCompatActivity {
 
                 List<MovieMinified> aMovies = rolesList.getSmallRoles();
 
-                MovieMinified a1 = aMovies.get(0);
-                MovieMinified a2 = aMovies.get(1);
-                MovieMinified a3 = aMovies.get(2);
-                MovieMinified a4 = aMovies.get(3);
-                MovieMinified a5 = aMovies.get(4);
-                MovieMinified a6 = aMovies.get(5);
+                if(aMovies.size() > 0){
+                    MovieMinified a1 = aMovies.get(0);
+                    firstTV.setText(a1.getTitle());
+                    Picasso.with(getApplicationContext()).load(a1.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(firstIV);
+                    RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.aFirstLayout);
+                    rl1.setOnClickListener(setMovieDetailsListener(a1.getId()));
+                }
 
-                firstTV.setText(a1.getTitle());
-                Picasso.with(getApplicationContext()).load(a1.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(firstIV);
+                if(aMovies.size() > 1){
+                    MovieMinified a2 = aMovies.get(1);
+                    secondTV.setText(a2.getTitle());
+                    Picasso.with(getApplicationContext()).load(a2.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(secondIV);
+                    RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.aSecondLayout);
+                    rl2.setOnClickListener(setMovieDetailsListener(a2.getId()));
+                }
 
-                secondTV.setText(a2.getTitle());
-                Picasso.with(getApplicationContext()).load(a2.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(secondIV);
+                if(aMovies.size() > 2){
+                    MovieMinified a3 = aMovies.get(2);
+                    thirdTV.setText(a3.getTitle());
+                    Picasso.with(getApplicationContext()).load(a3.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(thirdIV);
+                    RelativeLayout rl3 = (RelativeLayout) findViewById(R.id.aThirdLayout);
+                    rl3.setOnClickListener(setMovieDetailsListener(a3.getId()));
+                }
 
-                thirdTV.setText(a3.getTitle());
-                Picasso.with(getApplicationContext()).load(a3.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(thirdIV);
+                if(aMovies.size() > 3){
+                    MovieMinified a4 = aMovies.get(3);
+                    fourthTV.setText(a4.getTitle());
+                    Picasso.with(getApplicationContext()).load(a4.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(fourthIV);
+                    RelativeLayout rl4 = (RelativeLayout) findViewById(R.id.aFourthLayout);
+                    rl4.setOnClickListener(setMovieDetailsListener(a4.getId()));
+                }
 
-                fourthTV.setText(a4.getTitle());
-                Picasso.with(getApplicationContext()).load(a4.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(fourthIV);
+                if(aMovies.size() > 4){
+                    MovieMinified a5 = aMovies.get(4);
+                    fifthTV.setText(a5.getTitle());
+                    Picasso.with(getApplicationContext()).load(a5.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(fifthIV);
+                    RelativeLayout rl5 = (RelativeLayout) findViewById(R.id.aFifthLayout);
+                    rl5.setOnClickListener(setMovieDetailsListener(a5.getId()));
+                }
 
-                fifthTV.setText(a5.getTitle());
-                Picasso.with(getApplicationContext()).load(a5.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(fifthIV);
-
-                sixthTV.setText(a6.getTitle());
-                Picasso.with(getApplicationContext()).load(a6.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(sixthIV);
-
-                //on click open actor
-
-                RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.aFirstLayout);
-                RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.aSecondLayout);
-                RelativeLayout rl3 = (RelativeLayout) findViewById(R.id.aThirdLayout);
-                RelativeLayout rl4 = (RelativeLayout) findViewById(R.id.aFourthLayout);
-                RelativeLayout rl5 = (RelativeLayout) findViewById(R.id.aFifthLayout);
-                RelativeLayout rl6 = (RelativeLayout) findViewById(R.id.aSixthLayout);
-
-                rl1.setOnClickListener(setMovieDetailsListener(a1.getId()));
-
-                rl2.setOnClickListener(setMovieDetailsListener(a2.getId()));
-
-                rl3.setOnClickListener(setMovieDetailsListener(a3.getId()));
-
-                rl4.setOnClickListener(setMovieDetailsListener(a4.getId()));
-
-                rl5.setOnClickListener(setMovieDetailsListener(a5.getId()));
-
-                rl6.setOnClickListener(setMovieDetailsListener(a6.getId()));
+                if(aMovies.size() > 5){
+                    MovieMinified a6 = aMovies.get(5);
+                    sixthTV.setText(a6.getTitle());
+                    Picasso.with(getApplicationContext()).load(a6.getPosterPictureUrl()).placeholder(R.drawable.person_placeholder).into(sixthIV);
+                    RelativeLayout rl6 = (RelativeLayout) findViewById(R.id.aSixthLayout);
+                    rl6.setOnClickListener(setMovieDetailsListener(a6.getId()));
+                }
 
             }
 
