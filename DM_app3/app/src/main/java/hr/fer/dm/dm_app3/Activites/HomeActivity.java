@@ -66,7 +66,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import hr.fer.dm.dm_app3.Classes.BaseFragment;
 import hr.fer.dm.dm_app3.Classes.Fab.FilterOptions;
+import hr.fer.dm.dm_app3.Classes.HomeFragment;
 import hr.fer.dm.dm_app3.Classes.SectionsPagerAdapter;
 import hr.fer.dm.dm_app3.R;
 
@@ -154,7 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                         if(iDrawerItem != null){
                             Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
                             if(iDrawerItem.getIdentifier() == 1){
-                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                                intent = new Intent(HomeActivity.this, SearchMoviesActivity.class);
                             }
                             else if (iDrawerItem.getIdentifier() == 2){
                                 intent = new Intent(HomeActivity.this, WatchLaterActivity.class);
@@ -244,7 +246,7 @@ public class HomeActivity extends AppCompatActivity {
                         if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
                             //We get the different between oldValue and the new value
                             int newValue = numberPicker.getValue();
-                             npTo.setMinValue(numberPicker.getValue());
+                            npTo.setMinValue(numberPicker.getValue());
                         }
                     }
                 });
@@ -252,10 +254,10 @@ public class HomeActivity extends AppCompatActivity {
                 // lista zanrova
                 //TODO: listu genereova dohvatiti??
                 listview = (ListView) promptsView.findViewById(R.id.lvGenresDialog);
-                String[] values = new String[] { "Action ", "Adventure ", "Animation ", "Biography ", "Comedy ", "Crime ", "Documentary ", "Drama ", "Family ", "Fantasy ", "Film-Noir ", "History ", "Horror ", "Music ", "Musical ", "Mystery ", "Romance ", "Sci-Fi ", "Sport ", "Thriller ", "War ", "Western"};
+                String[] values = new String[]{"Action ", "Adventure ", "Animation ", "Biography ", "Comedy ", "Crime ", "Documentary ", "Drama ", "Family ", "Fantasy ", "Film-Noir ", "History ", "Horror ", "Music ", "Musical ", "Mystery ", "Romance ", "Sci-Fi ", "Sport ", "Thriller ", "War ", "Western"};
 
                 List<String> pomList = new ArrayList<String>();
-                for (String s: values) {
+                for (String s : values) {
                     pomList.add(s);
                 }
 
@@ -278,10 +280,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 // set dialog message
                 alertDialogBuilder
-                .setCancelable(true)
+                        .setCancelable(true)
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         // get user input and set it to result
                                         // edit text
                                         filterOptions.setTitle(userInput.getText().toString());
@@ -292,7 +294,7 @@ public class HomeActivity extends AppCompatActivity {
                                         for (int i = 0; i < listview.getAdapter().getCount(); i++) {
                                             if (checked.get(i)) {
                                                 // Do something
-                                                checkedGenres.add((String)listview.getAdapter().getItem(i));
+                                                checkedGenres.add((String) listview.getAdapter().getItem(i));
                                             }
                                         }
 
@@ -306,7 +308,7 @@ public class HomeActivity extends AppCompatActivity {
                                 })
                         .setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 });
@@ -337,6 +339,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -467,7 +470,6 @@ public class HomeActivity extends AppCompatActivity {
 //        myView.setVisibility(View.VISIBLE);
 //        anim.start();
 //    }
-
 
 
 }
