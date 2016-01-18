@@ -152,20 +152,21 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
                         if(iDrawerItem != null){
-                            Intent intent = null;
+                            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
                             if(iDrawerItem.getIdentifier() == 1){
                                 intent = new Intent(HomeActivity.this, HomeActivity.class);
                             }
                             else if (iDrawerItem.getIdentifier() == 2){
-                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                                intent = new Intent(HomeActivity.this, WatchLaterActivity.class);
                             }
                             else if (iDrawerItem.getIdentifier() == 3){
-                                intent = new Intent(HomeActivity.this, HomeActivity.class);
+                                intent = new Intent(HomeActivity.this, WatchedActivity.class);
                             }
                             else if (iDrawerItem.getIdentifier() == 4){
                                 LoginManager.getInstance().logOut();
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                                intent = new Intent(HomeActivity.this, LoginActivity.class);
                             }
+                            startActivity(intent);
                         }
                         return false;
                     }
@@ -366,6 +367,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
         else if(id==R.id.action_search)
+        {
+            startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
+        }
+        else
         {
             startActivity(new Intent(HomeActivity.this, SearchMoviesActivity.class));
         }

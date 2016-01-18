@@ -40,6 +40,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Models.ErrorModel;
 import hr.fer.dm.dm_app3.Models.genres.Genre;
 import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.login.LoginResponse;
@@ -95,9 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    // do something with token
 //
 //                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                    loggedin();
-
+                    //loggedin();
                 }
             }
         });
@@ -212,12 +211,16 @@ public class LoginActivity extends AppCompatActivity {
         final String token = AccessToken.getCurrentAccessToken().getToken(); //Facebook doesn't allow devs to Log "session.getAccessToken" directly, because it may cause leaks
 
         ApiManagerMovie.getService().getFToken(token, new Callback<LoginResponse>() {
+
             @Override
             public void success(LoginResponse loginResponse, Response response) {
                 try {
+                    int s = response.getStatus();
                     SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("token", token);
+//                    editor.putString("token", token);
+                    String sss = loginResponse.getUserData().getToken();
+                    editor.putString("token", loginResponse.getUserData().getToken());
                     editor.putString("name", loginResponse.getUserData().getUser().getFirstName());
                     editor.putString("uri", loginResponse.getUserData().getUser().getPhoto());
                     editor.putString("email", loginResponse.getUserData().getUser().getEmail());
@@ -232,7 +235,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
 
                 } catch (Exception exc) {
-
+                    Toast.makeText(LoginActivity.this, "Something LOGIN happened :(", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -240,6 +243,10 @@ public class LoginActivity extends AppCompatActivity {
             public void failure(RetrofitError error) {
                 Toast.makeText(LoginActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
 
+                if (error.getResponse() != null) {
+                    ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
+                    startActivity(errorModel.actionForStatusCode(error.getResponse().getStatus(), LoginActivity.this));
+                }
             }
         });
     }

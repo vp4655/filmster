@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="sharedPref">"facebookApp"</string>
+
     <string name="app_name">Filmster</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_splash_screen">SplashScreenActivity</string>

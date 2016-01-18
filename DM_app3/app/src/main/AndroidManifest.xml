@@ -88,6 +88,10 @@
         </activity>
         <activity android:name=".Activites.SearchMoviesActivity" >
         </activity>
+        <activity android:name=".Activites.WatchedActivity" >
+        </activity>
+        <activity android:name=".Activites.WatchLaterActivity" >
+        </activity>
     </application>
 
 </manifest>

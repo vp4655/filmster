@@ -1,6 +1,7 @@
 package hr.fer.dm.dm_app3.Classes;
 
 import android.app.ProgressDialog;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,10 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.List;
 
+import hr.fer.dm.dm_app3.Models.ErrorModel;
+import hr.fer.dm.dm_app3.Models.api.MovieAdapterApi;
+import hr.fer.dm.dm_app3.Models.api.MovieApi;
+import hr.fer.dm.dm_app3.Models.api.MoviedxApi;
 import hr.fer.dm.dm_app3.Models.genres.Genre;
 import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
@@ -37,9 +42,12 @@ public abstract class BaseFragment extends Fragment{
 
     int threshold;
     int currentPage;
+    int currentPageApi;  // API od 0 ide!
     int totalPages;
 
     protected List<Movie> movieList;
+
+    protected List<hr.fer.dm.dm_app3.Models.api.MovieApi> movieListApi;
 
     // TODO: obrisati poslije - genreova ne dohvaća app
     HashMap<Integer, String> genres = new HashMap<Integer, String>();
@@ -51,15 +59,33 @@ public abstract class BaseFragment extends Fragment{
     //private MovieAdapter_themovie adapter;
     protected MovieAdapterRV recyclerAdapter;
 
+
     protected Callback<Moviedx> callback;
     protected Callback<Moviedx> callbackLazy;
+
+    // API
+
+    protected String token;
+    protected Boolean end;
+
+    protected RecyclerView recyclerViewApi;
+    protected  boolean gettingApi = false;
+    protected MovieAdapterApi recyclerAdapterApi;
+    protected RecyclerView.OnScrollListener rvScrollListenerApi;
+    protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackApi;
+    protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackLazyApi;
 
     public BaseFragment()
     {
         threshold = 10;
         currentPage = 1; // imdb broji od 1!!!
+        currentPageApi=0;
         totalPages = 0;
+        token="";
+        end = false;
 
+
+        //TODO: maknuti ih poslije
         rvScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -92,7 +118,6 @@ public abstract class BaseFragment extends Fragment{
             }
 
         };
-
         callback = new Callback<Moviedx>() {
             @Override
             public void success(Moviedx m, Response response) {
@@ -110,10 +135,16 @@ public abstract class BaseFragment extends Fragment{
             @Override
             public void failure(RetrofitError error) {
                 hidePDialog();
-                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+                String er= error.getUrl();
+
+                String errorMess = ":(  ";
+                if (error.getResponse() != null) {
+                    ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
+                    errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
+                }
+                Toast.makeText(getActivity(), errorMess, Toast.LENGTH_LONG).show();
             }
         };
-
         callbackLazy = new Callback<Moviedx>() {
             @Override
             public void success(Moviedx m, Response response) {
@@ -131,9 +162,117 @@ public abstract class BaseFragment extends Fragment{
 
             @Override
             public void failure(RetrofitError error) {
-//                hidePDialog();
-                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+                hidePDialog();
+                String er= error.getUrl();
+
+                String errorMess = ":(  ";
+                if (error.getResponse() != null) {
+                    ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
+                    errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
+                }
+                Toast.makeText(getActivity(), errorMess, Toast.LENGTH_LONG).show();
             }
+        };
+
+
+
+
+        ///////////////////API//////////////////////
+        callbackApi = new Callback<MoviedxApi>() {
+            @Override
+            public void success(MoviedxApi m, Response response) {
+                try {
+                    hidePDialog();
+                    movieListApi = m.getMovieList();
+
+                    if(m.getMovieList().size()<m.getlimit())
+                        end = true;
+
+                    recyclerAdapterApi = new MovieAdapterApi(movieListApi);
+                    recyclerViewApi.setAdapter(recyclerAdapterApi);
+                } catch (Exception exc) {
+
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hidePDialog();
+                String er= error.getUrl();
+
+                String errorMess = ":(  ";
+                if (error.getResponse() != null) {
+                    ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
+                    errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
+                }
+                Toast.makeText(getActivity(), errorMess, Toast.LENGTH_LONG).show();
+
+            }
+        };
+
+        callbackLazyApi = new Callback<MoviedxApi>() {
+            @Override
+            public void success(MoviedxApi m, Response response) {
+                try {
+//                    hidePDialog();
+                    List<MovieApi> list = m.getMovieList();
+                    recyclerAdapterApi.addMovies(list);
+
+                    if(m.getMovieList().size()<m.getlimit())
+                        end = true;
+                    gettingApi = false;
+
+                } catch (Exception exc) {
+                    int a = 0;
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                //hidePDialog();
+                String er= error.getUrl();
+
+                String errorMess = ":(  ";
+                if (error.getResponse() != null) {
+                    ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
+                    errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
+                }
+                Toast.makeText(getActivity(), errorMess, Toast.LENGTH_LONG).show();
+            }
+        };
+
+        rvScrollListenerApi = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!gettingApi) {
+                    LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
+                    int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+                    int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
+
+                    int count = movieListApi.size();
+                    if ((firstVisiblePosition >= count - 1 - threshold) && !end) {
+                        currentPageApi++;
+                        if(!end)
+                            getMoviesLazy(currentPageApi);
+                    }
+                }
+
+            }
+
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+
+//                    int visible = recyclerView. ();
+//                    int count = recyclerView.getCount();
+//                    int result = recyclerView.getCount() - 1 - threshold;
+//                    if ((recyclerView.getLastVisiblePosition() >= recyclerView.getCount() - 1 - threshold) && totalPages > currentPage) {
+//                        currentPage++;
+//                        getMoviesLazy(currentPage);
+//                    }
+            }
+
         };
     }
 
@@ -168,11 +307,14 @@ public abstract class BaseFragment extends Fragment{
 
     protected void getMoviesLazy(int page) {
         getting=true;
+        gettingApi=true;
         //ApiManager.getService().getMovies(currentPage, callback);
         getServiceLazy(page);
     }
 
     protected abstract void getServiceLazy(int page);
+
+
 
     protected void getGenres() {
 
@@ -192,7 +334,16 @@ public abstract class BaseFragment extends Fragment{
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Something happened :(", Toast.LENGTH_LONG).show();
+                hidePDialog();
+                String er= error.getUrl();
+
+                String errorMess = ":(  ";
+                if (error.getResponse() != null) {
+                    ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
+                    errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
+                }
+                Toast.makeText(getActivity(), errorMess, Toast.LENGTH_LONG).show();
+
             }
         });
     }
