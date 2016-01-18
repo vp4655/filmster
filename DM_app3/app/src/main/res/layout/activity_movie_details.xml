@@ -70,284 +70,287 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/swiper">
 
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:weightSum="4"
                     android:layout_height="120dp"
-                    android:id="@+id/bottom_wrapper">
+                    android:background="@color/gray_back">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:weightSum="4"
+                        android:id="@+id/sharer"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_back">
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/secondaryText">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="@color/secondaryText">
+                        <ImageView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_social_share"
+                            android:id="@+id/shareIcon">
 
-                            <ImageView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:src="@drawable/ic_social_share">
+                        </ImageView>
 
-                            </ImageView>
+                        <com.facebook.share.widget.ShareButton
+                            android:id="@+id/share_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:contentDescription="Share"
+                            android:textSize="18sp"
+                            android:background="@color/transparent"/>
+                        <!-- <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Share"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_icons">
 
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:text="Share"
-                                android:textSize="18sp"
-                                android:textColor="@color/text_icons">
-
-                            </TextView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="@color/colorPrimary">
-
-                            <ImageView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:src="@drawable/ic_action_alarm_add">
-
-                            </ImageView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:text="Watchlist"
-                                android:textSize="18sp"
-                                android:textColor="@color/text_icons">
-
-                            </TextView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="#46529e">
-
-                            <ImageView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:src="@drawable/ic_action_thumb_up">
-
-                            </ImageView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:text="Like"
-                                android:textSize="18sp"
-                                android:textColor="@color/text_icons">
-
-                            </TextView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="@color/colorAccent">
-
-                            <ImageView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:src="@drawable/ic_watched">
-
-                            </ImageView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:text="Seen"
-                                android:textSize="18sp"
-                                android:textColor="@color/text_icons">
-
-                            </TextView>
-
-                        </LinearLayout>
+                        </TextView> -->
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/colorPrimary">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:id="@+id/likes">
+                        <ImageView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_action_alarm_add">
+
+                        </ImageView>
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="@string/watch_text"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_icons">
+
+                        </TextView>
+
+                    </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:weightSum="8"
-                        android:background="@color/gray_back">
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/facebook_color">
+
+                        <ImageView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_action_thumb_up">
+
+                        </ImageView>
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="@string/like_text"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_icons">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/colorAccent">
+
+                        <ImageView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_watched">
+
+                        </ImageView>
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="@string/seen_text"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_icons">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:weightSum="8"
+                    android:background="@color/gray_back">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="7"
+                        android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="7"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
                             android:weightSum="2">
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:weightSum="2">
+                                android:orientation="horizontal"
+                                android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal"
-                                    android:gravity="center">
+                                <ImageView
+                                    android:layout_height="55dp"
+                                    android:layout_width="55dp"
+                                    android:src="@drawable/ic_rtomato">
 
-                                    <ImageView
-                                        android:layout_height="55dp"
-                                        android:layout_width="55dp"
-                                        android:src="@drawable/ic_rtomato">
+                                </ImageView>
 
-                                    </ImageView>
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:text="5.6"
+                                    android:id="@+id/tvRottenTomato"
+                                    android:textSize="32sp">
 
-                                    <TextView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:layout_marginLeft="8dp"
-                                        android:text="5.6"
-                                        android:textSize="32sp">
-
-                                    </TextView>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:layout_height="55dp"
-                                        android:layout_width="55dp"
-                                        android:src="@drawable/ic_rt_users">
-
-                                    </ImageView>
-
-                                    <TextView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:layout_marginLeft="8dp"
-                                        android:text="5.6"
-                                        android:textSize="32sp">
-
-                                    </TextView>
-
-                                </LinearLayout>
+                                </TextView>
 
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:weightSum="2">
+                                android:orientation="horizontal"
+                                android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal"
-                                    android:gravity="center">
+                                <ImageView
+                                    android:layout_height="55dp"
+                                    android:layout_width="55dp"
+                                    android:src="@drawable/ic_rt_users">
 
-                                    <ImageView
-                                        android:layout_height="55dp"
-                                        android:layout_width="55dp"
-                                        android:src="@drawable/ic_imdb_icon">
+                                </ImageView>
 
-                                    </ImageView>
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:text="5.6"
+                                    android:id="@+id/tvRottenTomatoUser"
+                                    android:textSize="32sp">
 
-                                    <TextView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:layout_marginLeft="8dp"
-                                        android:text="5.6"
-                                        android:textSize="32sp">
-
-                                    </TextView>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:layout_height="55dp"
-                                        android:layout_width="55dp"
-                                        android:src="@drawable/ic_metacritic">
-
-                                    </ImageView>
-
-                                    <TextView
-                                        android:layout_height="wrap_content"
-                                        android:layout_width="wrap_content"
-                                        android:layout_marginLeft="8dp"
-                                        android:text="5.6"
-                                        android:textSize="32sp">
-
-                                    </TextView>
-
-                                </LinearLayout>
+                                </TextView>
 
                             </LinearLayout>
 
                         </LinearLayout>
 
-
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:gravity="center">
+                            android:orientation="vertical"
+                            android:weightSum="2">
 
-                            <ImageView
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:src="@drawable/ic_keyboard_arrow_left_black_48dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:gravity="center">
 
-                            </ImageView>
+                                <ImageView
+                                    android:layout_height="55dp"
+                                    android:layout_width="55dp"
+                                    android:src="@drawable/ic_imdb_icon">
 
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:text="5.6"
+                                    android:id="@+id/tvImdb"
+                                    android:textSize="32sp">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_height="55dp"
+                                    android:layout_width="55dp"
+                                    android:src="@drawable/ic_metacritic">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:text="5.6"
+                                    android:id="@+id/tvMetaCritic"
+                                    android:textSize="32sp">
+
+                                </TextView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
 
-                </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_keyboard_arrow_left_black_48dp">
+
+                        </ImageView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </com.daimajia.swipe.SwipeLayout>
 
@@ -585,22 +588,109 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvMovieHomepage"
+                android:id="@+id/castDetailsText"
                 android:layout_below="@+id/castRuler"
                 android:layout_marginTop="10dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:paddingLeft="5dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="@string/movie_details"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/director_list"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:id="@+id/directors"
+                android:layout_below="@id/castDetailsText"/>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/movieDetails"
+                android:layout_below="@id/directors"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/releaseText"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondaryText"
+                        android:text="@string/release_text"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/releaseText"
+                        android:id="@+id/releaseDate"
+                        android:textColor="@color/secondaryText"
+                        android:text="@string/release_date"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/runtime_text"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/runtimeText"
+                        android:textColor="@color/secondaryText"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/runtime_movie"
+                        android:layout_below="@id/runtimeText"
+                        android:textSize="18sp"
+                        android:id="@+id/runtime"
+                        android:textColor="@color/secondaryText"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/crewLink"
                 android:textSize="20sp"
-                android:text="@string/actor_default_homepage"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:layout_below="@id/movieDetails"
+                android:clickable="true"
                 android:background="@drawable/text_view_click_background"
-                android:clickable="true"/>
+                android:text="@string/full_crew"
+                android:layout_marginBottom="8dp"/>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:id="@+id/linksRuler"
-                android:layout_below="@id/tvMovieHomepage"
+                android:layout_below="@id/crewLink"
                 android:background="#b8b8b8"></View>
 
             <LinearLayout

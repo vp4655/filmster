@@ -8,10 +8,4 @@
         android:icon="@drawable/ic_action_image_dehaze"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_logout" android:title="@string/action_logout"
-        android:orderInCategory="100" app:showAsAction="never" />
-
-    <item android:id="@+id/action_search" android:title="@string/action_search"
-        android:orderInCategory="100" app:showAsAction="never" />
-
 </menu>

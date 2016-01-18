@@ -1,6 +1,7 @@
 package hr.fer.dm.dm_app3.Network;
 
 import hr.fer.dm.dm_app3.Models.actor.CastList;
+import hr.fer.dm.dm_app3.Models.actor.CrewList;
 import hr.fer.dm.dm_app3.Models.genres.Genredx;
 import hr.fer.dm.dm_app3.Models.themoviedb.Movie;
 import hr.fer.dm.dm_app3.Models.themoviedb.MovieDetail;
@@ -38,5 +39,8 @@ public interface MovieService {
 
     @GET("/3/movie/{id}/casts?api_key=b4af86d450ee7b94546e7fc869efeb9f")
     void getCast(@Path("id") int id, Callback<CastList> callback);
+
+    @GET("/3/movie/{id}/casts?api_key=b4af86d450ee7b94546e7fc869efeb9f")
+    void getCrew(@Path("id") int id, Callback<CrewList> callback);
 
 }

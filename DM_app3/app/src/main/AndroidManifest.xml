@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".Activites.LoginActivity" >
+        <activity android:name=".Activites.LoginActivity"
+            android:theme="@style/NoAction" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +40,11 @@
             android:theme="@style/NoAction" >
         </activity>
         <activity
+            android:name=".Activites.CrewActivity"
+            android:label="@string/cast_string"
+            android:theme="@style/NoAction" >
+        </activity>
+        <activity
             android:name=".Activites.RolesActivity"
             android:label="@string/cast_string"
             android:theme="@style/NoAction" >
@@ -53,25 +59,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!-- <activity android:name=".Activites.SearchActivity" > -->
-
-
-        <!-- &lt;!&ndash; to identify this activity as "searchable" &ndash;&gt; -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.SEARCH" /> -->
-        <!-- </intent-filter> -->
-
-
-        <!-- <meta-data -->
-        <!-- android:name="android.app.searchable" -->
-        <!-- android:value=".SearchActivity" -->
-        <!-- android:resource="@xml/searchable" /> -->
-        <!-- </activity> -->
-
         <activity
             android:name=".Activites.SearchActivity"
             android:label="@string/action_search"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:theme="@style/NoAction">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

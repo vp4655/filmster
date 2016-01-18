@@ -40,7 +40,7 @@ public class RolesActivity extends AppCompatActivity{
         setContentView(R.layout.activity_roles);
 
         int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
-        final String actorName = (String) getIntent().getExtras().get("ActorName") + "'s roles";
+        final String actorName = (String) getIntent().getExtras().get("ActorName") + "'s credits";
 
         ApiActorManager.getService().getRoles(ajDI, new Callback<RolesList>() {
             @Override

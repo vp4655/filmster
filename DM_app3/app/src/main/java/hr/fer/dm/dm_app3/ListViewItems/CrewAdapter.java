@@ -9,22 +9,21 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
-import hr.fer.dm.dm_app3.Models.themoviedb.MovieMinified;
+import hr.fer.dm.dm_app3.Models.actor.CrewMinified;
 import hr.fer.dm.dm_app3.R;
 import hr.fer.dm.dm_app3.RecyclerViewHolders.ActorMinifiedViewHolder;
 import hr.fer.dm.dm_app3.RecyclerViewHolders.RecyclerHeaderViewHolder;
 
-public class RolesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class CrewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HEADER = 2;
     private static final int TYPE_ITEM = 1;
 
-    private List<MovieMinified> mMovieList;
+    private List<CrewMinified> mActorList;
     private View mView;
 
-    public RolesAdapter(List<MovieMinified> movieList) {
-        mMovieList = movieList;
+    public CrewAdapter(List<CrewMinified> actorList) {
+        mActorList = actorList;
     }
 
     @Override
@@ -45,19 +44,18 @@ public class RolesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         if (!isPositionHeader(position)) {
             ActorMinifiedViewHolder holder = (ActorMinifiedViewHolder) viewHolder;
-            MovieMinified movieMinified = mMovieList.get(position - 1);
-
-            holder.setContent(mView, movieMinified.getTitle(), movieMinified.getCharacterName() != null ? movieMinified.getCharacterName() : movieMinified.getJob(), movieMinified.getPosterPictureUrl());
+            CrewMinified actorMinified = mActorList.get(position - 1);
+            holder.setContent(mView, actorMinified.getName(), actorMinified.getJob(), actorMinified.getProfilePictureUrl());
         }
     }
 
     public Object getItem(int position){
-        return mMovieList.get(position);
+        return mActorList.get(position);
     }
 
     //our old getItemCount()
     public int getBasicItemCount() {
-        return mMovieList == null ? 0 : mMovieList.size();
+        return mActorList == null ? 0 : mActorList.size();
     }
 
     //our new getItemCount() that includes header View

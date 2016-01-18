@@ -288,13 +288,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aFirstImage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aFirstName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aFirstImage"
                             android:layout_centerInParent="true"/>
 
@@ -310,13 +310,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aSecondImage" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aSecondName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aSecondImage"
                             android:layout_centerInParent="true"/>
 
@@ -332,13 +332,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aThirdImage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aThirdName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aThirdImage"
                             android:layout_centerInParent="true"/>
 
@@ -354,13 +354,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aFourthImage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aFourthName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aFourthImage"
                             android:layout_centerInParent="true"/>
 
@@ -376,13 +376,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aFifthImage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aFifthName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aFifthImage"
                             android:layout_centerInParent="true"/>
 
@@ -398,13 +398,13 @@
                             android:layout_width="120dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/person_placeholder"
+                            android:src="@drawable/small_movie_poster"
                             android:id="@+id/aSixthImage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/aSixthName"
-                            android:text="@string/actor_default_name"
+                            android:text="@string/default_movie_name"
                             android:layout_below="@+id/aSixthImage"
                             android:layout_centerInParent="true"/>
 

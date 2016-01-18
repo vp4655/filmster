@@ -35,11 +35,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import hr.fer.dm.dm_app3.ListViewItems.CrewAdapter;
 import hr.fer.dm.dm_app3.Models.actor.ActorMinified;
 import hr.fer.dm.dm_app3.ListViewItems.CastAdapter;
 import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.actor.CastList;
-import hr.fer.dm.dm_app3.Models.actor.CastWrapper;
+import hr.fer.dm.dm_app3.Models.actor.CrewList;
+import hr.fer.dm.dm_app3.Models.actor.CrewMinified;
+import hr.fer.dm.dm_app3.Models.actor.CrewWrapper;
 import hr.fer.dm.dm_app3.Network.ApiManager;
 import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
 import hr.fer.dm.dm_app3.R;
@@ -47,7 +50,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class CastActivity extends AppCompatActivity {
+public class CrewActivity extends AppCompatActivity {
 
     private String name;
     private String uri;
@@ -61,26 +64,28 @@ public class CastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast);
 
-        int ajDI = (int) getIntent().getIntExtra(LoginActivity.ACTOR_DETAIL_KEY, 9576);
+        int ajDI = (int) getIntent().getExtras().get("Id");
 
         String s = getResources().getString(R.string.sharedPref);
         SharedPreferences sp = this.getApplicationContext().getSharedPreferences(s, Activity.MODE_PRIVATE);
         apiToken = sp.getString("token", "");
 
-        ApiManagerMovie.getService().getCast(apiToken, "movieId,cast",ajDI, new Callback<CastWrapper>() {
+        ApiManagerMovie.getService().getCrew(apiToken, "movieId,crew",ajDI, new Callback<CrewWrapper>() {
             @Override
-            public void success(CastWrapper castList, Response response) {
+            public void success(CrewWrapper wrapper, Response response) {
 
-                List<ActorMinified> aActors = castList.getCastList().getCast();
+                CrewList castList = wrapper.getCrewList();
+
+                List<CrewMinified> aCrew = castList.getCrew();
 
                 initToolbar();
-                initRecyclerView(aActors);
+                initRecyclerView(aCrew);
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(CastActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(CrewActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -102,7 +107,7 @@ public class CastActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_other) {
-            Intent intent = new Intent(CastActivity.this, HomeActivity.class);
+            Intent intent = new Intent(CrewActivity.this, HomeActivity.class);
             startActivity(intent);
         }
         else if (id == android.R.id.home){
@@ -121,13 +126,13 @@ public class CastActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initRecyclerView(List<ActorMinified> actors) {
+    private void initRecyclerView(List<CrewMinified> crew) {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewCast);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final CastAdapter recyclerAdapter = new CastAdapter(actors);
+        final CrewAdapter recyclerAdapter = new CrewAdapter(crew);
         recyclerView.setAdapter(recyclerAdapter);
 
-        final GestureDetector mGestureDetector = new GestureDetector(CastActivity.this, new GestureDetector.SimpleOnGestureListener() {
+        final GestureDetector mGestureDetector = new GestureDetector(CrewActivity.this, new GestureDetector.SimpleOnGestureListener() {
 
             @Override public boolean onSingleTapUp(MotionEvent e) {
                 return true;
@@ -143,9 +148,9 @@ public class CastActivity extends AppCompatActivity {
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
 
-                    ActorMinified actorMinified = (ActorMinified)recyclerAdapter.getItem(recyclerView.getChildAdapterPosition(child) - 1);
-                    Intent intent = new Intent(CastActivity.this, ActorDetailActivity.class);
-                    intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, actorMinified.getId());
+                    CrewMinified crewMinified = (CrewMinified)recyclerAdapter.getItem(recyclerView.getChildAdapterPosition(child) - 1);
+                    Intent intent = new Intent(CrewActivity.this, ActorDetailActivity.class);
+                    intent.putExtra(LoginActivity.ACTOR_DETAIL_KEY, crewMinified.getId());
                     startActivity(intent);
 
                     return true;

@@ -10,57 +10,59 @@ public class MovieDetail implements Serializable {
     @SerializedName("poster_path")
     private String image;
 
-    @SerializedName("adult")
-    private Boolean adult;
-
     @SerializedName("overview")
     private String overview;
 
     @SerializedName("release_date")
     private String release_date;
 
-    @SerializedName("homepage")
-    private String homepage;
+    @SerializedName("genre_ids")
+    private List<Integer> genre_ids;
+    private List<String> genres;
 
-    @SerializedName("id")
+    @SerializedName("movieId")
     private int id;
 
-    @SerializedName("original_title")
-    private String original_title;
+    @SerializedName("imdb_id")
+    private String imdb_id;
+
+    @SerializedName("imdb_rating")
+    private String imdb_rating;
 
     @SerializedName("title")
     private String title;
 
-    @SerializedName("backdrop_path")
-    private String backdrop_path;
+    @SerializedName("metascore")
+    private String metascore;
+
+    @SerializedName("homepage")
+    private String homepage;
+
+    @SerializedName("runtime")
+    private int runtime;
+
+    @SerializedName("tomato_meter")
+    private String tomato_meter;
+
+    @SerializedName("tomato_user_meter")
+    private String tomato_user_meter;
 
     @SerializedName("popularity")
     private Float popularity;
 
-    @SerializedName("vote_count")
-    private int vote_count;
-
-    @SerializedName("video")
-    private Boolean video;
-
     @SerializedName("vote_average")
     private Float vote_average;
 
-    @SerializedName("imdb_id")
-    private String imdb_id;
+    @SerializedName("director")
+    private String director;
 
 
     public String getTitle() {
         return title;
     }
 
-    public String getImdb_id(){
-        return imdb_id;
-    }
-
-    public Boolean getAdult()
-    {
-        return adult;
+    public String getDirector() {
+        return director;
     }
 
     public String getOverview()
@@ -78,31 +80,40 @@ public class MovieDetail implements Serializable {
         return id;
     }
 
-    public String getHomepage() { return homepage; }
-
-    public String getOriginal_title()
-    {
-        return original_title;
+    public String getRuntime(){
+        return Integer.toString(runtime);
     }
 
-    public String getBackdrop_path()
-    {
-        return backdrop_path;
+    public String getImdb_rating(){
+        return imdb_rating;
     }
 
-    public Float getPopularity()
-    {
-        return popularity;
+    public String getMetascore(){
+        return metascore;
     }
 
-    public int getVote_count()
-    {
-        return vote_count;
+    public String getTomato_meter(){
+        return tomato_meter;
     }
 
-    public Boolean getVideo()
+    public String getHomepage(){
+        return homepage;
+    }
+
+    public String getTomato_user_meter(){
+        return tomato_user_meter;
+    }
+
+    public String getPopularity()
     {
-        return video;
+//        DecimalFormat df = new DecimalFormat("#.##");
+//        df.setRoundingMode(RoundingMode.CEILING);
+//        return df.format(popularity);
+        return Float.toString(25.0f);
+    }
+
+    public String getImdb_id(){
+        return imdb_id;
     }
 
     public Float getVote_average()
