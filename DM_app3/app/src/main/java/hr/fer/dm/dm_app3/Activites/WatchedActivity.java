@@ -2,15 +2,23 @@ package hr.fer.dm.dm_app3.Activites;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,8 +31,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hr.fer.dm.dm_app3.Listeners.HidingScrollListener;
 import hr.fer.dm.dm_app3.Models.ErrorModel;
 import hr.fer.dm.dm_app3.Models.api.MovieAdapterApi;
+import hr.fer.dm.dm_app3.Models.api.MovieAdapterHeader;
 import hr.fer.dm.dm_app3.Models.api.MovieApi;
 import hr.fer.dm.dm_app3.Models.api.MoviedxApi;
 import hr.fer.dm.dm_app3.Network.ApiManagerMovie;
@@ -50,10 +60,11 @@ public class WatchedActivity extends AppCompatActivity {
     @Bind(R.id.rvMoviesWatched)RecyclerView recyclerViewApi;                // <--
 
     protected  boolean gettingApi = false;
-    protected MovieAdapterApi recyclerAdapterApi;
+    protected MovieAdapterHeader recyclerAdapterApi;
     protected RecyclerView.OnScrollListener rvScrollListenerApi;
     protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackApi;
     protected Callback<hr.fer.dm.dm_app3.Models.api.MoviedxApi> callbackLazyApi;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +80,35 @@ public class WatchedActivity extends AppCompatActivity {
 
         movieListApi = new ArrayList<>();
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbarWatched);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(getString(R.string.cast_string));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.text_icons));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerViewApi = (RecyclerView) findViewById(R.id.rvMoviesWatched);            // <--
         recyclerViewApi.setLayoutManager(new LinearLayoutManager(this));
+
+        final GestureDetector mGestureDetector = new GestureDetector(WatchedActivity.this, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+        recyclerViewApi.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
+
         rvScrollListenerApi = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -114,7 +152,7 @@ public class WatchedActivity extends AppCompatActivity {
                     if(m.getMovieList().size()<m.getlimit())
                         end = true;
 
-                    recyclerAdapterApi = new MovieAdapterApi(movieListApi);
+                    recyclerAdapterApi = new MovieAdapterHeader(movieListApi);
                     recyclerViewApi.setAdapter(recyclerAdapterApi);
                 } catch (Exception exc) {
 
@@ -171,6 +209,14 @@ public class WatchedActivity extends AppCompatActivity {
         initList();
     }
 
+    private void hideViews() {
+        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showViews() {
+        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+    }
+
     public void initList()
     {
         String s = getResources().getString(R.string.sharedPref);
@@ -181,7 +227,7 @@ public class WatchedActivity extends AppCompatActivity {
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading...");
         pDialog.show();
-        ApiManagerMovie.getService().getMoviesWatched(token,currentPageApi, callbackApi);
+        ApiManagerMovie.getService().getMoviesWatched(token, currentPageApi, callbackApi);
 
     }
 
@@ -190,6 +236,33 @@ public class WatchedActivity extends AppCompatActivity {
             pDialog.dismiss();
             pDialog = null;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_other, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_other) {
+            Intent intent = new Intent(WatchedActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
+        else if (id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
