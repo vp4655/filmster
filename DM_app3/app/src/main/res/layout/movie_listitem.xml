@@ -62,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/ivImdb"
-                        android:src="@drawable/ic_imdb"/>
+                        android:src="@drawable/ic_imdb_blue"/>
 
                     <TextView
                         android:id="@+id/tvImdb"
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/ivRottenTomato"
-                        android:src="@drawable/ic_metacritic"/>
+                        android:src="@drawable/ic_meta_blue"/>
 
                     <TextView
                         android:id="@+id/tvRottenTomato"
@@ -96,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/ivMetaCritic"
-                        android:src="@drawable/ic_rtomato"/>
+                        android:src="@drawable/ic_tomato_blue2"/>
 
                     <TextView
                         android:id="@+id/tvMetaCritic"

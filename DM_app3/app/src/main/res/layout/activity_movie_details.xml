@@ -229,7 +229,7 @@
                                 <ImageView
                                     android:layout_height="55dp"
                                     android:layout_width="55dp"
-                                    android:src="@drawable/ic_rtomato">
+                                    android:src="@drawable/ic_tomato_blue2">
 
                                 </ImageView>
 
@@ -255,7 +255,7 @@
                                 <ImageView
                                     android:layout_height="55dp"
                                     android:layout_width="55dp"
-                                    android:src="@drawable/ic_rt_users">
+                                    android:src="@drawable/ic_popcorn_blue">
 
                                 </ImageView>
 
@@ -290,7 +290,7 @@
                                 <ImageView
                                     android:layout_height="55dp"
                                     android:layout_width="55dp"
-                                    android:src="@drawable/ic_imdb_icon">
+                                    android:src="@drawable/ic_imdb_blue">
 
                                 </ImageView>
 
@@ -316,7 +316,7 @@
                                 <ImageView
                                     android:layout_height="55dp"
                                     android:layout_width="55dp"
-                                    android:src="@drawable/ic_metacritic">
+                                    android:src="@drawable/ic_meta_blue">
 
                                 </ImageView>
 
