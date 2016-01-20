@@ -173,7 +173,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     tvMetaCritic.setText(m.getMetascore());
                     getTvRottenTomatoUser.setText(m.getTomato_user_meter());
                     tvRottenTomato.setText(m.getTomato_meter());
-                    directors.setText(m.getDirector());
+                    directors.setText(Html.fromHtml("<b>Directed by:</b> " + m.getDirector()));
 
                     imdbButton.setOnClickListener(new View.OnClickListener() {
                         @Override
