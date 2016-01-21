@@ -94,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 //                    // do something with token
 //
 //                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    //loggedin();
+                    loggedin();
+                    return;
                 }
             }
         });
@@ -208,10 +209,17 @@ public class LoginActivity extends AppCompatActivity {
     {
         final String token = AccessToken.getCurrentAccessToken().getToken(); //Facebook doesn't allow devs to Log "session.getAccessToken" directly, because it may cause leaks
 
+//        //pDialog.show(this, "Working..", "Downloading Data...", true, false);
+//        pDialog = new ProgressDialog(LoginActivity.this);
+//        // Showing progress dialog before making http request
+//        pDialog.setMessage("Loading...");
+//        pDialog.show();
+
         ApiManagerMovie.getService().getFToken(token, new Callback<LoginResponse>() {
 
             @Override
             public void success(LoginResponse loginResponse, Response response) {
+                //hidePDialog();
                 try {
                     int s = response.getStatus();
                     SharedPreferences sp = getSharedPreferences("facebookApp", Activity.MODE_PRIVATE);
@@ -239,6 +247,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                hidePDialog();
                 Toast.makeText(LoginActivity.this, "Something happened :(", Toast.LENGTH_LONG).show();
 
                 if (error.getResponse() != null) {

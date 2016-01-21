@@ -28,6 +28,8 @@ import hr.fer.dm.dm_app3.Util.AppController;
  */
 public class RecyclerItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    private static final String UNKNOWN = "?";
+
     private TextView title;
     private TextView ratingImdb;
     private TextView ratingMeta;
@@ -71,8 +73,8 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder implements V
 
         // rating
         ratingImdb.setText(m.getPopularity());
-        ratingRTomato.setText(m.getPopularity());
-        ratingMeta.setText(m.getPopularity());
+        ratingRTomato.setText(UNKNOWN);
+        ratingMeta.setText(UNKNOWN);
 
         // genre
         String genreStr = "";

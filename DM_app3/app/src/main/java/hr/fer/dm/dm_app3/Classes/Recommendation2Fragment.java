@@ -45,7 +45,11 @@ public class Recommendation2Fragment extends BaseFragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnScrollListener(rvScrollListener);
 
-        getGenres();
+        if(movieList.size()==0)
+        {
+            getGenres();
+        }
+
 
 
         HomeActivity activity = (HomeActivity) getActivity();

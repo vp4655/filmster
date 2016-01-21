@@ -26,6 +26,9 @@ import hr.fer.dm.dm_app3.Util.AppController;
 public class MovieItemViewHolderApi extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private static final int NUM_GENRES_SHOWED = 4;
+    private static final String UNKNOWN = "?";
+    private static final String NA = "N/A";
+
 
     private TextView title;
     private TextView ratingImdb;
@@ -59,19 +62,38 @@ public class MovieItemViewHolderApi extends RecyclerView.ViewHolder implements V
 
     public void setContent(View parent, MovieApi m) {
 
-        if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
+//        if (imageLoader == null)
+//            imageLoader = AppController.getInstance().getImageLoader();
 
         // thumbnail image
-        Picasso.with(parent.getContext()).load(m.imdb_poster_link).placeholder(R.drawable.small_movie_poster).into(thumbNail);
+        if(m.imdb_poster_link!=null)
+            Picasso.with(parent.getContext()).load(m.imdb_poster_link).placeholder(R.drawable.small_movie_poster).into(thumbNail);
 
         // title
-        title.setText(m.getTitle());
+        if(m.getTitle()== null)
+            title.setText(UNKNOWN);
+        else
+            title.setText(m.getTitle());
+
 
         // rating
-        ratingImdb.setText(m.getimdb_rating());
-        ratingRTomato.setText(m.gettomato_rating());
-        ratingMeta.setText(m.getmetascore());
+        if(m.getimdb_rating()==null || m.getimdb_rating().equals(NA))
+            ratingImdb.setText(UNKNOWN);
+        else
+            ratingImdb.setText(m.getimdb_rating());
+
+
+        String meta = m.gettomato_rating();
+        if(m.gettomato_rating()==null || m.gettomato_rating().equals(NA))
+            ratingRTomato.setText(UNKNOWN);
+        else
+            ratingRTomato.setText(m.gettomato_rating());
+
+        if(m.getmetascore()==null || m.getmetascore().equals(NA))
+            ratingMeta.setText(UNKNOWN);
+        else
+            ratingMeta.setText(m.getmetascore());
+
 
         // genre
         String genreStr = "";

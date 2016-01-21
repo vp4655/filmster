@@ -112,10 +112,10 @@ public class Movie implements Serializable {
 
     public String getPopularity()
     {
-//        DecimalFormat df = new DecimalFormat("#.##");
-//        df.setRoundingMode(RoundingMode.CEILING);
-//        return df.format(popularity);
-        return Float.toString(25.0f);
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        return df.format(popularity).toString();
+        //return Float.toString(25.0f);
     }
 
     public String getImdb_id(){

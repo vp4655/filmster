@@ -55,7 +55,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <!--imdb-->
                     <ImageView
@@ -82,14 +83,13 @@
                         android:src="@drawable/ic_meta_blue"/>
 
                     <TextView
-                        android:id="@+id/tvRottenTomato"
+                        android:id="@+id/tvMetaCritic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dip"
                         android:text="rating"
                         android:textSize="@dimen/rating"
-                        android:layout_gravity="center"
-                        />
+                        android:layout_gravity="center"/>
 
                     <!--metacritic-->
                     <ImageView
@@ -99,13 +99,14 @@
                         android:src="@drawable/ic_tomato_blue2"/>
 
                     <TextView
-                        android:id="@+id/tvMetaCritic"
+                        android:id="@+id/tvRottenTomato"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dip"
                         android:text="rating"
                         android:textSize="@dimen/rating"
                         android:layout_gravity="center"/>
+
                 </LinearLayout>
 
                 <TextView
