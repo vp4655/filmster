@@ -72,11 +72,11 @@ public class HomeFragment extends BaseFragment {
 
         if(s != "")
         {
-            ApiManagerMovie.getService().getMoviesSearch("popularity", currentPageApi, s, token, callbackApi);
+            ApiManagerMovie.getService().getMoviesSearchSimilar("popularity DESC", currentPageApi, s, token, callbackApi);
         }
         else
         {
-            ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackApi);
+            ApiManagerMovie.getService().getMoviesSimilar(token, currentPageApi, callbackApi);
         }
 
     }
@@ -88,11 +88,11 @@ public class HomeFragment extends BaseFragment {
 
         if(s != "")
         {
-            ApiManagerMovie.getService().getMoviesSearch("popularity", currentPageApi, s, token, callbackLazyApi);
+            ApiManagerMovie.getService().getMoviesSearchSimilar("popularity DESC", currentPageApi, s, token, callbackLazyApi);
         }
         else
         {
-            ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackLazyApi);
+            ApiManagerMovie.getService().getMoviesSimilar(token, currentPageApi, callbackLazyApi);
         }
     }
 
