@@ -36,6 +36,19 @@ public interface MovieApiService {
     @GET("/v1/movies")
     void getMovies( @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
 
+    @GET("/v1/movies")
+    void getMoviesSocial( @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
+
+    @GET("/v1/movies")
+    void getMoviesSearchSocial( @Query("sort") String sort, @Query("page") int page, @Query("where") String where, @Query("access_token") String token ,Callback<MoviedxApi> callback);
+
+
+    @GET("/v1/movies")
+    void getMoviesSimilar( @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
+
+    @GET("/v1/movies")
+    void getMoviesSearchSimilar( @Query("sort") String sort, @Query("page") int page, @Query("where") String where, @Query("access_token") String token ,Callback<MoviedxApi> callback);
+
     @GET("/v1/users/watched")
     void getMoviesWatched( @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
 
@@ -44,6 +57,9 @@ public interface MovieApiService {
 
     @GET("/v1/movies")
     void getMoviesHot( @Query("sort") String sort, @Query("access_token") String movies, @Query("page") int page, Callback<MoviedxApi> callback);
+
+    @GET("/v1/movies")
+    void getMoviesHotSearch( @Query("sort") String sort, @Query("page") int page, @Query("where") String where, @Query("access_token") String token, Callback<MoviedxApi> callback);
 
 
     @GET("/v1/movies")
