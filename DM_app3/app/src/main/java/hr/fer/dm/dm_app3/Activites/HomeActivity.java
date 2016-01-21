@@ -322,7 +322,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                         fragment1.reload();
                                         fragment2.reload();
-                                        //fragment3.reload();   // jer je s imdb pa nema search
+                                        fragment3.reload();   // jer je s imdb pa nema search
 
 
                                     }

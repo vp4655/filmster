@@ -113,7 +113,7 @@ public class WatchLaterActivity extends AppCompatActivity {
                         currentPageApi++;
                         if(!end)
                         {
-                            ApiManagerMovie.getService().getMoviesWatched(token,currentPageApi,callbackLazyApi);            //<--
+                            ApiManagerMovie.getService().getMoviesWatchLater(token, currentPageApi, callbackLazyApi);            //<--
                         }
                     }
                 }
@@ -216,7 +216,7 @@ public class WatchLaterActivity extends AppCompatActivity {
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading...");
         pDialog.show();
-        ApiManagerMovie.getService().getMoviesWatched(token,currentPageApi, callbackApi);
+        ApiManagerMovie.getService().getMoviesWatchLater(token,currentPageApi, callbackApi);
 
     }
 

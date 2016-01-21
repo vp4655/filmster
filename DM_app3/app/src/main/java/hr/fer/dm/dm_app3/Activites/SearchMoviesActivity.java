@@ -121,7 +121,7 @@ public class SearchMoviesActivity extends AppCompatActivity {
                         currentPageApi++;
                         if(!end)
                         {
-                            ApiManagerMovie.getService().getMoviesSearch(token ,"popularity",currentPageApi, query_, callbackLazyApi);
+                            ApiManagerMovie.getService().getMoviesSearch("popularity DESC",currentPageApi, query_, token, callbackLazyApi);
                         }
                     }
                 }
@@ -231,7 +231,7 @@ public class SearchMoviesActivity extends AppCompatActivity {
                 // Showing progress dialog before making http request
                 pDialog.setMessage("Loading...");
                 pDialog.show();
-                ApiManagerMovie.getService().getMoviesSearch(token,"popularity",currentPageApi, query_, callbackApi);
+                ApiManagerMovie.getService().getMoviesSearch("popularity DESC",currentPageApi, query_, token, callbackApi);
 
 
 

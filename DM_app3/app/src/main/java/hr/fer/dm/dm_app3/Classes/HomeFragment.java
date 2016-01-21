@@ -67,49 +67,30 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void getService() {
-        if(filterOptions!=null && filterOptions.getOption() == SearchOption.Genre)
-        {
 
-            String s = "{\"genres\":["+filterOptions.getGenreId()+"]};";
-            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackApi);
-        }
-        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.Name)
+        String s = getWhere();
+
+        if(s != "")
         {
-            String s = "{\"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
-            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackApi);
+            ApiManagerMovie.getService().getMoviesSearch("popularity", currentPageApi, s, token, callbackApi);
         }
-        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.NameGenre)
-        {
-            String s = "{\"genres\":["+filterOptions.getGenreId()+"], \"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
-            ApiManagerMovie.getService().getMoviesSearch(token,"popularity", currentPageApi, s, callbackApi);
-        }
-        else    // sve
+        else
         {
             ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackApi);
         }
-
 
     }
 
     @Override
     protected void getServiceLazy(int page) {
-        if(filterOptions!=null && filterOptions.getOption() == SearchOption.Genre)
-        {
 
-            String s = "{\"genres\":["+filterOptions.getGenreId()+"]};";
-            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackLazyApi);
-        }
-        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.Name)
+        String s = getWhere();
+
+        if(s != "")
         {
-            String s = "{\"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
-            ApiManagerMovie.getService().getMoviesSearch(token, "popularity", currentPageApi, s, callbackLazyApi);
+            ApiManagerMovie.getService().getMoviesSearch("popularity", currentPageApi, s, token, callbackLazyApi);
         }
-        else if(filterOptions!=null && filterOptions.getOption() == SearchOption.NameGenre)
-        {
-            String s = "{\"genres\":["+filterOptions.getGenreId()+"], \"title\":{\"contains\":\""+filterOptions.getTitle()+"\"}}};";
-            ApiManagerMovie.getService().getMoviesSearch(token,"popularity", currentPageApi, s, callbackLazyApi);
-        }
-        else    // sve
+        else
         {
             ApiManagerMovie.getService().getMovies(token, currentPageApi, callbackLazyApi);
         }

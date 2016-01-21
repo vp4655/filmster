@@ -369,6 +369,19 @@ public abstract class BaseFragment extends Fragment{
         });
     }
 
+    protected String getWhere()
+    {
+        String s = "";
+        if (filterOptions != null && filterOptions.getOption() == SearchOption.Genre) {
+            s = "{\"genres\":[" + filterOptions.getGenreId() + "]}";
+        } else if (filterOptions != null && filterOptions.getOption() == SearchOption.Name) {
+            s = "{\"title\":{\"contains\":\"" + filterOptions.getTitle() + "\"}}";
+        } else if (filterOptions != null && filterOptions.getOption() == SearchOption.NameGenre) {
+            s = "{\"genres\":[" + filterOptions.getGenreId() + "], \"title\":{\"contains\":\"" + filterOptions.getTitle() + "\"}}";
+        }
+        return s;
+    }
+
     public void reload()
     {
         //Toast.makeText(getActivity(), "FRAGM", Toast.LENGTH_SHORT).show();
