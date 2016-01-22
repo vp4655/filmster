@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
-                .withHeaderBackground(R.drawable.header)
+                .withHeaderBackground(R.drawable.abstract__gold__texture__textured_378078)
                 .addProfiles(
                         new ProfileDrawerItem().withName(name + " " + lastName).withEmail(email).withIcon(uri))
                 .withSavedInstance(savedInstanceState)
