@@ -23,34 +23,16 @@ public class CastList {
 
     public List<ActorMinified> getCast() {
 
-        Map<String, ActorMinified> filterd = new HashMap<String, ActorMinified>();
-        List<ActorMinified> temp = new ArrayList<ActorMinified>(cast);
-
-        for(ActorMinified movie : temp){
-            if(!filterd.containsKey(movie.getName())){
-                filterd.put(movie.getName(), movie);
-            }
-        }
-
-        return new ArrayList<>(filterd.values());
+        return cast;
     }
 
     public List<ActorMinified> getSmallCast(){
 
-        Map<String, ActorMinified> filterd = new HashMap<String, ActorMinified>();
-        List<ActorMinified> temp = new ArrayList<ActorMinified>(cast);
-
-        for(ActorMinified movie : temp){
-            if(!filterd.containsKey(movie.getName())){
-                filterd.put(movie.getName(), movie);
-            }
-        }
-
-        if(filterd.size() > 0){
-            return new ArrayList<ActorMinified>(filterd.values()).subList(0, 6 < filterd.size() ? 6 : filterd.size() - 1);
+        if(cast.size() > 0){
+            return cast.subList(0, 6 < cast.size() ? 6 : cast.size() - 1);
         }
         else {
-            return new ArrayList<ActorMinified>(filterd.values());
+            return cast;
         }
     }
 
