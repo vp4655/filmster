@@ -208,7 +208,8 @@ public abstract class BaseFragment extends Fragment{
                 String errorMess = ":(  ";
                 if (error.getResponse() != null) {
                     ErrorModel errorModel = (ErrorModel) error.getBodyAs(ErrorModel.class);
-                    errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
+                    if(errorModel!=null)
+                        errorMess+=errorModel.getCode()+": "+ errorModel.getMessage();
                 }
                 Toast.makeText(getActivity(), errorMess, Toast.LENGTH_LONG).show();
 
