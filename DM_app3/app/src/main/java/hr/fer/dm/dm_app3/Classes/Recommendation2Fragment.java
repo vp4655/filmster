@@ -71,7 +71,7 @@ public class Recommendation2Fragment extends BaseFragment {
 
         if(s != "")
         {
-            ApiManagerMovie.getService().getMoviesHotSearch("popularity  DESC", currentPageApi, s, token, callbackApi);
+            ApiManagerMovie.getService().getMoviesHotSearch("popularity DESC", currentPageApi, s, token, callbackApi);
 
         }
         else
